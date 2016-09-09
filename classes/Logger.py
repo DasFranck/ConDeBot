@@ -40,12 +40,14 @@ class Logger():
         else:
             self.logger.info(string + " in #" + message.channel.name + " on " + message.server.name + " (%s)" % message.server.id)
 
+    # Add an entry in the log with error level.
     def log_error_command(self, string, message):
         if (message.channel.is_private is True):
             self.logger.error(string + " in a Private Channel")
         else:
             self.logger.error(string + " in #" + message.channel.name + " on " + message.server.name + " (%s)" % message.server.id)
 
+    # Add an entry in the log with warn level.
     def log_warn_command(self, string, message):
         if (message.channel.is_private is True):
             self.logger.warn(string + " in a Private Channel")
