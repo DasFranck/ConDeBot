@@ -13,5 +13,10 @@ except ImportError as message:
     exit(12)
 
 
-def quote(nick):
-    return ("Here " + nick + ", that's your coffee.\n" + random.choice(QUOTES))
+def quote(nick, args):
+    # Check if the coffee is for someone else (And if the sender didn't forget the recipient)
+    if ('>' in args):
+        index = args.index('>') + 1
+        return ("Here " + " ".join(args[index:]) + ", that's your coffee.\n" + random.choice(QUOTES))
+    else:
+        return ("Here " + nick + ", that's your coffee.\n" + random.choice(QUOTES))

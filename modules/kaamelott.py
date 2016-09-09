@@ -6,14 +6,13 @@ NAME = "ConDeBot"
 try:
     import codecs
     import random
-    import shlex
 except ImportError as message:
     print('Missing package(s) for %s: %s' % (NAME, message))
     exit(12)
 
 
 # Display random quotes of Kaamelott
-async def quote(client, logger, message, msg, nick):
+async def quote(client, logger, message, nick):
     fd_kaam = codecs.open("txtfiles/kaamelott.txt", "r", "utf-8")
     buf = fd_kaam.read()
     nb = random.randint(1, int(buf[0:buf.index('\n')]))
@@ -27,18 +26,17 @@ async def quote(client, logger, message, msg, nick):
 
 
 # Display specific quotes of Kaamelott
-async def spec(client, logger, message, msg, nick):
-    arglist = shlex.split(msg)
+async def spec(client, logger, message, args, nick):
     fd_kaam = codecs.open("txtfiles/kaamelott.txt", "r", "utf-8")
     buf = fd_kaam.read()
 
-    if (len(arglist) == 3):
+    if (len(args) == 1):
         logger.log_info_command("Number of Kaamelott Quote (" + buf[0:buf.index('\n')] + ") was requested by " + nick, message)
         await client.send_message(message.channel, "There's " + buf[0:buf.index('\n')] + " Kaamelott Quote")
         fd_kaam.close()
         return
 
-    nb = int(arglist[3])
+    nb = int(args[1])
     if (nb > int(buf[0:buf.index('\n')])):
         logger.log_warn_command("Non-existant Kaamelott Quote #" + str(nb) + " was requested by " + nick, message)
         await client.send_message(message.channel, "FAILED : Kaamelott Quote #" + str(nb) + " doesn't exist")
@@ -54,10 +52,9 @@ async def spec(client, logger, message, msg, nick):
 
 
 # Manage Kaamelott
-async def main(client, logger, message, msg, nick):
-    arglist = shlex.split(msg)
-    if (len(arglist) == 2):
-        await quote(client, logger, message, msg, nick)
-    elif (len(arglist) >= 3 and arglist[2] == "-q"):
-        await spec(client, logger, message, msg, nick)
+async def main(client, logger, message, args, nick):
+    if (len(args) == 0):
+        await quote(client, logger, message, nick)
+    elif (len(args) >= 1 and args[0] == "-q"):
+        await spec(client, logger, message, args, nick)
     return
