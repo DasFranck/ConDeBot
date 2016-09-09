@@ -1,0 +1,126 @@
+2016-09-08 14:39:36,406 :: INFO :: #-------------START-------------#
+2016-09-08 14:39:36,406 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 14:39:36,406 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 14:39:36,409 :: INFO :: logging in using static token
+2016-09-08 14:39:37,120 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 14:39:37,121 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 14:39:39,255 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 14:39:39,255 :: INFO :: ------------
+2016-09-08 14:39:46,723 :: INFO :: Help requested by DasFranck in a Private Channel
+2016-09-08 15:27:45,207 :: INFO :: #-------------START-------------#
+2016-09-08 15:27:45,213 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:27:45,214 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:27:45,215 :: INFO :: logging in using static token
+2016-09-08 15:27:46,009 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 15:27:46,010 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 15:27:48,149 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 15:27:48,150 :: INFO :: ------------
+2016-09-08 15:33:20,552 :: INFO :: #-------------START-------------#
+2016-09-08 15:33:20,552 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:33:20,552 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:33:20,553 :: INFO :: logging in using static token
+2016-09-08 15:33:21,272 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 15:33:21,273 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 15:33:23,436 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 15:33:23,436 :: INFO :: ------------
+2016-09-08 15:34:09,400 :: INFO :: Coffee requested by DasFranck in general on Testmybot
+2016-09-08 15:34:13,941 :: INFO :: Help requested by DasFranck in general on Testmybot
+2016-09-08 15:34:23,227 :: INFO :: Help requested by DasFranck in a Private Channel
+2016-09-08 15:38:50,858 :: INFO :: #-------------START-------------#
+2016-09-08 15:38:50,859 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:38:50,859 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:38:50,860 :: INFO :: logging in using static token
+2016-09-08 15:38:51,803 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 15:38:51,804 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 15:38:54,008 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 15:38:54,008 :: INFO :: ------------
+2016-09-08 15:39:07,855 :: INFO :: Help requested by DasFranck in a Private Channel
+2016-09-08 15:39:12,874 :: INFO :: Coffee requested by DasFranck in a Private Channel
+2016-09-08 15:39:29,368 :: INFO :: Help requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:40:18,637 :: INFO :: Source files requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:40:23,075 :: INFO :: Help requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:40:30,930 :: INFO :: Version requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:42:53,228 :: INFO :: #-------------START-------------#
+2016-09-08 15:42:53,228 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:42:53,228 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:42:53,229 :: INFO :: logging in using static token
+2016-09-08 15:42:53,987 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 15:42:53,989 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 15:42:56,128 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 15:42:56,128 :: INFO :: ------------
+2016-09-08 15:43:00,178 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:43:03,821 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:44:14,095 :: INFO :: #-------------START-------------#
+2016-09-08 15:44:14,095 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:44:14,095 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:44:14,097 :: INFO :: logging in using static token
+2016-09-08 15:44:14,826 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 15:44:14,835 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 15:44:17,405 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 15:44:17,406 :: INFO :: ------------
+2016-09-08 15:44:32,879 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:44:44,710 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:44:50,136 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:44:58,056 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:02,342 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:06,291 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:10,239 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:13,767 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:17,277 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:21,201 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:26,326 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:45:42,557 :: INFO :: Help requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:54:39,180 :: INFO :: #-------------START-------------#
+2016-09-08 15:54:39,180 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:54:39,180 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:54:39,182 :: INFO :: logging in using static token
+2016-09-08 15:56:13,217 :: INFO :: #-------------START-------------#
+2016-09-08 15:56:13,217 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 15:56:13,217 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 15:56:13,219 :: INFO :: logging in using static token
+2016-09-08 15:56:13,910 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 15:56:13,910 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 15:56:16,044 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 15:56:16,044 :: INFO :: ------------
+2016-09-08 15:56:37,327 :: INFO :: Help requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:56:46,347 :: INFO :: Coffee requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 15:56:51,338 :: INFO :: Version requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 17:17:15,564 :: INFO :: #-------------START-------------#
+2016-09-08 17:17:15,564 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 17:17:15,564 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 17:17:15,566 :: INFO :: logging in using static token
+2016-09-08 17:17:16,534 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 17:17:16,536 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 17:17:18,663 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 17:17:18,663 :: INFO :: ------------
+2016-09-08 17:17:32,394 :: INFO :: Help requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 17:17:36,358 :: INFO :: Random Kaamelott Quote (#14) was requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 17:17:59,730 :: INFO :: Kaamelott Quote #12 was requested by DasFranck in #general on Testmybot (223088482837331970)
+2016-09-08 17:19:33,060 :: INFO :: #-------------START-------------#
+2016-09-08 17:19:33,060 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 17:19:33,061 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 17:19:33,063 :: INFO :: logging in using static token
+2016-09-08 17:19:34,066 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 17:19:34,067 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 17:19:36,228 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 17:19:36,228 :: INFO :: ------------
+2016-09-08 17:19:45,189 :: INFO :: Random Kaamelott Quote (#5) was requested by DasFranck in a Private Channel
+2016-09-08 17:19:49,465 :: INFO :: Coffee requested by DasFranck in a Private Channel
+2016-09-08 17:20:45,304 :: INFO :: #-------------START-------------#
+2016-09-08 17:20:45,305 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 17:20:45,305 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 17:20:45,307 :: INFO :: logging in using static token
+2016-09-08 17:20:51,253 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 17:20:51,255 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 17:20:53,375 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 17:20:53,376 :: INFO :: ------------
+2016-09-08 17:21:22,706 :: INFO :: Coffee requested by DasFranck in a Private Channel
+2016-09-08 17:21:42,768 :: INFO :: #-------------START-------------#
+2016-09-08 17:21:42,769 :: INFO :: on_ready has successfully been registered as an event
+2016-09-08 17:21:42,769 :: INFO :: on_message has successfully been registered as an event
+2016-09-08 17:21:42,771 :: INFO :: logging in using static token
+2016-09-08 17:21:43,573 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2016-09-08 17:21:43,575 :: INFO :: sent the identify payload to create the websocket
+2016-09-08 17:21:45,713 :: INFO :: Sucessfully connected as Meh (223088022655205376)
+2016-09-08 17:21:45,713 :: INFO :: ------------
+2016-09-08 17:22:05,502 :: INFO :: Help requested by DasFranck in #general on Testmybot (223088482837331970)
