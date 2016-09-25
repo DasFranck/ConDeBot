@@ -44,6 +44,7 @@ except ImportError as message:
 try:
     from modules import coffee
     from modules import kaamelott
+    from modules import opmod
     from modules import suicide
 except ImportError as message:
     print("Missing python module(s) for %s: %s" % (NAME, message))
@@ -104,6 +105,10 @@ def on_message(message):
 
         elif (action in ["slain", "kill", "suicide"]):
             yield from suicide.main(client, logger, message, action, nick)
+
+        # Manage operators (Module: "opmod")
+        elif (action in ["op", "deop", "isop", "list_op"]):
+            yield from opmod.main(client, logger, message, action, args, nick)
 
     return
 
