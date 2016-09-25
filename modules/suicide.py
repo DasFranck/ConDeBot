@@ -36,5 +36,3 @@ async def main(client, logger, message, action, nick):
 
     # Trying to exit properly (client.py:494 from discord.py)
     await client.logout()
-    kill_me(client)
-    sys.exit(4515)
