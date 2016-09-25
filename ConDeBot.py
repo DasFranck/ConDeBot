@@ -11,9 +11,19 @@ DESC = "ConDeBot - Un con de bot Discord"
 NAME = "ConDeBot"
 PREF = ""
 SHME = "CDB"
-TOKEN = "MjIzMDg4MDIyNjU1MjA1Mzc2.CrG2dQ.1fJEF1N_vVTtAah7obDe5BwQAlY"
 VERS = "0.0.1a"
 
+HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
+            + "!coffee                  Serve some coffee\n"                                        \
+            + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
+            + "!source                  Display an url to the bot's source code\n"                  \
+            + "!version                 Show CDB and Discord API Version\n"                         \
+            + "```"
+#               + "!weather CITY_NAME       Show the weather and temperature of CITY_NAME\n"            \
+#               + "!op USERNAME             Grant USERNAME to Operator status (OP Rights needed)\n"     \
+#               + "!deop USERNAME           Remove USERNAME from Operator status (OP Rights needed)\n"  \
+#               + "!isop USERNAME           Check if USERNAME is an Operator status\n"                  \
+#               + "!list_op                 Print the Operators list\n"                                 \
 
 # Import modules with try and catch
 try:
@@ -74,15 +84,15 @@ def on_message(message):
     if (triggered):
         if (action in ["help", ""]):
             logger.log_info_command("Help requested by " + nick, message)
-            yield from client.send_message(chan, "You asked for help %s?" % nick)
+            yield from client.send_message(chan, HELP)
 
         elif (action == "version"):
             logger.log_info_command("Version requested by " + nick, message)
-            yield from client.send_message(chan, "You asked for my version %s?" % nick)
+            yield from client.send_message(chan, NAME + "'s version: " + VERS)
 
         elif (action == "source"):
             logger.log_info_command("Source files requested by " + nick, message)
-            yield from client.send_message(chan, "Well, my creator is a douche and has still not put my source code on internet")
+            yield from client.send_message(chan, NAME + "'s source files: https://git.daspat.fr/ConDeBot_Discord/")
 
         # Serve a delicious coffee (Module: "coffee")
         elif (action in ["café", "cafe", "coffee"]):
@@ -101,7 +111,7 @@ def on_message(message):
 # The Main.
 def main():
     parser = argparse.ArgumentParser(description=DESC)
-    parser.add_argument("--token", default=TOKEN)
+    parser.add_argument("token")
     args = parser.parse_args()
 
     client.run(args.token)

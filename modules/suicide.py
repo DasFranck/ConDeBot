@@ -5,7 +5,6 @@ NAME = "ConDeBot"
 
 try:
     import asyncio
-    import sys
 except ImportError as message:
     print("Missing package(s) for %s: %s" % (NAME, message))
     exit(12)
