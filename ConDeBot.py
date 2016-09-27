@@ -105,6 +105,10 @@ def on_message(message):
         elif (action in ["slain", "kill", "suicide"]):
             yield from suicide.main(client, logger, message, action, nick)
 
+        else:
+            if (yield from replier.main(clieny, logger, message, action, args, nick)):
+                yield from client.send_message(chan, "I know nothing about this. I swear!")
+
     return
 
 
