@@ -114,7 +114,7 @@ async def main(client, logger, message, action, args, nick):
     elif (action == "isop"):
         for nickdis in args:
             await isop_l(client, logger, message, nickdis, nick)
-    elif (action == "list_op"):
+    elif (action == "op_list"):
         await op_list(client, message, ops, logger, nick)
 
     with open(OPS_FILE, 'w') as ops_file:

@@ -18,12 +18,11 @@ HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
             + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
             + "!source                  Display an url to the bot's source code\n"                  \
             + "!version                 Show CDB and Discord API Version\n"                         \
+            + "!op USERNAME             Grant USERNAME to Operator status (OP Rights needed)\n"     \
+            + "!deop USERNAME           Remove USERNAME from Operator status (OP Rights needed)\n"  \
+            + "!isop USERNAME           Check if USERNAME is an Operator status\n"                  \
+            + "!op_list                 Print the Operators list\n"                                 \
             + "```"
-#               + "!weather CITY_NAME       Show the weather and temperature of CITY_NAME\n"            \
-#               + "!op USERNAME             Grant USERNAME to Operator status (OP Rights needed)\n"     \
-#               + "!deop USERNAME           Remove USERNAME from Operator status (OP Rights needed)\n"  \
-#               + "!isop USERNAME           Check if USERNAME is an Operator status\n"                  \
-#               + "!list_op                 Print the Operators list\n"                                 \
 
 # Import modules with try and catch
 try:
@@ -101,21 +100,23 @@ def on_message(message):
             logger.log_info_command("Coffee requested by " + nick, message)
             yield from client.send_message(chan, coffee.quote(nick, args))
 
+        # Manage some kaamelott quotes (Module: "kaamelott")
         elif (action in ["kaamelott"]):
             yield from kaamelott.main(client, logger, message, args, nick)
 
+        # Manage the death of this bot (Module: "suicide")
         elif (action in ["slain", "kill", "suicide"]):
             yield from suicide.main(client, logger, message, action, nick)
 
         # Manage operators (Module: "opmod")
-        elif (action in ["op", "deop", "isop", "list_op"]):
+        elif (action in ["op", "deop", "isop", "op_list"]):
             yield from opmod.main(client, logger, message, action, args, nick)
 
         # Display the commands call count (Module: "replier")
         elif (action in ["count"]):
             yield from replier.count(client, logger, message, action, args, nick)
 
-        # If it's not a built-in command, check if it's related to replies
+        # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:
             yield from replier.main(client, logger, message, action, args, nick)
     return
@@ -131,5 +132,5 @@ def main():
     return
 
 
-if __name__ == '__main__':
+if (__name__ == '__main__'):
     main()
