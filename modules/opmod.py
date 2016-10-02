@@ -19,7 +19,7 @@ async def isop_user(user):
     if (os.path.isfile(OPS_FILE)):
         with open(OPS_FILE) as ops_file:
             ops = json.load(ops_file)
-        return ((user.name + "#" + str(user.disciminator)) in ops)
+        return ((user.name + "#" + str(user.discriminator)) in ops)
     else:
         return (False)
 
