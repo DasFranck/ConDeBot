@@ -112,13 +112,12 @@ def on_message(message):
             yield from opmod.main(client, logger, message, action, args, nick)
 
         # Display the commands call count (Module: "replier")
-#        elif (action in ["count"]):
-#            yield from replier.count(client, logger, message, action, nick)
+        elif (action in ["count"]):
+            yield from replier.count(client, logger, message, action, args, nick)
 
         # If it's not a built-in command, check if it's related to replies
         else:
-            if (not (yield from replier.main(client, logger, message, action, args, nick))):
-                yield from client.send_message(chan, "I know nothing about this. I swear!")
+            yield from replier.main(client, logger, message, action, args, nick)
     return
 
 
