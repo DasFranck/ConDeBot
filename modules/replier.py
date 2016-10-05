@@ -39,7 +39,7 @@ async def load_replies(client, message):
 
 
 # Print the number of times a message has been triggered
-async def count(client, logger, message, action, args, nick):
+async def count(client, logger, message, action, args, author):
     replies = await load_replies(client, message)
     if (replies is None):
         return
@@ -56,7 +56,7 @@ async def count(client, logger, message, action, args, nick):
 
 
 # Manage the printing and setting of triggered messages
-async def main(client, logger, message, action, args, nick):
+async def main(client, logger, message, action, args, author):
     replies = await load_replies(client, message)
     if (replies is None):
         return
