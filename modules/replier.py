@@ -49,10 +49,10 @@ async def count(client, logger, message, action, args, author):
         for arg in args:
             reply = get_reply(replies, arg)
             if (reply is None):
-                logger.log_error_command("Count of trigger %s (%d) requested by %s" (arg, -1, author, message))
+                logger.log_error_command("Count of trigger %s (%d) requested by %s" % (arg, -1, author), message)
                 await client.send_message(message.channel, "The trigger %s doesn't even exist." % arg)
             else:
-                logger.log_error_command("Count of trigger %s (%d) requested by %s" (arg, reply["count"], author, message))
+                logger.log_error_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
                 await client.send_message(message.channel, "The trigger %s has been called %d times." % (arg, reply["count"]))
 
 
@@ -69,7 +69,7 @@ async def main(client, logger, message, action, args, author):
         if (reply is not None):
             await client.send_message(message.channel, reply["message"])
             reply["count"] += 1
-            logger.log_info_command("The trigger %s has been called by" % (action, author), message)
+            logger.log_info_command("The trigger %s has been called by %s" % (action, author), message)
             with open(REPLIES_FILE, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
@@ -86,12 +86,12 @@ async def main(client, logger, message, action, args, author):
                                        message=" ".join(args[1:]),
                                        count=0)
                 replies.append(new_dict)
-                logger.log_info_command("The new trigger %s has been set by" % (action, author), message)
+                logger.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
             else:
                 old_dict["trigger"] = action
                 old_dict["message"] = " ".join(args[1:])
                 old_dict["count"] = 0
-                logger.log_info_command("The trigger %s has been reset by" % (action, author), message)
+                logger.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
             await client.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
             with open(REPLIES_FILE, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
