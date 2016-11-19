@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-REPLIES_FILE_PATH = "jsonfiles/"
-REPLIES_FILE = REPLIES_FILE_PATH + "replies.json"
+REPLIES_FILE_DIR = "jsonfiles/"
 
 try:
     from collections import OrderedDict
@@ -24,9 +23,9 @@ def get_reply(replies, trigger):
 
 
 # Load the replies file into an array of dict
-async def load_replies(client, message, logger):
-    if (os.path.isfile(REPLIES_FILE)):
-        with open(REPLIES_FILE) as replies_file:
+async def load_replies(client, message, logger, replies_path):
+    if (os.path.isfile(replies_path)):
+        with open(replies_path) as replies_file:
             try:
                 return hjson.load(replies_file)
             except:
@@ -58,8 +57,14 @@ async def count(client, logger, message, action, args, author):
 
 # Manage the printing and setting of triggered messages
 async def main(client, logger, message, action, args, author):
+    # Set file path
+    if message.server is not None:
+        replies_path = REPLIES_FILE_DIR + message.server.id + ".json"
+    else:
+        replies_path = REPLIES_FILE_DIR + "dump.json"
+
     # Load JSON replies file
-    replies = await load_replies(client, message, logger)
+    replies = await load_replies(client, message, logger, replies_path)
     if (replies is None):
         return
 
@@ -70,7 +75,7 @@ async def main(client, logger, message, action, args, author):
             await client.send_message(message.channel, reply["message"])
             reply["count"] += 1
             logger.log_info_command("The trigger %s has been called by %s" % (action, author), message)
-            with open(REPLIES_FILE, 'w') as replies_file:
+            with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
             await client.send_message(message.channel, "I know nothing about this. I swear!")
@@ -93,7 +98,7 @@ async def main(client, logger, message, action, args, author):
                 old_dict["count"] = 0
                 logger.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
             await client.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
-            with open(REPLIES_FILE, 'w') as replies_file:
+            with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
             await client.send_message(message.channel, "You should try to put a message to assign to this trigger.")
