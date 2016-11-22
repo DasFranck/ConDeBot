@@ -6,6 +6,7 @@ REPLIES_FILE = REPLIES_FILE_PATH + "replies.json"
 
 try:
     from collections import OrderedDict
+    from modules import opmod
     import os
     import hjson
 except ImportError as message:
@@ -13,6 +14,15 @@ except ImportError as message:
     exit(12)
 
 # TODO : ADD LOGGING FUNCTION CALL
+
+
+# Lock a reply (OP-ONLY)
+async def lock(client, logger, message, action, args, author):
+    if (not await opmod.isop_user(message.author)):
+        await client.send_message(message.channel, "You don't have the right to do that.")
+        logger.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % (author), message)
+    else:
+        print()
 
 
 # Get the reply dict assign to the trigger
@@ -83,12 +93,18 @@ async def main(client, logger, message, action, args, author):
                                        count=0)
                 replies.append(new_dict)
             else:
-                old_dict["trigger"] = action
-                old_dict["message"] = " ".join(args[1:])
-                old_dict["count"] = 0
+                if (not await opmod.isop_user(message.author) and old_dict["locked"] is True):
+                    await client.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
+                    return
+                else:
+                    old_dict["trigger"] = action
+                    old_dict["message"] = " ".join(args[1:])
+                    old_dict["count"] = 0
+                    old_dict["locked"] = False
             await client.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
             with open(REPLIES_FILE, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
             await client.send_message(message.channel, "You should try to put a message to assign to this trigger.")
+            return
     return

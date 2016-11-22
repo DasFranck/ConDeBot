@@ -99,6 +99,7 @@ def on_message(message):
         # Serve a delicious coffee (Module: "coffee")
         elif (action in ["café", "cafe", "coffee"]):
             logger.log_info_command("Coffee requested by " + author, message)
+            yield from client.send_message(chan, ":coffee:")
             yield from client.send_message(chan, coffee.quote(author, args))
 
         # Manage some kaamelott quotes (Module: "kaamelott")
@@ -116,6 +117,12 @@ def on_message(message):
         # Display the commands call count (Module: "replier")
         elif (action in ["count"]):
             yield from replier.count(client, logger, message, action, args, author)
+
+        elif (action in ["lock"]):
+            yield from replier.lock(client, logger, message, action, args, author)
+
+        elif (action in ["unlock"]):
+            yield from replier.unlock(client, logger, message, action, args, author)
 
         # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:
