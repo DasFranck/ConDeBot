@@ -40,7 +40,7 @@ async def locker(client, logger, message, action, args, author):
                 return
             old_dict["locked"] = True if action == "lock" else False
             await client.send_message(message.channel, "Roger that, %s trigger has been %s." % (args[0], action + "ed"))
-            logger.log_info_command("%s of trigger %s requested by %s" % (args[0].capitalize(), author), message)
+            logger.log_info_command("%s of trigger %s requested by %s" % (action.capitalize(), args[0], author), message)
             with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
     return
