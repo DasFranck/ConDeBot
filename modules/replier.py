@@ -28,7 +28,6 @@ async def locker(client, logger, message, action, args, author):
 
     if (not await opmod.isop_user(message.author)):
         await client.send_message(message.channel, "You don't have the right to do that.")
-        logger.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % (author), message)
         logger.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED" % (action if len(args) else "[ ERR ]", author), message)
         return
     else:
@@ -41,6 +40,7 @@ async def locker(client, logger, message, action, args, author):
                 return
             old_dict["locked"] = True if action == "lock" else False
             await client.send_message(message.channel, "Roger that, %s trigger has been %s." % (args[0], action + "ed"))
+            logger.log_info_command("%s of trigger %s requested by %s" % (args[0].capitalize(), author), message)
             with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
     return
@@ -90,10 +90,10 @@ async def count(client, logger, message, action, args, author):
         for arg in args:
             reply = get_reply(replies, arg)
             if (reply is None):
-                logger.log_error_command("Count of trigger %s (%d) requested by %s" % (arg, -1, author), message)
+                logger.log_error_command("Count of non-existant trigger %s requested by %s" % (arg, author), message)
                 await client.send_message(message.channel, "The trigger %s doesn't even exist." % arg)
             else:
-                logger.log_error_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
+                logger.log_info_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
                 await client.send_message(message.channel, "The trigger %s has been called %d times." % (arg, reply["count"]))
 
 
@@ -120,6 +120,7 @@ async def main(client, logger, message, action, args, author):
             with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
+            logger.log_info_command("Non-existant trigger %s has been called by %s" % (action, author), message)
             await client.send_message(message.channel, "I know nothing about this. I swear!")
 
     # Assign a message to this trigger
