@@ -118,11 +118,8 @@ def on_message(message):
         elif (action in ["count"]):
             yield from replier.count(client, logger, message, action, args, author)
 
-        elif (action in ["lock"]):
-            yield from replier.lock(client, logger, message, action, args, author)
-
-        elif (action in ["unlock"]):
-            yield from replier.unlock(client, logger, message, action, args, author)
+        elif (action in ["lock", "unlock"]):
+            yield from replier.locker(client, logger, message, action, args, author)
 
         # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:

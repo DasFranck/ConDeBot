@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-REPLIES_FILE_PATH = "jsonfiles/"
-REPLIES_FILE = REPLIES_FILE_PATH + "replies.json"
+REPLIES_FILE_DIR = "jsonfiles/"
 
 try:
     from collections import OrderedDict
@@ -13,16 +12,13 @@ except ImportError as message:
     print("Missing package(s) for the replier module: %s" % message)
     exit(12)
 
-# TODO : ADD LOGGING FUNCTION CALL
-
 
 # Lock a reply (OP-ONLY)
-async def lock(client, logger, message, action, args, author):
+async def locker(client, logger, message, action, args, author):
     if (not await opmod.isop_user(message.author)):
         await client.send_message(message.channel, "You don't have the right to do that.")
         logger.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % (author), message)
     else:
-        print()
 
 
 # Get the reply dict assign to the trigger
@@ -36,12 +32,13 @@ def get_reply(replies, trigger):
 
 
 # Load the replies file into an array of dict
-async def load_replies(client, message):
-    if (os.path.isfile(REPLIES_FILE)):
-        with open(REPLIES_FILE) as replies_file:
+async def load_replies(client, message, logger, replies_path):
+    if (os.path.isfile(replies_path)):
+        with open(replies_path) as replies_file:
             try:
                 return hjson.load(replies_file)
             except:
+                logger.logger.error("JSON replies file loading failed.")
                 await client.send_message(message.channel, "The JSON replies file seems corrupted. Please fix it before using the replier module.")
                 return None
     else:
@@ -50,7 +47,7 @@ async def load_replies(client, message):
 
 # Print the number of times a message has been triggered
 async def count(client, logger, message, action, args, author):
-    replies = await load_replies(client, message)
+    replies = await load_replies(client, message, logger)
     if (replies is None):
         return
     if (args is None or len(args) == 0):
@@ -60,23 +57,34 @@ async def count(client, logger, message, action, args, author):
         for arg in args:
             reply = get_reply(replies, arg)
             if (reply is None):
+                logger.log_error_command("Count of trigger %s (%d) requested by %s" % (arg, -1, author), message)
                 await client.send_message(message.channel, "The trigger %s doesn't even exist." % arg)
             else:
+                logger.log_error_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
                 await client.send_message(message.channel, "The trigger %s has been called %d times." % (arg, reply["count"]))
 
 
 # Manage the printing and setting of triggered messages
 async def main(client, logger, message, action, args, author):
-    replies = await load_replies(client, message)
+    # Set file path
+    if message.server is not None:
+        replies_path = REPLIES_FILE_DIR + message.server.id + ".json"
+    else:
+        replies_path = REPLIES_FILE_DIR + "dump.json"
+
+    # Load JSON replies file
+    replies = await load_replies(client, message, logger, replies_path)
     if (replies is None):
         return
+
     # Call the triggered message
     if (args is None or len(args) == 0):
         reply = get_reply(replies, action)
         if (reply is not None):
             await client.send_message(message.channel, reply["message"])
             reply["count"] += 1
-            with open(REPLIES_FILE, 'w') as replies_file:
+            logger.log_info_command("The trigger %s has been called by %s" % (action, author), message)
+            with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
             await client.send_message(message.channel, "I know nothing about this. I swear!")
@@ -92,17 +100,20 @@ async def main(client, logger, message, action, args, author):
                                        message=" ".join(args[1:]),
                                        count=0)
                 replies.append(new_dict)
+                logger.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
             else:
                 if (not await opmod.isop_user(message.author) and old_dict["locked"] is True):
                     await client.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
+                    logger.log_warn_command("The trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
                     return
                 else:
                     old_dict["trigger"] = action
                     old_dict["message"] = " ".join(args[1:])
                     old_dict["count"] = 0
                     old_dict["locked"] = False
+                    logger.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
             await client.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
-            with open(REPLIES_FILE, 'w') as replies_file:
+            with open(replies_path, 'w') as replies_file:
                 hjson.dump(replies, replies_file, indent=' ' * 2)
         else:
             await client.send_message(message.channel, "You should try to put a message to assign to this trigger.")
