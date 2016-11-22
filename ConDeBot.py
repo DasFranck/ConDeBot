@@ -68,12 +68,13 @@ def on_ready():
 # Triggered when the bot receive a message
 @client.async_event
 def on_message(message):
-    if (message.author == client.user):
+    msg = message.content
+    args = msg.split(" ")
+    if (message.author == client.user or len(args) == 0):
         return
     author = utilities.get_nickdis(message.author)
-    msg = message.content
     chan = message.channel
-    args = msg.split(" ")
+
     if (PREF == ""):
         triggered = args[0][0] == "!"
         action = args[0][1:] if len(args[0]) > 0 else ""
