@@ -111,10 +111,13 @@ async def main(client, logger, message, action, args, author):
         return
 
     # Call the triggered message
-    if (args is None or len(args) == 0):
+    if (args is None or len(args) == 0 or args[0] == ">"):
         reply = get_reply(replies, action)
         if (reply is not None):
-            await client.send_message(message.channel, reply["message"])
+            if (args and args[0] == ">" and len(args) >= 2):
+                await client.send_message(message.channel, args[1] + ": " + reply["message"])
+            else:
+                await client.send_message(message.channel, reply["message"])
             reply["count"] += 1
             logger.log_info_command("The trigger %s has been called by %s" % (action, author), message)
             with open(replies_path, 'w') as replies_file:
