@@ -101,7 +101,13 @@ def on_message(message):
         elif (action in ["café", "cafe", "coffee"]):
             logger.log_info_command("Coffee requested by " + author, message)
             yield from client.send_message(chan, ":coffee:")
-            yield from client.send_message(chan, coffee.quote(author, args))
+            yield from client.send_message(chan, coffee.coffee(author, args))
+
+        # Serve a delicious tea (Module: "coffee")
+        elif (action in ["thé", "the", "tea"]):
+            logger.log_info_command("Tea requested by " + author, message)
+            yield from client.send_message(chan, ":tea:")
+            yield from client.send_message(chan, coffee.tea(author, args))
 
         # Manage some kaamelott quotes (Module: "kaamelott")
         elif (action in ["kaamelott"]):
