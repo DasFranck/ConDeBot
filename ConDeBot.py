@@ -11,7 +11,7 @@ DESC = "ConDeBot - Un con de bot Discord"
 NAME = "ConDeBot"
 PREF = ""
 SHME = "CDB"
-VERS = "0.0.1a"
+VERS = "0.0.1b"
 
 # Help message (Should be automatically generated)
 HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
@@ -44,6 +44,7 @@ except ImportError as message:
 try:
     from modules import coffee
     from modules import kaamelott
+    from modules import list
     from modules import opmod
     from modules import replier
     from modules import suicide
@@ -72,7 +73,7 @@ def on_ready():
 def on_message(message):
     msg = message.content
     args = msg.split(" ")
-    if (message.author == client.user or len(args) == 0):
+    if (message.author == client.user or msg is None or len(args[0]) == 0):
         return
     author = utilities.get_nickdis(message.author)
     chan = message.channel
@@ -132,6 +133,9 @@ def on_message(message):
 
         elif action in ["status", "game"]:
             yield from status.main(client, logger, message, action, args, author)
+
+        elif action in ["list"]:
+            yield from list.main(client, logger, message, action, args, author)
 
         # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:

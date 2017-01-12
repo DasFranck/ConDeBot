@@ -139,7 +139,7 @@ async def main(client, logger, message, action, args, author):
             old_dict = get_reply(replies, action)
             # If the reply dict don't exist set it, else replace it
             if (old_dict is None):
-                new_dict = OrderedDict(trigger=action, message=" ".join(args[1:]), count=0)
+                new_dict = OrderedDict(trigger=action, message=" ".join(args[1:]), count=0, locked=False)
                 replies.append(new_dict)
                 logger.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
             else:
