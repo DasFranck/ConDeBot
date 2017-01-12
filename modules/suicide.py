@@ -4,24 +4,10 @@
 NAME = "ConDeBot"
 
 try:
-    import asyncio
     from modules import opmod
 except ImportError as message:
     print("Missing package(s) for %s: %s" % (NAME, message))
     exit(12)
-
-
-def kill_me(client):
-    pending = asyncio.Task.all_tasks()
-    gathered = asyncio.gather(*pending)
-    try:
-        gathered.cancel()
-        client.loop.run_until_complete(gathered)
-        gathered.exception()
-    except:
-        pass
-    client.loop.stop()
-    return
 
 
 async def main(client, logger, message, action, author):

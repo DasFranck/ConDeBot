@@ -144,7 +144,7 @@ async def main(client, logger, message, action, args, author):
                 logger.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
             else:
                 # Check if the reply dict is locked
-                if (not await opmod.isop_user(message.author) and old_dict["locked"] is True):
+                if (not await opmod.isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
                     await client.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
                     logger.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
                     return

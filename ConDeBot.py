@@ -13,6 +13,7 @@ PREF = ""
 SHME = "CDB"
 VERS = "0.0.1a"
 
+# Help message (Should be automatically generated)
 HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
             + "!coffee                  Serve some coffee\n"                                        \
             + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
@@ -46,6 +47,7 @@ try:
     from modules import opmod
     from modules import replier
     from modules import suicide
+    from modules import status
     from modules import utilities
 except ImportError as message:
     print("Missing python module(s) for %s: %s" % (NAME, message))
@@ -89,44 +91,47 @@ def on_message(message):
             logger.log_info_command("Help requested by " + author, message)
             yield from client.send_message(chan, HELP)
 
-        elif (action == "version"):
+        elif action == "version":
             logger.log_info_command("Version requested by " + author, message)
             yield from client.send_message(chan, NAME + "'s version: " + VERS)
 
-        elif (action == "source"):
+        elif action == "source":
             logger.log_info_command("Source files requested by " + author, message)
             yield from client.send_message(chan, NAME + "'s source files: https://git.daspat.fr/ConDeBot_Discord/")
 
         # Serve a delicious coffee (Module: "coffee")
-        elif (action in ["café", "cafe", "coffee"]):
+        elif action in ["café", "cafe", "coffee"]:
             logger.log_info_command("Coffee requested by " + author, message)
             yield from client.send_message(chan, ":coffee:")
             yield from client.send_message(chan, coffee.coffee(author, args))
 
         # Serve a delicious tea (Module: "coffee")
-        elif (action in ["thé", "the", "tea"]):
+        elif action in ["thé", "the", "tea"]:
             logger.log_info_command("Tea requested by " + author, message)
             yield from client.send_message(chan, ":tea:")
             yield from client.send_message(chan, coffee.tea(author, args))
 
         # Manage some kaamelott quotes (Module: "kaamelott")
-        elif (action in ["kaamelott"]):
+        elif action in ["kaamelott"]:
             yield from kaamelott.main(client, logger, message, args, author)
 
         # Manage the death of this bot (Module: "suicide")
-        elif (action in ["slain", "kill", "suicide"]):
+        elif action in ["slain", "kill", "suicide"]:
             yield from suicide.main(client, logger, message, action, author)
 
         # Manage operators (Module: "opmod")
-        elif (action in ["op", "deop", "isop", "op_list"]):
+        elif action in ["op", "deop", "isop", "op_list"]:
             yield from opmod.main(client, logger, message, action, args, author)
 
         # Display the commands call count (Module: "replier")
-        elif (action in ["count"]):
+        elif action in ["count"]:
             yield from replier.count(client, logger, message, action, args, author)
 
-        elif (action in ["lock", "unlock"]):
+        elif action in ["lock", "unlock"]:
             yield from replier.locker(client, logger, message, action, args, author)
+
+        elif action in ["status", "game"]:
+            yield from status.main(client, logger, message, action, args, author)
 
         # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:
