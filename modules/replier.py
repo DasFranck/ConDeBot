@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-REPLIES_FILE_DIR = "jsonfiles/"
+REPLIES_FILE_DIR = "jsonfiles/replies/"
 
 try:
     from collections import OrderedDict
@@ -72,6 +72,9 @@ async def load_replies(client, message, logger, replies_path):
 
 # Print the number of times a message has been triggered
 async def count(client, logger, message, action, args, author):
+    if not os.path.isdir(REPLIES_FILE_DIR):
+        os.makedirs(REPLIES_FILE_DIR)
+
     # Set file path
     if message.server is not None:
         replies_path = REPLIES_FILE_DIR + message.server.id + ".json"
@@ -99,6 +102,9 @@ async def count(client, logger, message, action, args, author):
 
 # Manage the printing and setting of triggered messages
 async def main(client, logger, message, action, args, author):
+    if not os.path.isdir(REPLIES_FILE_DIR):
+        os.makedirs(REPLIES_FILE_DIR)
+
     # Set file path
     if message.server is not None:
         replies_path = REPLIES_FILE_DIR + message.server.id + ".json"
@@ -131,14 +137,13 @@ async def main(client, logger, message, action, args, author):
         if (len(args) > 1):
             # Check if the reply dict already exist
             old_dict = get_reply(replies, action)
-            # If the reply dict exist, replace it
+            # If the reply dict don't exist set it, else replace it
             if (old_dict is None):
-                new_dict = OrderedDict(trigger=action,
-                                       message=" ".join(args[1:]),
-                                       count=0)
+                new_dict = OrderedDict(trigger=action, message=" ".join(args[1:]), count=0)
                 replies.append(new_dict)
                 logger.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
             else:
+                # Check if the reply dict is locked
                 if (not await opmod.isop_user(message.author) and old_dict["locked"] is True):
                     await client.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
                     logger.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
