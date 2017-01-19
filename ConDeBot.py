@@ -128,14 +128,20 @@ def on_message(message):
         elif action in ["count"]:
             yield from replier.count(client, logger, message, action, args, author)
 
+        # Lock the permission to modify a specific trigger (Module: "replier")
         elif action in ["lock", "unlock"]:
             yield from replier.locker(client, logger, message, action, args, author)
 
+        # Change the status/game of the bot (Module: "status")
         elif action in ["status", "game"]:
             yield from status.main(client, logger, message, action, args, author)
 
+        # Pick a random element in a list and mange thoses lists (Module: "lists")
         elif action in ["list"]:
             yield from list.main(client, logger, message, action, args, author)
+
+        elif action in ["triggerlist"]:
+            yield from replier.list(client, logger, message, action, args, author)
 
         # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:

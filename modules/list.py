@@ -57,13 +57,13 @@ async def add_to_list(client, logger, lists, list_name, content, message, author
     return lists
 
 
-async def write_random_from_list(lists, list_name, client, message):
+async def write_random_from_list(logger, lists, list_name, client, message):
     list = get_list(lists, list_name)
     index = random.randrange(len(list["list"]))
     await client.send_message(message.channel, list["list"][index])
     await client.send_message(message.channel, str(index))
+    logger.log_info_command("A random content from the list %s has been requested by %s" % (list_name, author), message)
     list["count"] += 1
-    print(list)
     return lists
 
 
@@ -106,7 +106,7 @@ async def main(client, logger, message, action, args, author):
             pass
 
     elif len(args) == 1:
-        new_lists = await write_random_from_list(lists, args[0], client, message)
+        new_lists = await write_random_from_list(logger, lists, args[0], client, message)
         write_to_file(lists_path, new_lists)
 
     else:

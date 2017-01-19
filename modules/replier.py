@@ -98,6 +98,33 @@ async def count(client, logger, message, action, args, author):
             else:
                 logger.log_info_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
                 await client.send_message(message.channel, "The trigger %s has been called %d times." % (arg, reply["count"]))
+    return
+
+
+# Send the list of the server's trigger messages
+async def list(client, logger, message, action, args, author):
+    if not os.path.isdir(REPLIES_FILE_DIR):
+        os.makedirs(REPLIES_FILE_DIR)
+
+    if message.server is not None:
+        replies_path = REPLIES_FILE_DIR + message.server.id + ".json"
+    else:
+        await client.send_message(message.channel, "You can't use this command outside of a server for now.")
+        return
+
+    # Load JSON replies file
+    replies = await load_replies(client, message, logger, replies_path)
+    if (replies is None):
+        return
+
+    message_to_send = "Here's the list of replies for {} ({})\n```".format(message.server.name, message.server.id)
+    for reply in replies:
+        message_to_send += reply["trigger"] + "\n"
+    message_to_send += "```"
+    await client.send_message(message.author, message_to_send)
+    await client.send_message(message.channel, "{}: I've send you the trigger list by PM.".format(message.author.mention))
+    logger.log_info_command("The trigger list has been requested by %s" % (author), message)
+    return
 
 
 # Manage the printing and setting of triggered messages
