@@ -13,7 +13,8 @@ PREF = ""
 SHME = "CDB"
 VERS = "0.0.1b"
 
-# Help message (Should be automatically generated)
+# Help message
+# TODO: Should be automatically generated
 HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
             + "!coffee                  Serve some coffee\n"                                        \
             + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
@@ -87,6 +88,7 @@ def on_message(message):
         action = msg.split(" ")[1] if len(msg.split(" ")) > 1 else ""
         args = args[2:]
 
+    # DO A MODULE POOL SOMEDAY. PLZ.
     if (triggered):
         if (action in ["help", ""]):
             logger.log_info_command("Help requested by " + author, message)
@@ -104,13 +106,13 @@ def on_message(message):
         elif action in ["café", "cafe", "coffee"]:
             logger.log_info_command("Coffee requested by " + author, message)
             yield from client.send_message(chan, ":coffee:")
-            yield from client.send_message(chan, coffee.coffee(author, args))
+            yield from client.send_message(chan, coffee.coffee(client, logger, message, action, args, author))
 
         # Serve a delicious tea (Module: "coffee")
         elif action in ["thé", "the", "tea"]:
             logger.log_info_command("Tea requested by " + author, message)
             yield from client.send_message(chan, ":tea:")
-            yield from client.send_message(chan, coffee.tea(author, args))
+            yield from client.send_message(chan, coffee.tea(client, logger, message, action, args, author))
 
         # Manage some kaamelott quotes (Module: "kaamelott")
         elif action in ["kaamelott"]:
@@ -118,7 +120,7 @@ def on_message(message):
 
         # Manage the death of this bot (Module: "suicide")
         elif action in ["slain", "kill", "suicide"]:
-            yield from suicide.main(client, logger, message, action, author)
+            yield from suicide.main(client, logger, message, action, args, author)
 
         # Manage operators (Module: "opmod")
         elif action in ["op", "deop", "isop", "op_list"]:

@@ -10,7 +10,7 @@ except ImportError as message:
     exit(12)
 
 
-async def main(client, logger, message, action, author):
+async def main(client, logger, message, action, args, author):
     if (not await opmod.isop_user(message.author)):
         await client.send_message(message.channel, "You don't have the right to do that.")
         logger.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % (author), message)

@@ -117,7 +117,7 @@ async def list(client, logger, message, action, args, author):
     if (replies is None):
         return
 
-    message_to_send = "Here's the list of replies for {} ({})\n```".format(message.server.name, message.server.id)
+    message_to_send = "Here's the list of triggers for {} ({})\n```".format(message.server.name, message.server.id)
     for reply in replies:
         message_to_send += reply["trigger"] + "\n"
     message_to_send += "```"
