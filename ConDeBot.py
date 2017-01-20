@@ -43,14 +43,14 @@ except ImportError as message:
 
 # Import modules
 try:
-    from modules import coffee
-    from modules import kaamelott
-    from modules import list
-    from modules import opmod
-    from modules import replier
-    from modules import suicide
-    from modules import status
-    from modules import utilities
+    from plugins import coffee
+    from plugins import kaamelott
+    from plugins import list
+    from plugins import opmod
+    from plugins import replier
+    from plugins import suicide
+    from plugins import status
+    from plugins import utilities
 except ImportError as message:
     print("Missing python module(s) for %s: %s" % (NAME, message))
     exit(12)

@@ -1,11 +1,10 @@
 ### TOP PRIORITY
-* Make the list module
-* Use a config file
 
 ### HIGH PRIORITY
+* Use a config file
 * Write a nice README
 * Release the bot
-* Make a module pool
+* Make a plugin pool
 
 ### MEDIUM PRIORITY
 * Transfer the kaamelott module to a simple list (handled by the list module)
