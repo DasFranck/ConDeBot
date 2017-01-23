@@ -1,3 +1,5 @@
+![ConDeBot](https://dasfranck.fr/Stuff/ConDeBot-Banner.png)
+
 # ConDeBot (Discord Version)
 Un con de bot Discord.
 
