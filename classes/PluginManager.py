@@ -27,6 +27,8 @@ class PluginManager:
                 try:
                     module = importlib.import_module("plugins." + plugin_name[:-3])
                     self.load(module)
-                except ModuleNotFoundError:
+                # except ModuleNotFoundError:
+                except ImportError as e:
+                    print(e)
                     pass
         self.cdb.logger.logger.info("============")

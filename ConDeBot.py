@@ -3,7 +3,7 @@
 
 # Help message
 # TODO: Should be automatically generated
-#HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
+# HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
 #            + "!coffee                  Serve some coffee\n"                                        \
 #            + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
 #            + "!source                  Display an url to the bot's source code\n"                  \
@@ -21,17 +21,19 @@ import discord
 from classes.PluginManager import PluginManager
 from classes.Logger import Logger
 
+from config import NAME, SHORT_NAME, DESCRIPTION, CMD_PREFIX
+
 
 class ConDeBot(discord.Client):
-    # Setting up some strings globals
-    CDB_PATH = "./"
-    DESC = "ConDeBot - Un con de bot Discord"
-    NAME = "ConDeBot"
-    PREF = ""
-    SHME = "CDB"
-    VERS = "0.0.1b"
-
     def __init__(self, *args, **kwargs):
+        self.NAME = NAME
+        self.SHME = SHORT_NAME
+        self.DESC = DESCRIPTION
+        self.PREF = CMD_PREFIX
+
+        self.CDB_PATH = "./"
+        self.VERS = "0.0.1b"
+
         super().__init__(*args, **kwargs)
         self.logger = Logger()
         self.plugin_manager = PluginManager(self)
@@ -48,21 +50,6 @@ class ConDeBot(discord.Client):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_message(message))
         print("GUD")
-        #msg = message.content
-        #args = msg.split(" ")
-        #if (message.author == self.user or msg is None or len(args[0]) == 0):
-        #    return
-        #author = utilities.get_nickdis(message.author)
-        #chan = message.channel
-
-        #if (self.PREF == ""):
-        #    triggered = args[0][0] == "!"
-        #    action = args[0][1:] if len(args[0]) > 0 else ""
-        #    args = args[1:]
-        #else:
-        #    triggered = args[0] == ("!" + PREF)
-        #    action = msg.split(" ")[1] if len(msg.split(" ")) > 1 else ""
-        #    args = args[2:]
 
 #        # DO A MODULE POOL SOMEDAY. PLZ.
 #        if (triggered):

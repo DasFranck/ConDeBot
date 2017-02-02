@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-NAME = "ConDeBot"
-
-try:
-    import random
-    import json
-except ImportError as message:
-    print("Missing package(s) for %s: %s" % (NAME, message))
-    exit(12)
+import random
+import json
 
 from classes.Plugin import Plugin
 import utilities

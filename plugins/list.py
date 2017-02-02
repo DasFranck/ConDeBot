@@ -3,15 +3,11 @@
 
 LISTS_FILE_DIR = "jsonfiles/lists/"
 
-try:
-    from collections import OrderedDict
-    from plugins import opmod
-    import hjson
-    import os
-    import random
-except ImportError as message:
-    print("Missing package(s) for the list module: %s" % message)
-    exit(12)
+from collections import OrderedDict
+from plugins import opmod
+import hjson
+import os
+import random
 
 
 # Load the lists file into an array of dict
