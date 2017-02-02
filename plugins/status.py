@@ -5,7 +5,7 @@ NAME = "ConDeBot"
 
 try:
     import discord
-    from modules import opmod
+    from plugins import opmod
 except ImportError as message:
     print("Missing package(s) for %s: %s" % (NAME, message))
     exit(12)

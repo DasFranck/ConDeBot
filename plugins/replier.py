@@ -5,7 +5,7 @@ REPLIES_FILE_DIR = "jsonfiles/replies/"
 
 try:
     from collections import OrderedDict
-    from modules import opmod
+    from plugins import opmod
     import os
     import hjson
 except ImportError as message:

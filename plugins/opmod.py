@@ -10,7 +10,7 @@ try:
     import json
     import os
     import discord
-    from modules.utilities import get_nickdis
+    # from plugins.utilities import get_nickdis
 except ImportError as message:
     print('Missing package(s) for %s: %s' % (NAME, message))
     exit(12)

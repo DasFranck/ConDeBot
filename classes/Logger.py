@@ -9,7 +9,7 @@ import logging
 import os
 
 
-class Logger():
+class Logger:
     logger = logging.getLogger('discord')
 
     # Bot Initialization
