@@ -65,18 +65,6 @@ class ConDeBot(discord.Client):
 #                self.logger.log_info_command("Source files requested by " + author, message)
 #                await self.send_message(chan, NAME + "'s source files: https://git.daspat.fr/ConDeBot_Discord/")
 #
-#            # Manage some kaamelott quotes (Module: "kaamelott")
-#            elif action in ["kaamelott"]:
-#                await kaamelott.main(self, self.logger, message, args, author)
-#
-#            # Manage the death of this bot (Module: "suicide")
-#            elif action in ["slain", "kill", "suicide"]:
-#                await suicide.main(self, self.logger, message, action, args, author)
-#
-#            # Manage operators (Module: "opmod")
-#            elif action in ["op", "deop", "isop", "op_list"]:
-#                await opmod.main(self, self.logger, message, action, args, author)
-#
 #            # Display the commands call count (Module: "replier")
 #            elif action in ["count"]:
 #                await replier.count(self, self.logger, message, action, args, author)
@@ -84,10 +72,6 @@ class ConDeBot(discord.Client):
 #            # Lock the permission to modify a specific trigger (Module: "replier")
 #            elif action in ["lock", "unlock"]:
 #                await replier.locker(self, self.logger, message, action, args, author)
-#
-#            # Change the status/game of the bot (Module: "status")
-#            elif action in ["status", "game"]:
-#                await status.main(self, self.logger, message, action, args, author)
 #
 #            # Pick a random element in a list and mange thoses lists (Module: "lists")
 #            elif action in ["list"]:

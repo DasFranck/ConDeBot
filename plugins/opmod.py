@@ -18,7 +18,7 @@ class OpModPlugin(Plugin):
 
     async def on_message(self, message):
         (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if not triggered:
+        if not triggered or action not in ["op", "deop", "isop", "op_list"]:
             return
 
         ops = []
