@@ -14,7 +14,6 @@
 #            + "!op_list                 Print the Operators list\n"                                 \
 #            + "```"
 
-# Import modules with try and catch
 import argparse
 import discord
 
@@ -49,41 +48,72 @@ class ConDeBot(discord.Client):
     async def on_message(self, message):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_message(message))
-        print("GUD")
 
-#        # DO A MODULE POOL SOMEDAY. PLZ.
-#        if (triggered):
-#            if (action in ["help", ""]):
-#                self.logger.log_info_command("Help requested by " + author, message)
-#                await self.send_message(chan, HELP)
-#
-#            elif action == "version":
-#                self.logger.log_info_command("Version requested by " + author, message)
-#                await self.send_message(chan, NAME + "'s version: " + VERS)
-#
-#            elif action == "source":
-#                self.logger.log_info_command("Source files requested by " + author, message)
-#                await self.send_message(chan, NAME + "'s source files: https://git.daspat.fr/ConDeBot_Discord/")
-#
-#            # Display the commands call count (Module: "replier")
-#            elif action in ["count"]:
-#                await replier.count(self, self.logger, message, action, args, author)
-#
-#            # Lock the permission to modify a specific trigger (Module: "replier")
-#            elif action in ["lock", "unlock"]:
-#                await replier.locker(self, self.logger, message, action, args, author)
-#
-#            # Pick a random element in a list and mange thoses lists (Module: "lists")
-#            elif action in ["list"]:
-#                await list.main(self, self.logger, message, action, args, author)
-#
-#            elif action in ["triggerlist"]:
-#                await replier.list(self, self.logger, message, action, args, author)
-#
-#            # If it's not a built-in command, check if it's related to replies (Module: "replier")
-#            else:
-#                await replier.main(self, self.logger, message, action, args, author)
-#        return
+    async def on_message_edit(self, before, after):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_message_edit(before, after))
+
+    async def on_message_delete(self, message):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_message_delete(message))
+
+    async def on_channel_create(self, channel):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_channel_create(channel))
+
+    async def on_channel_update(self, before, after):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_channel_update(before, after))
+
+    async def on_channel_delete(self, channel):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_channel_delete(channel))
+
+    async def on_member_join(self, member):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_member_join(member))
+
+    async def on_member_remove(self, member):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_member_remove(member))
+
+    async def on_member_update(self, before, after):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_member_update(before, after))
+
+    async def on_server_join(self, server):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_server_join(server))
+
+    async def on_server_update(self, before, after):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_server_update(before, after))
+
+    async def on_server_role_create(self, server, role):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_server_role_create(server, role))
+
+    async def on_server_role_delete(self, server, role):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_server_role_delete(server, role))
+
+    async def on_server_role_update(self, server, role):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_server_role_update(server, role))
+
+    async def on_voice_state_update(self, before, after):
+        pass
+
+    async def on_member_ban(self, member):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_member_ban(member))
+
+    async def on_member_unban(self, member):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_member_unban(member))
+
+    async def on_typing(self, channel, user, when):
+        pass
 
 
 # The Main.

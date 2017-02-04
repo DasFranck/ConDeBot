@@ -16,7 +16,6 @@ class PluginManager:
         self.cdb.logger.logger.info("Loading plugins from the module {}...".format(module.__name__))
         for plugin in inspect.getmembers(module, inspect.isclass):
             if issubclass(plugin[1], Plugin) and not plugin[1] is Plugin:
-                self.cdb.logger.logger.info("Plugin {} loaded.".format(module.__name__))
                 print("\t" + plugin[1].__name__)
                 self.cdb.plugins.append(plugin[1](self.cdb))
 

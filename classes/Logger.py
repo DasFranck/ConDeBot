@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-Nothing here for now.
-"""
-
 import logging
 import os
 
