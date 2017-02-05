@@ -6,27 +6,27 @@ Un con de bot Discord.
 ## Features
 - Fully Asynchrounous Bot written in python 3.6
 - Operator system
-- Plugin system
+- Dynamic plugin system
 - A lot of plugins included (and more to come!)
 
 ## Plugins
-- Coffee
+- **Coffee**  
 Serve a delicous coffee (or tea) with a random phrase
-- Kaamelott
+- **Kaamelott**  
 Display random quotes and specific quotes from the french TV series Kaamelott
-- List
+- **List**  
 Kinda like the replier module but with list and random picking
-- Opmod
+- **Opmod**  
 Manage Operators
-- Replier
+- **Replier**  
 Register custom replies for the bot. You can send them, lock them and display stats about them.
-- Source
+- **Source**  
 Display links to his own source code
-- Status
+- **Status**  
 Change the bot status and his played game on discord
-- Suicide
+- **Suicide**  
 Remotly kill the bot
-- Version
+- **Version**  
 Display the bot version
 
 ## Dependencies
@@ -34,6 +34,7 @@ Display the bot version
 * [hjson](https://github.com/hjson/hjson-py)
 
 ## Usage
+*To be writed soon.*
 
 ## Changelog
 ### Version 1 (06/02/2017)
