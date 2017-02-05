@@ -16,22 +16,23 @@
 
 import argparse
 import discord
+import sys
 
 from classes.PluginManager import PluginManager
 from classes.Logger import Logger
 
-from config import NAME, SHORT_NAME, DESCRIPTION, CMD_PREFIX
+import config
 
 
 class ConDeBot(discord.Client):
     def __init__(self, *args, **kwargs):
-        self.NAME = NAME
-        self.SHME = SHORT_NAME
-        self.DESC = DESCRIPTION
-        self.PREF = CMD_PREFIX
+        self.NAME = config.NAME
+        self.SHME = config.SHORT_NAME
+        self.DESC = config.DESCRIPTION
+        self.PREF = config.CMD_PREFIX
 
         self.CDB_PATH = "./"
-        self.VERS = "0.0.1b"
+        self.VERS = "1"
 
         super().__init__(*args, **kwargs)
         self.logger = Logger()
@@ -121,10 +122,15 @@ def main():
     cdb = ConDeBot()
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("token")
+    parser.add_argument("--token")
     args = parser.parse_args()
 
-    cdb.run(args.token)
+    if "token" in args:
+        cdb.run(args.token)
+    elif "token" in config:
+        cdb.run(config.token)
+    else:
+        print("You should input a token via the config file or via arguments", file=sys.stderr)
     return
 
 
