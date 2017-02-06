@@ -32,7 +32,7 @@ class ConDeBot(discord.Client):
         self.PREF = config.CMD_PREFIX
 
         self.CDB_PATH = "./"
-        self.VERS = "1"
+        self.VERS = "1.0-release"
 
         super().__init__(*args, **kwargs)
         self.logger = Logger()
