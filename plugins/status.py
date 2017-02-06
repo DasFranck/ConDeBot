@@ -21,7 +21,7 @@ class StatusPlugin(Plugin):
 
     async def on_message(self, message):
         (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if not triggered:
+        if not triggered and action not in ["status", "game"]:
             return
 
         if not isop_user(message.author):
