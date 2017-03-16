@@ -8,7 +8,7 @@ import os
 from config import OPS_FILE
 
 
-# Check if user is op (NOT LOGGED FUNCTION, meant to be use in the source code of CDB)
+# Check if user is op
 def isop_user(user):
     nickdis = ""
     if (isinstance(user, str)):
@@ -30,6 +30,7 @@ def get_nickdis(user):
     return (user.name + "#" + str(user.discriminator))
 
 
+# Return a tuple which contain metadata of a message
 def get_meta(cdb, message):
     msg = message.content
     args = msg.split(" ")

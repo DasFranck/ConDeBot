@@ -103,12 +103,12 @@ class OpModPlugin(Plugin):
 
     # Op user
     async def op_list(self, message, author, ops):
-        string = "Operator list:\n"
+        string = "**Operator list:**\n"
         for op in ops:
             if (op is ops[-1]):
-                string += "%s" % op
+                string += "- %s" % op
             else:
-                string += "%s, " % op
+                string += "- %s\n" % op
         await self.cdb.send_message(message.channel, string)
         self.cdb.logger.log_info_command("Operator list requested by %s" % author, message)
         return
