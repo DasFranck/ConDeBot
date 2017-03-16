@@ -37,5 +37,8 @@ Display the bot version
 *To be writed soon.*
 
 ## Changelog
-### Version 1 (06/02/2017)
+### Version 1.0.1 (16/03/2017)
+* Quick hotfix
+
+### Version 1.0 (06/02/2017)
 * Initial Release
