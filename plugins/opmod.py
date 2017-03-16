@@ -65,7 +65,7 @@ class OpModPlugin(Plugin):
 
     # Op user
     async def op_him(self, message, author, arg, ops):
-        if not isop_user(message.user):
+        if not isop_user(message.author):
             await self.cdb.send_message(message.channel, "You don't have the right to do that.")
             self.cdb.logger.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
             return (ops)
@@ -84,7 +84,7 @@ class OpModPlugin(Plugin):
 
     # Deop user
     async def deop_him(self, message, author, arg, ops):
-        if not isop_user(message.user):
+        if not isop_user(message.author):
             await self.cdb.send_message(message.channel, "You don't have the right to do that.")
             self.cdb.logger.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
             return (ops)
