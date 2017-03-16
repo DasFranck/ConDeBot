@@ -36,6 +36,11 @@ Display the bot version
 ## Usage
 *To be writed soon.*
 
+
 ## Changelog
+### Actual dev version (xx/xx/20xx)
+* Error and warning are now displayed in a nice embed message
+* Bugfixes
+
 ### Version 1 (06/02/2017)
 * Initial Release
