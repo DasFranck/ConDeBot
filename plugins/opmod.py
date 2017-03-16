@@ -6,7 +6,7 @@ import os
 
 from config import OPS_FILE, OPS_FILE_PATH
 from classes.Plugin import Plugin
-from utilities import isop_user, get_meta
+from utilities import isop_user, get_meta, display_error, display_warning
 
 
 class OpModPlugin(Plugin):
@@ -66,12 +66,12 @@ class OpModPlugin(Plugin):
     # Op user
     async def op_him(self, message, author, arg, ops):
         if not isop_user(message.author):
-            await self.cdb.send_message(message.channel, "You don't have the right to do that.")
+            await display_error(self.cdb, message.channel, "You don't have the right to do that.")
             self.cdb.logger.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
             return (ops)
 
         if isop_user(arg):
-            await self.cdb.send_message(message.channel, "%s is already an operator" % arg)
+            await display_warning(self.cdb, message.channel, "%s is already an operator" % arg)
             self.cdb.logger.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, author), message)
             return (ops)
 
@@ -85,12 +85,12 @@ class OpModPlugin(Plugin):
     # Deop user
     async def deop_him(self, message, author, arg, ops):
         if not isop_user(message.author):
-            await self.cdb.send_message(message.channel, "You don't have the right to do that.")
+            await display_error(self.cdb, message.channel, "You don't have the right to do that.")
             self.cdb.logger.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
             return (ops)
 
         if not isop_user(arg):
-            await self.cdb.send_message(message.channel, "%s is already not an operator" % arg)
+            await display_warning(self.cdb, message.channel, "%s is already not an operator" % arg)
             self.cdb.logger.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, author), message)
             return (ops)
 

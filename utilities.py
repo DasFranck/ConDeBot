@@ -47,3 +47,15 @@ def get_meta(cdb, message):
         args = args[2:]
 
     return (msg, args, author, triggered, action)
+
+
+# Display an error in an embed message
+async def display_error(cdb, channel, error_message, title="Error"):
+    em = discord.Embed(title=title, description=error_message, colour=0xFF0000)
+    await cdb.send_message(channel, embed=em)
+
+
+# Display a warning in an embed message
+async def display_warning(cdb, channel, error_message, title="Warning"):
+    em = discord.Embed(title=title, description=error_message, colour=0xFFCC00)
+    await cdb.send_message(channel, embed=em)
