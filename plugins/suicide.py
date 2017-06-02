@@ -32,8 +32,10 @@ class SuicidePlugin(Plugin):
         if (triggered and action in ["restart"]):
             if not isop_user(message.author):
                 await self.cdb.send_message(message.channel, "You don't have the right to do that.")
-                self.cdb.logger.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % (author), message)
+                self.cdb.logger.log_warn_command("Bot restart requested by NON-OP %s, FAILED" % (author), message)
             else:
                 await self.cdb.send_message(message.channel, "Restart has been ordered by %s." % author)
+                self.cdb.logger.log_info_command("Bot has been restarted by " + author, message)
+                self.cdb.logger.logger.info("#------------RESTART------------#")
                 await self.cdb.logout()
                 sys.exit(30)
