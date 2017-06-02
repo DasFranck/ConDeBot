@@ -5,7 +5,7 @@ import discord
 import json
 import os
 
-from config import OPS_FILE
+from config.config import OPS_FILE
 
 
 # Check if user is op

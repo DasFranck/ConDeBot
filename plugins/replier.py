@@ -6,7 +6,7 @@ import os
 import hjson
 
 from classes.Plugin import Plugin
-from config import REPLIES_FILE_DIR
+from config.config import REPLIES_FILE_DIR
 from utilities import get_meta, isop_user
 
 

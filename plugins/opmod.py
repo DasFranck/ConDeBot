@@ -4,7 +4,7 @@
 import json
 import os
 
-from config import OPS_FILE, OPS_FILE_PATH
+from config.config import OPS_FILE, OPS_FILE_PATH
 from classes.Plugin import Plugin
 from utilities import isop_user, get_meta, display_error, display_warning
 

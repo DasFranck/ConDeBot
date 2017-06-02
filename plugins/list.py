@@ -6,7 +6,7 @@ import hjson
 import os
 import random
 
-from config import LISTS_FILE_DIR
+from config.config import LISTS_FILE_DIR
 from classes.Plugin import Plugin
 from utilities import get_meta, isop_user
 

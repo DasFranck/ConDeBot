@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+#!/usr/bin/python3
 
 # Help message
 # TODO: Should be automatically generated
@@ -15,13 +14,14 @@
 #            + "```"
 
 import argparse
-import discord
 import sys
+
+sys.path.insert(0, "lib")
+import discord
 
 from classes.PluginManager import PluginManager
 from classes.Logger import Logger
-
-import config
+from config import config
 
 
 class ConDeBot(discord.Client):
@@ -125,13 +125,7 @@ def main():
     parser.add_argument("--token")
     args = parser.parse_args()
 
-    if "token" in args:
-        cdb.run(args.token)
-    elif "token" in config:
-        cdb.run(config.token)
-    else:
-        print("You should input a token via the config file or via arguments", file=sys.stderr)
-    return
+    cdb.run(args.token)
 
 
 if (__name__ == '__main__'):
