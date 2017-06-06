@@ -13,5 +13,9 @@ class SourcePlugin(Plugin):
         (msg, args, author, triggered, action) = get_meta(self.cdb, message)
         if triggered and action in ["source"]:
             self.cdb.logger.log_info_command("Source files requested by " + author, message)
-            await self.cdb.send_message(message.channel, self.cdb.NAME + "'s source files: \nhttps://git.dasfranck.fr/ConDeBot_Discord/\nhttps://github.com/DasFranck/ConDeBot_Discord")
+            await self.cdb.send_message(message.channel,
+                                        ("{}'s source files:\n",
+                                         "https://git.dasfranck.fr/ConDeBot_Discord/\n"
+                                         "https://github.com/DasFranck/ConDeBot_Discord")
+                                        .format(self.CDB.name))
             return
