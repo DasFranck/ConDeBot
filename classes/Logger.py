@@ -8,7 +8,6 @@ import os
 class Logger:
     logger = logging.getLogger('discord')
 
-    # Bot Initialization
     def __init__(self):
         # Set logger level to INFO
         self.logger.setLevel(logging.INFO)
@@ -17,8 +16,11 @@ class Logger:
             os.makedirs("logs")
 
         # Setting handler (Log File)
-        handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='a')
-        handler.setFormatter(logging.Formatter("%(asctime)s :: %(levelname)s :: %(message)s"))
+        handler = logging.FileHandler(filename='logs/discord.log',
+                                      encoding='utf-8',
+                                      mode='a')
+        handler.setFormatter(logging.Formatter(
+            "%(asctime)s :: %(levelname)s :: %(message)s"))
         self.logger.addHandler(handler)
 
         # Setting stream_handler (Stdout)
@@ -29,23 +31,32 @@ class Logger:
         self.logger.info("#-------------START-------------#")
         return
 
-    # Add an entry in the log with info level.
     def log_info_command(self, string, message):
+        """ Add an entry in the log with info level. """
         if (message.channel.is_private is True):
             self.logger.info(string + " in a Private Channel")
         else:
-            self.logger.info(string + " in #" + message.channel.name + " on " + message.server.name + " (%s)" % message.server.id)
+            self.logger.info("{} in #{} on {} (%{})".format(string,
+                                                            message.channel.name,
+                                                            message.server.name,
+                                                            message.server.id))
 
-    # Add an entry in the log with error level.
     def log_error_command(self, string, message):
+        """ Add an entry in the log with error level. """
         if (message.channel.is_private is True):
             self.logger.error(string + " in a Private Channel")
         else:
-            self.logger.error(string + " in #" + message.channel.name + " on " + message.server.name + " (%s)" % message.server.id)
+            self.logger.error("{} in #{} on {} (%{})".format(string,
+                                                             message.channel.name,
+                                                             message.server.name,
+                                                             message.server.id))
 
-    # Add an entry in the log with warn level.
     def log_warn_command(self, string, message):
+        """ Add an entry in the log with warn level. """
         if (message.channel.is_private is True):
             self.logger.warn(string + " in a Private Channel")
         else:
-            self.logger.warn(string + " in #" + message.channel.name + " on " + message.server.name + " (%s)" % message.server.id)
+            self.logger.warn("{} in #{} on {} (%{})".format(string,
+                                                            message.channel.name,
+                                                            message.server.name,
+                                                            message.server.id))
