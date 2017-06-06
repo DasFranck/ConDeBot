@@ -24,7 +24,11 @@ def main():
 
     if not args.no_pip:
         print("Downloading or updating requirements, please wait...")
-        status_code = subprocess.call([sys.executable, "-m", "pip", "install", "--upgrade", "--target", "lib", "-r", "requirements.txt"])
+        status_code = subprocess.call([sys.executable, "-m", "pip",
+                                                       "install", "--upgrade",
+                                                       "--target", "lib",
+                                                       "-r", "requirements.txt"
+                                       ])
         if status_code == 0:
             print("\nRequirements setup completed.")
         else:
@@ -35,14 +39,16 @@ def main():
     elif "token" in config and len(config.token) != 0:
         run_cdb(config.token, args.autorestart)
     else:
-        print("You should input a token via the config file or via arguments", file=sys.stderr)
+        print("You should input a token via the config file or via arguments",
+              file=sys.stderr)
     return
 
 
 def run_cdb(token, autorestart):
     while True:
         try:
-            code = subprocess.call((sys.executable, "ConDeBot.py", "--token", token))
+            code = subprocess.call((sys.executable, "ConDeBot.py",
+                                                    "--token", token))
         except KeyboardInterrupt:
             code = 0
             break
