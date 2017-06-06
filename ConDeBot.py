@@ -41,7 +41,8 @@ class ConDeBot(discord.Client):
 
     # Triggered when the bot is ready
     async def on_ready(self):
-        self.logger.logger.info("Sucessfully connected as %s (%s)" % (self.user.name, self.user.id))
+        self.logger.logger.info("Sucessfully connected as {} ({})".format(self.user.name,
+                                                                          self.user.id))
         self.logger.logger.info("------------")
         return
 
