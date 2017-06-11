@@ -2,9 +2,11 @@
 *.swp
 *.log
 
-logs/
-jsonfiles/lists/
-jsonfiles/replies/
+.config
+
+data/logs/
+data/jsonfiles/lists/
+data/jsonfiles/replies/
 
 # Virtualenv files
 .Python
