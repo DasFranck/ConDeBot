@@ -1,6 +1,7 @@
 [Unit]
 Description=ConDeBot
 After=multi-user.target
+
 [Service]
 WorkingDirectory=/home/dasfranck/dasgit/ConDeBot_Discord
 User=dasfranck

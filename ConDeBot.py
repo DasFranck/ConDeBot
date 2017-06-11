@@ -30,11 +30,11 @@ class ConDeBot(discord.Client):
         self.SHME = config.SHORT_NAME
         self.DESC = config.DESCRIPTION
         self.PREF = config.CMD_PREFIX
-
         self.CDB_PATH = "./"
         self.VERS = "1"
 
         super().__init__(*args, **kwargs)
+
         self.logger = Logger()
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
