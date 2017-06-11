@@ -6,10 +6,10 @@ SHORT_NAME = "CDB"
 DESCRIPTION = "ConDeBot - Un con de bot Discord"
 CMD_PREFIX = ""
 
-OPS_FILE_PATH = "jsonfiles/"
+OPS_FILE_PATH = "data/jsonfiles/"
 OPS_FILE = OPS_FILE_PATH + "ops.json"
-REPLIES_FILE_DIR = "jsonfiles/replies/"
-LISTS_FILE_DIR = "jsonfiles/lists/"
+REPLIES_FILE_DIR = "data/jsonfiles/replies/"
+LISTS_FILE_DIR = "data/jsonfiles/lists/"
 
 token = ""
 
