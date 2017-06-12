@@ -73,8 +73,8 @@ class ListPlugin(Plugin):
         return lists
 
     async def on_message(self, message):
-        (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if not triggered or action != "list":
+        cmd = get_meta(self.cdb, message)
+        if not cmd.triggered or cmd.action != "list":
             return
 
         # Set file path
@@ -90,26 +90,26 @@ class ListPlugin(Plugin):
             await self.cdb.send_message(message.channel, "The JSON lists file seems corrupted. Please fix it before using the replier module.")
             return
 
-        if len(args) > 1:
-            if args[1] == "add":
-                if len(args) == 2:
+        if len(cmd.args) > 1:
+            if cmd.args[1] == "add":
+                if len(cmd.args) == 2:
                     await self.cdb.send_message(message.channel, "Try with a content to put in the list next time.")
                 else:
-                    new_lists = await self.add_to_list(lists, args[0], " ".join(args[2:]), message, author)
+                    new_lists = await self.add_to_list(lists, cmd.args[0], " ".join(cmd.args[2:]), message, cmd.author_nickdis)
                     write_to_file(lists_path, new_lists)
-            if args[1] == "get":
+            if cmd.args[1] == "get":
                 pass
-            if args[1] == "del":
+            if cmd.args[1] == "del":
                 pass
-            if args[1] == "count":
+            if cmd.args[1] == "count":
                 pass
-            if args[1] == "size":
+            if cmd.args[1] == "size":
                 pass
-            if args[1] == "lock":
+            if cmd.args[1] == "lock":
                 pass
 
-        elif len(args) == 1:
-            new_lists = await self.write_random_from_list(lists, args[0], message, author)
+        elif len(cmd.args) == 1:
+            new_lists = await self.write_random_from_list(lists, cmd.args[0], message, cmd.author_nickdis)
             write_to_file(lists_path, new_lists)
 
         else:

@@ -1,11 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
 import discord
 import json
 import os
 
 from config.config import OPS_FILE
+
+
+Command = namedtuple("Command",
+                     # Message content and metadata
+                     ["content",
+                      "timestamp",
+                      "author_id",
+                      "nickdis",
+                      "msg",  # Original Message Object reference
+
+                      # Command parsing
+                      "triggered",
+                      "action",
+                      "args"])
 
 
 # Check if user is op
@@ -35,8 +50,7 @@ def get_meta(cdb, message):
     msg = message.content
     args = msg.split(" ")
     if (message.author == cdb.user or msg is None or len(args[0]) == 0):
-        return (None, None, None, None, None)
-    author = get_nickdis(message.author)
+        return None
 
     if (cdb.PREF == ""):
         triggered = args[0][0] == "!"
@@ -47,7 +61,16 @@ def get_meta(cdb, message):
         action = msg.split(" ")[1] if len(msg.split(" ")) > 1 else ""
         args = args[2:]
 
-    return (msg, args, author, triggered, action)
+    cmd = Command(message.content,
+                  message.timestamp,
+                  message.author.id,
+                  get_nickdis(message.author),
+                  msg,
+                  triggered,
+                  action,
+                  args)
+
+    return cmd
 
 
 # Display an error in an embed message

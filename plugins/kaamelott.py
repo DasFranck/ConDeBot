@@ -10,12 +10,12 @@ from utilities import get_meta
 
 class KaamelottPlugin(Plugin):
     async def on_message(self, message):
-        (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if (triggered and action == "kaamelott"):
-            if (len(args) == 0):
-                await self.quote(message, author)
-            elif (len(args) >= 1 and args[0] == "-q"):
-                await self.spec(message, args, author)
+        cmd = get_meta(self.cdb, message)
+        if (cmd.triggered and cmd.action == "kaamelott"):
+            if (len(cmd.args) == 0):
+                await self.quote(message, cmd.author_nickdis)
+            elif (len(cmd.args) >= 1 and cmd.args[0] == "-q"):
+                await self.spec(message, cmd.args, cmd.author_nickdis)
         return
 
     # Display random quotes of Kaamelott

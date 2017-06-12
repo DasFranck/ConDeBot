@@ -139,7 +139,7 @@ class ReplierPlugin(Plugin):
         return
 
     async def on_message(self, message):
-        (msg, args, author, triggered, action) = get_meta(self.cdb, message)
+        cmd = get_meta(self.cdb, message)
 
         # Set file path
         if message.server is not None:
@@ -153,17 +153,17 @@ class ReplierPlugin(Plugin):
             return
 
         # Display the commands call count (Module: "replier")
-        if triggered:
-            if action in ["count"]:
-                await self.count(message, action, args, author, replies)
+        if cmd.triggered:
+            if cmd.action in ["count"]:
+                await self.count(message, cmd.action, cmd.args, cmd.author_nickdis, replies)
 
             # Lock the permission to modify a specific trigger (Module: "replier")
-            elif action in ["lock", "unlock"]:
-                await self.locker(message, action, args, author, replies, replies_path)
+            elif cmd.action in ["lock", "unlock"]:
+                await self.locker(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)
 
-            elif action in ["triggerlist"]:
-                await self.list(message, action, args, author, replies)
+            elif cmd.action in ["triggerlist"]:
+                await self.list(message, cmd.action, cmd.args, cmd.author_nickdis, replies)
 
             # If it's not a built-in command, check if it's related to replies (Module: "replier")
             else:
-                await self.replier(message, action, args, author, replies, replies_path)
+                await self.replier(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)

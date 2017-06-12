@@ -16,8 +16,8 @@ class OpModPlugin(Plugin):
             os.makedirs(OPS_FILE_PATH)
 
     async def on_message(self, message):
-        (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if not triggered or action not in ["op", "deop", "isop", "op_list"]:
+        cmd = get_meta(self.cdb, message)
+        if not cmd.triggered or cmd.action not in ["op", "deop", "isop", "op_list"]:
             return
 
         ops = []
@@ -26,20 +26,20 @@ class OpModPlugin(Plugin):
             with open(OPS_FILE) as ops_file:
                 ops = json.load(ops_file)
 
-        if (action == "op"):
-            for arg in args:
-                ops = await self.op_him(message, author, arg, ops)
-        elif (action == "deop"):
-            for arg in args:
-                ops = await self.deop_him(message, author, arg, ops)
-        elif (action == "isop"):
-            if (len(args) == 0):
-                await self.isop_s(message, author)
+        if (cmd.action == "op"):
+            for arg in cmd.args:
+                ops = await self.op_him(message, cmd.author_nickdis, arg, ops)
+        elif (cmd.action == "deop"):
+            for arg in cmd.args:
+                ops = await self.deop_him(message, cmd.author_nickdis, arg, ops)
+        elif (cmd.action == "isop"):
+            if (len(cmd.args) == 0):
+                await self.isop_s(message, cmd.author_nickdis)
             else:
-                for arg in args:
-                    await self.isop_l(message, author, arg)
-        elif (action == "op_list"):
-            await self.op_list(message, author, ops)
+                for arg in cmd.args:
+                    await self.isop_l(message, cmd.author_nickdis, arg)
+        elif (cmd.action == "op_list"):
+            await self.op_list(message, cmd.author_nickdis, ops)
 
         with open(OPS_FILE, 'w') as ops_file:
             json.dump(ops, ops_file)

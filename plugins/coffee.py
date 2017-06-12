@@ -5,29 +5,29 @@ import random
 import json
 
 from classes.Plugin import Plugin
-import utilities
+from utilities import get_meta
 
 
 class CoffeePlugin(Plugin):
     async def on_message(self, message):
-        (msg, args, author, triggered, action) = utilities.get_meta(self.cdb, message)
-        if not triggered:
+        cmd = get_meta(self.cdb, message)
+        if not cmd.triggered:
             return
 
         # Serve a delicious coffee (Module: "coffee")
-        if action in ["café", "cafe", "coffee"]:
-            self.cdb.logger.log_info_command("Coffee requested by " + author,
+        if cmd.action in ["café", "cafe", "coffee"]:
+            self.cdb.logger.log_info_command("Coffee requested by " + cmd.author_nickdis,
                                              message)
             await self.cdb.send_message(message.channel, ":coffee:")
             await self.cdb.send_message(message.channel,
-                                        self.serve(message, args, "coffee"))
+                                        self.serve(message, cmd.args, "coffee"))
         # Serve a delicious tea (Module: "coffee")
-        elif action in ["thé", "the", "tea"]:
-            self.cdb.logger.log_info_command("Tea requested by " + author,
+        elif cmd.action in ["thé", "the", "tea"]:
+            self.cdb.logger.log_info_command("Tea requested by " + cmd.author_nickdis,
                                              message)
             await self.cdb.send_message(message.channel, ":tea:")
             await self.cdb.send_message(message.channel,
-                                        self.serve(message, args, "tea"))
+                                        self.serve(message, cmd.args, "tea"))
 
     def serve(self, message, args, drink):
         """

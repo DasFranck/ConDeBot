@@ -10,9 +10,9 @@ class VersionPlugin(Plugin):
         super().__init__(cdb)
 
     async def on_message(self, message):
-        (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if triggered and action in "version":
-            self.cdb.logger.log_info_command("Version requested by " + author,
+        cmd = get_meta(self.cdb, message)
+        if cmd.triggered and cmd.action in "version":
+            self.cdb.logger.log_info_command("Version requested by " + cmd.author_nickdis,
                                              message)
             await self.cdb.send_message(message.channel,
                                         "{}'s version: {}".format(
