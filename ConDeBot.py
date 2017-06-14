@@ -22,6 +22,7 @@ import discord
 from classes.PluginManager import PluginManager
 from classes.Logger import Logger
 from config import config
+from utilities import get_meta
 
 
 class ConDeBot(discord.Client):
@@ -31,7 +32,7 @@ class ConDeBot(discord.Client):
         self.DESC = config.DESCRIPTION
         self.PREF = config.CMD_PREFIX
         self.CDB_PATH = "./"
-        self.VERS = "1"
+        self.VERS = "1.0dev"
 
         super().__init__(*args, **kwargs)
 
@@ -48,8 +49,9 @@ class ConDeBot(discord.Client):
 
     # Triggered when the bot receive a message
     async def on_message(self, message):
+        cmd = get_meta(self, message)
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_message(message))
+            self.loop.create_task(plugin.on_message(message, cmd))
 
     async def on_message_edit(self, before, after):
         for plugin in self.plugins:

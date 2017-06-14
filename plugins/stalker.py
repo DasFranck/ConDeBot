@@ -3,20 +3,22 @@
 
 import time
 from classes.Plugin import Plugin
-from utilities import isop_user, get_meta, display_error
+from utilities import isop_user, display_error
 
 
 class StalkerPlugin(Plugin):
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
-        if (cmd.triggered and cmd.action in ["stalk"]):
-            if not isop_user(message.author):
-                await display_error(self.cdb,
-                                    message.channel,
-                                    "You don't have the right to do that."
-                                    )
-                self.cdb.logger.log_warn_command("Stalker command use requested by NON-OP {}, FAILED".format(cmd.author_nickdis),
-                                                 message)
+    async def on_message(self, message, cmd):
+        if not cmd.triggered \
+           or cmd.action not in ["stalk"]:
+            return
+
+        if not isop_user(message.author):
+            await display_error(self.cdb,
+                                message.channel,
+                                "You don't have the right to do that."
+                                )
+            self.cdb.logger.log_warn_command("Stalker command use requested by NON-OP {}, FAILED".format(cmd.author_nickdis),
+                                             message)
 
     async def on_member_update(self, before, after):
         if before.status != after.status:

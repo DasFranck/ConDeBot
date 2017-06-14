@@ -5,17 +5,19 @@ import codecs
 import random
 
 from classes.Plugin import Plugin
-from utilities import get_meta
 
 
 class KaamelottPlugin(Plugin):
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
-        if (cmd.triggered and cmd.action == "kaamelott"):
-            if (len(cmd.args) == 0):
-                await self.quote(message, cmd.author_nickdis)
-            elif (len(cmd.args) >= 1 and cmd.args[0] == "-q"):
-                await self.spec(message, cmd.args, cmd.author_nickdis)
+    async def on_message(self, message, cmd):
+        if not cmd \
+           or not cmd.triggered \
+           or not cmd.action == "kaamelott":
+            return
+
+        if (len(cmd.args) == 0):
+            await self.quote(message, cmd.author_nickdis)
+        elif (len(cmd.args) >= 1 and cmd.args[0] == "-q"):
+            await self.spec(message, cmd.args, cmd.author_nickdis)
         return
 
     # Display random quotes of Kaamelott

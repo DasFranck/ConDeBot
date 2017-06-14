@@ -7,7 +7,7 @@ import hjson
 
 from classes.Plugin import Plugin
 from config.config import REPLIES_FILE_DIR
-from utilities import get_meta, isop_user
+from utilities import isop_user
 
 
 # Get the reply dict assign to the trigger
@@ -138,8 +138,9 @@ class ReplierPlugin(Plugin):
                 return
         return
 
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
+    async def on_message(self, message, cmd):
+        if not cmd:
+            return
 
         # Set file path
         if message.server is not None:

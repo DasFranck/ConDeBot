@@ -6,7 +6,7 @@ import os
 
 from config.config import OPS_FILE, OPS_FILE_PATH
 from classes.Plugin import Plugin
-from utilities import isop_user, get_meta, display_error, display_warning
+from utilities import isop_user, display_error, display_warning
 
 
 class OpModPlugin(Plugin):
@@ -15,9 +15,9 @@ class OpModPlugin(Plugin):
         if (not os.path.exists(OPS_FILE_PATH)):
             os.makedirs(OPS_FILE_PATH)
 
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
-        if not cmd.triggered or cmd.action not in ["op", "deop", "isop", "op_list"]:
+    async def on_message(self, message, cmd):
+        if not cmd.triggered \
+           or cmd.action not in ["op", "deop", "isop", "op_list"]:
             return
 
         ops = []

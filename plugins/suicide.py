@@ -4,14 +4,16 @@
 import sys
 
 from classes.Plugin import Plugin
-from utilities import isop_user, get_meta
+from utilities import isop_user
 
 
 class SuicidePlugin(Plugin):
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
+    async def on_message(self, message, cmd):
+        if not cmd \
+           or not cmd.triggered:
+            return
 
-        if (cmd.triggered and cmd.action in ["slain", "kill", "suicide"]):
+        if cmd.action in ["slain", "kill", "suicide"]:
             if not isop_user(message.author):
                 await self.cdb.send_message(message.channel, "You don't have the right to do that.")
                 self.cdb.logger.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % cmd.author_nickdis, message)
@@ -28,7 +30,7 @@ class SuicidePlugin(Plugin):
                 # Trying to exit properly (client.py:494 from discord.py)
                 await self.cdb.logout()
 
-        if (cmd.triggered and cmd.action in ["restart"]):
+        if cmd.action in ["restart", "reboot"]:
             if not isop_user(message.author):
                 await self.cdb.send_message(message.channel, "You don't have the right to do that.")
                 self.cdb.logger.log_warn_command("Bot restart requested by NON-OP %s, FAILED" % cmd.author_nickdis, message)

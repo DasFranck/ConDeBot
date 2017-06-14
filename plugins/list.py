@@ -8,7 +8,7 @@ import random
 
 from config.config import LISTS_FILE_DIR
 from classes.Plugin import Plugin
-from utilities import get_meta, isop_user
+from utilities import isop_user
 
 
 # Load the lists file into an array of dict
@@ -72,9 +72,10 @@ class ListPlugin(Plugin):
         list["count"] += 1
         return lists
 
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
-        if not cmd.triggered or cmd.action != "list":
+    async def on_message(self, message, cmd):
+        if not cmd \
+           or not cmd.triggered \
+           or cmd.action not in ["list"]:
             return
 
         # Set file path

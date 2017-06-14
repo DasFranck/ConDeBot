@@ -5,13 +5,12 @@ import random
 import json
 
 from classes.Plugin import Plugin
-from utilities import get_meta
 
 
 class CoffeePlugin(Plugin):
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
-        if not cmd.triggered:
+    async def on_message(self, message, cmd):
+        if not cmd \
+           or not cmd.triggered:
             return
 
         # Serve a delicious coffee (Module: "coffee")

@@ -4,7 +4,7 @@
 import discord
 
 from classes.Plugin import Plugin
-from utilities import get_meta, isop_user
+from utilities import isop_user
 
 
 class StatusPlugin(Plugin):
@@ -19,9 +19,9 @@ class StatusPlugin(Plugin):
         self.status = None
         self.game = None
 
-    async def on_message(self, message):
-        cmd = get_meta(self.cdb, message)
-        if not cmd.triggered or cmd.action not in ["status", "game"]:
+    async def on_message(self, message, cmd):
+        if not cmd.triggered \
+           or cmd.action not in ["status", "game"]:
             return
 
         if not isop_user(message.author):
