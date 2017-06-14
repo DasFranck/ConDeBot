@@ -10,7 +10,7 @@ class VersionPlugin(Plugin):
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \
-           and cmd.action not in ["version"]:
+           or cmd.action not in ["version"]:
             return
 
         self.cdb.logger.log_info_command("Version requested by " + cmd.author_nickdis,
