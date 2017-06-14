@@ -5,8 +5,7 @@ python:
   - "nightly"
 install:
   - pip install flake8
-  - pip install mccabe
   - pip install -r requirements.txt
 script:
-  - flake8 --max-complexity 10 . --ignore=E501,E402
+  - flake8 . --ignore=E501,E402
 cache: pip
