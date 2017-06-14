@@ -14,7 +14,7 @@ Command = namedtuple("Command",
                      ["content",
                       "timestamp",
                       "author_id",
-                      "nickdis",
+                      "author_nickdis",
                       "msg",  # Original Message Object reference
 
                       # Command parsing
