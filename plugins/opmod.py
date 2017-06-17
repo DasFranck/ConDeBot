@@ -47,7 +47,7 @@ class OpModPlugin(Plugin):
 
     # Check if user is op (LOGGED FUNCTION, meant to be used via !isop "nickdis")
     async def isop_l(self, message, author, arg):
-        self.cdb.logger.log_info_command("Operator status of %s (%s) requested by %s" % (arg, await isop_user(arg), author), message)
+        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, await isop_user(arg), author), message)
         if isop_user(arg):
             await self.cdb.send_message(message.channel, "%s is an operator" % arg)
         else:
@@ -56,7 +56,7 @@ class OpModPlugin(Plugin):
 
     # Check if user who called the command is op (LOGGED FUNCTION, meant to be used via !isop)
     async def isop_s(self, message, author):
-        self.cdb.logger.log_info_command("Operator status of %s (%s) requested by %s" % (message.author, await isop_user(message.author), author), message)
+        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (message.author, await isop_user(message.author), author), message)
         if isop_user(message.author):
             await self.cdb.send_message(message.channel, "You are an operator")
         else:
@@ -67,38 +67,38 @@ class OpModPlugin(Plugin):
     async def op_him(self, message, author, arg, ops):
         if not isop_user(message.author):
             await display_error(self.cdb, message.channel, "You don't have the right to do that.")
-            self.cdb.logger.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
+            self.cdb.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
             return (ops)
 
         if isop_user(arg):
             await display_warning(self.cdb, message.channel, "%s is already an operator" % arg)
-            self.cdb.logger.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, author), message)
+            self.cdb.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, author), message)
             return (ops)
 
         ops.append(arg)
         with open(OPS_FILE, 'w') as ops_file:
             json.dump(ops, ops_file)
         await self.cdb.send_message(message.channel, "%s has been added as operator" % arg)
-        self.cdb.logger.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, author), message)
+        self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, author), message)
         return (ops)
 
     # Deop user
     async def deop_him(self, message, author, arg, ops):
         if not isop_user(message.author):
             await display_error(self.cdb, message.channel, "You don't have the right to do that.")
-            self.cdb.logger.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
+            self.cdb.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, author), message)
             return (ops)
 
         if not isop_user(arg):
             await display_warning(self.cdb, message.channel, "%s is already not an operator" % arg)
-            self.cdb.logger.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, author), message)
+            self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, author), message)
             return (ops)
 
         with open(OPS_FILE, 'w') as ops_file:
             json.dump(ops, ops_file)
         ops.remove(arg)
         await self.cdb.send_message(message.channel, "%s has been removed from operator list" % arg)
-        self.cdb.logger.log_info_command("Deleting operator (%s) requested by %s, OK" % (arg, author), message)
+        self.cdb.log_info_command("Deleting operator (%s) requested by %s, OK" % (arg, author), message)
         return (ops)
 
     # Op user
@@ -110,5 +110,5 @@ class OpModPlugin(Plugin):
             else:
                 string += "- %s\n" % op
         await self.cdb.send_message(message.channel, string)
-        self.cdb.logger.log_info_command("Operator list requested by %s" % author, message)
+        self.cdb.log_info_command("Operator list requested by %s" % author, message)
         return

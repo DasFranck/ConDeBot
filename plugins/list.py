@@ -50,16 +50,16 @@ class ListPlugin(Plugin):
         if (old_dict is None):
             new_dict = OrderedDict(name=list_name, list=[content], count=0, locked=False)
             lists.append(new_dict)
-            self.cdb.logger.log_info_command("The new list %s has been created by %s" % (list_name, author), message)
+            self.cdb.log_info_command("The new list %s has been created by %s" % (list_name, author), message)
         else:
             # Check if the reply dict is locked
             if (not isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
                 await self.cdb.send_message(message.channel, "Sorry, the %s list has been locked by an operator." % list_name)
-                self.cdb.logger.log_warn_command("The locked list %s modification has been requested by NON-OP %s, FAILED" % (list_name, author), message)
+                self.cdb.log_warn_command("The locked list %s modification has been requested by NON-OP %s, FAILED" % (list_name, author), message)
                 return lists
             else:
                 old_dict["list"].append(content)
-                self.cdb.logger.log_info_command("A new element has been added in the list %s by %s" % (list_name, author), message)
+                self.cdb.log_info_command("A new element has been added in the list %s by %s" % (list_name, author), message)
         await self.cdb.send_message(message.channel, "Roger that, a new element has been added in %s (index: %d)." % (list_name, len(get_list(lists, list_name)["list"]) - 1))
         return lists
 
@@ -68,7 +68,7 @@ class ListPlugin(Plugin):
         index = random.randrange(len(list["list"]))
         await self.cdb.send_message(message.channel, list["list"][index])
         await self.cdb.send_message(message.channel, str(index))
-        self.cdb.logger.log_info_command("A random content from the list %s has been requested by %s" % (list_name, author), message)
+        self.cdb.log_info_command("A random content from the list %s has been requested by %s" % (list_name, author), message)
         list["count"] += 1
         return lists
 

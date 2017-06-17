@@ -1,5 +1,4 @@
 ### TOP PRIORITY
-* Improve Logger class
 * Get rid of the Nickdis (Username#Tag) in the whole bot
   * Define ops by User ID and not Username#Tag
 

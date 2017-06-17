@@ -12,7 +12,7 @@ class SourcePlugin(Plugin):
         if not cmd.triggered \
            or cmd.action not in ["source"]:
             return
-        self.cdb.logger.log_info_command("Source files requested by " + cmd.author_nickdis, message)
+        self.cdb.log_info_command("Source files requested by " + cmd.author_nickdis, message)
         await self.cdb.send_message(message.channel,
                                     ("{}'s source files:\n",
                                      "https://git.dasfranck.fr/ConDeBot_Discord/\n"

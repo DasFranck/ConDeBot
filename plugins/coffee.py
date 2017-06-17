@@ -15,15 +15,16 @@ class CoffeePlugin(Plugin):
 
         # Serve a delicious coffee (Module: "coffee")
         if cmd.action in ["café", "cafe", "coffee"]:
-            self.cdb.logger.log_info_command("Coffee requested by " + cmd.author_nickdis,
-                                             message)
+            self.cdb.log_info_command("Coffee requested by " + cmd.author_nickdis,
+                                      message)
             await self.cdb.send_message(message.channel, ":coffee:")
             await self.cdb.send_message(message.channel,
                                         self.serve(message, cmd.args, "coffee"))
+
         # Serve a delicious tea (Module: "coffee")
         elif cmd.action in ["thé", "the", "tea"]:
-            self.cdb.logger.log_info_command("Tea requested by " + cmd.author_nickdis,
-                                             message)
+            self.cdb.log_info_command("Tea requested by " + cmd.author_nickdis,
+                                      message)
             await self.cdb.send_message(message.channel, ":tea:")
             await self.cdb.send_message(message.channel,
                                         self.serve(message, cmd.args, "tea"))

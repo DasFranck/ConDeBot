@@ -40,12 +40,21 @@ class ConDeBot(discord.Client):
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
 
+    # Aliases to self.logger functions
+    def log_error_command(self, *args, **kwargs):
+        self.logger.log_error_command(args, kwargs)
+
+    def log_warn_command(self, *args, **kwargs):
+        self.logger.log_warn_command(args, kwargs)
+
+    def log_info_command(self, *args, **kwargs):
+        self.logger.log_info_command(args, kwargs)
+
     # Triggered when the bot is ready
     async def on_ready(self):
-        self.logger.logger.info("Sucessfully connected as {} ({})".format(self.user.name,
-                                                                          self.user.id))
-        self.logger.logger.info("------------")
-        return
+        self.logger.info("Sucessfully connected as {} ({})".format(self.user.name,
+                                                                   self.user.id))
+        self.logger.info("------------")
 
     # Triggered when the bot receive a message
     async def on_message(self, message):

@@ -33,7 +33,7 @@ class ReplierPlugin(Plugin):
                 try:
                     return hjson.load(replies_file)
                 except:
-                    self.cdb.logger.logger.error("JSON replies file loading failed.")
+                    self.cdb.logger.error("JSON replies file loading failed.")
                     await self.cdb.send_message(message.channel, "The JSON replies file seems corrupted. Please fix it before using the replier module.")
                     return None
         else:
@@ -48,7 +48,7 @@ class ReplierPlugin(Plugin):
             for arg in args:
                 reply = get_reply(replies, arg)
                 if (reply is None):
-                    self.cdb.logger.log_error_command("Count of non-existant trigger %s requested by %s" % (arg, author), message)
+                    self.cdb.log_error_command("Count of non-existant trigger %s requested by %s" % (arg, author), message)
                     await self.cdb.send_message(message.channel, "The trigger %s doesn't even exist." % arg)
                 else:
                     self.cdb.log_info_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
@@ -67,14 +67,14 @@ class ReplierPlugin(Plugin):
         message_to_send += "```"
         await self.cdb.send_message(message.author, message_to_send)
         await self.cdb.send_message(message.channel, "{}: I've send you the trigger list by PM.".format(message.author.mention))
-        self.cdb.logger.log_info_command("The trigger list has been requested by %s" % (author), message)
+        self.cdb.log_info_command("The trigger list has been requested by %s" % (author), message)
         return
 
     # Lock a reply (OP-ONLY)
     async def locker(self, message, action, args, author, replies, replies_path):
         if not isop_user(message.author):
             await self.cdb.send_message(message.channel, "You don't have the right to do that.")
-            self.cdb.logger.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED" % (action if len(args) else "[ ERR ]", author), message)
+            self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED" % (action if len(args) else "[ ERR ]", author), message)
             return
         else:
             if (args is None or len(args) == 0):
@@ -86,7 +86,7 @@ class ReplierPlugin(Plugin):
                     return
                 old_dict["locked"] = True if action == "lock" else False
                 await self.cdb.send_message(message.channel, "Roger that, %s trigger has been %s." % (args[0], action + "ed"))
-                self.cdb.logger.log_info_command("%s of trigger %s requested by %s" % (action.capitalize(), args[0], author), message)
+                self.cdb.log_info_command("%s of trigger %s requested by %s" % (action.capitalize(), args[0], author), message)
                 with open(replies_path, 'w') as replies_file:
                     hjson.dump(replies, replies_file, indent=' ' * 2)
         return
@@ -101,12 +101,12 @@ class ReplierPlugin(Plugin):
                 else:
                     await self.cdb.send_message(message.channel, reply["message"])
                 reply["count"] += 1
-                self.cdb.logger.log_info_command("The trigger %s has been called by %s" % (action, author), message)
+                self.cdb.log_info_command("The trigger %s has been called by %s" % (action, author), message)
                 with open(replies_path, 'w') as replies_file:
                     hjson.dump(replies, replies_file, indent=' ' * 2)
             else:
                 pass
-                # self.cdb.logger.log_info_command("Non-existant trigger %s has been called by %s" % (action, author), message)
+                # self.cdb.log_info_command("Non-existant trigger %s has been called by %s" % (action, author), message)
 
         # Assign a message to this trigger
         elif (args[0] == "="):
@@ -117,19 +117,19 @@ class ReplierPlugin(Plugin):
                 if (old_dict is None):
                     new_dict = OrderedDict(trigger=action, message=" ".join(args[1:]), count=0, locked=False)
                     replies.append(new_dict)
-                    self.cdb.logger.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
+                    self.cdb.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
                 else:
                     # Check if the reply dict is locked
                     if (not isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
                         await self.cdb.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
-                        self.cdb.logger.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
+                        self.cdb.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
                         return
                     else:
                         old_dict["trigger"] = action
                         old_dict["message"] = " ".join(args[1:])
                         old_dict["count"] = 0
                         old_dict["locked"] = False
-                        self.cdb.logger.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
+                        self.cdb.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
                 await self.cdb.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
                 with open(replies_path, 'w') as replies_file:
                     hjson.dump(replies, replies_file, indent=' ' * 2)
