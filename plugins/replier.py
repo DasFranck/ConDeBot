@@ -26,8 +26,8 @@ class ReplierPlugin(Plugin):
         if not os.path.isdir(REPLIES_FILE_DIR):
             os.makedirs(REPLIES_FILE_DIR)
 
-    # Load the replies file into an array of dict
     async def load_replies(self, message, replies_path):
+        """ Load the replies file into an array of dict """
         if (os.path.isfile(replies_path)):
             with open(replies_path) as replies_file:
                 try:
@@ -39,60 +39,74 @@ class ReplierPlugin(Plugin):
         else:
             return []
 
-    # Print the number of times a message has been triggered
-    async def count(self, message, action, args, author, replies):
-        if (args is None or len(args) == 0):
-            await self.cdb.send_message(message.channel, "Try with an argument for this command next time.")
-            return
-        else:
-            for arg in args:
-                reply = get_reply(replies, arg)
-                if (reply is None):
-                    self.cdb.log_error_command("Count of non-existant trigger %s requested by %s" % (arg, author), message)
-                    await self.cdb.send_message(message.channel, "The trigger %s doesn't even exist." % arg)
-                else:
-                    self.cdb.log_info_command("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], author), message)
-                    await self.cdb.send_message(message.channel, "The trigger %s has been called %d times." % (arg, reply["count"]))
-        return
-
-    # Send the list of the server's trigger messages
-    async def list(self, message, action, args, author, replies):
-        if message.server is None:
-            await self.cdb.send_message(message.channel, "You can't use this command outside of a server for now.")
+    async def count(self, cmd, replies):
+        """ Print the number of times a message has been triggered"""
+        if (cmd.args is None or len(cmd.args) == 0):
+            await self.cdb.send_message(cmd.message.channel,
+                                        "Try with an argument for this command next time.")
             return
 
-        message_to_send = "Here's the list of triggers for {} ({})\n```".format(message.server.name, message.server.id)
+        for arg in cmd.args:
+            reply = get_reply(replies, arg)
+            if (reply is None):
+                self.cdb.log_error_command("Count of non-existant trigger %s requested by %s" % (arg,
+                                                                                                 cmd.author_nickdis),
+                                           cmd.message)
+                await self.cdb.send_message(cmd.message.channel,
+                                            "The trigger %s doesn't even exist." % arg)
+            else:
+                self.cdb.log_info_command("Count of trigger %s (%d) requested by %s" % (arg,
+                                                                                        reply["count"],
+                                                                                        cmd.author_nickdis),
+                                          cmd.message)
+                await self.cdb.send_message(cmd.message.channel,
+                                            "The trigger %s has been called %d times." % (arg,
+                                                                                          reply["count"]))
+
+    async def list(self, cmd, replies):
+        """ Send the list of the server's trigger messages """
+        if cmd.message.server is None:
+            await self.cdb.send_message(cmd.message.channel,
+                                        "You can't use this command outside of a server for now.")
+            return
+
+        message_to_send = "Here's the list of triggers for {} ({})\n```".format(cmd.message.server.name,
+                                                                                cmd.message.server.id)
         for reply in replies:
             message_to_send += reply["trigger"] + "\n"
         message_to_send += "```"
-        await self.cdb.send_message(message.author, message_to_send)
-        await self.cdb.send_message(message.channel, "{}: I've send you the trigger list by PM.".format(message.author.mention))
-        self.cdb.log_info_command("The trigger list has been requested by %s" % (author), message)
+        await self.cdb.send_message(cmd.message.author, message_to_send)
+        await self.cdb.send_message(cmd.message.channel,
+                                    "{}: I've send you the trigger list by PM.".format(cmd.message.author.mention))
+        self.cdb.log_info_command("The trigger list has been requested by %s" % (cmd.author_nickdis), cmd.message)
         return
 
-    # Lock a reply (OP-ONLY)
-    async def locker(self, message, action, args, author, replies, replies_path):
-        if not isop_user(message.author):
-            await self.cdb.send_message(message.channel, "You don't have the right to do that.")
-            self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED" % (action if len(args) else "[ ERR ]", author), message)
+    async def locker(self, cmd, replies, replies_path):
+        """ Unlock/Lock a reply (OP-ONLY) """
+        if not isop_user(cmd.message.author):
+            await self.cdb.send_message(cmd.message.channel,
+                                        "You don't have the right to do that.")
+            self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED"
+                                      % (cmd.action if len(cmd.args) else "[ ERR ]", cmd.author),
+                                      cmd.message)
             return
-        else:
-            if (args is None or len(args) == 0):
-                await self.cdb.send_message(message.channel, "Try with an argument for this command next time.")
-                return
-            else:
-                old_dict = get_reply(replies, args[0])
-                if (old_dict is None):
-                    return
-                old_dict["locked"] = True if action == "lock" else False
-                await self.cdb.send_message(message.channel, "Roger that, %s trigger has been %s." % (args[0], action + "ed"))
-                self.cdb.log_info_command("%s of trigger %s requested by %s" % (action.capitalize(), args[0], author), message)
-                with open(replies_path, 'w') as replies_file:
-                    hjson.dump(replies, replies_file, indent=' ' * 2)
-        return
+
+        if (cmd.args is None or len(cmd.args) == 0):
+            await self.cdb.send_message(cmd.message.channel, "Try with an argument for this command next time.")
+            return
+
+        old_dict = get_reply(replies, cmd.args[0])
+        if (old_dict is None):
+            return
+
+        old_dict["locked"] = True if cmd.action == "lock" else False
+        await self.cdb.send_message(cmd.message.channel, "Roger that, %s trigger has been %s." % (cmd.args[0], cmd.action + "ed"))
+        self.cdb.log_info_command("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], cmd.author), cmd.message)
+        with open(replies_path, 'w') as replies_file:
+            hjson.dump(replies, replies_file, indent=' ' * 2)
 
     async def replier(self, message, action, args, author, replies, replies_path):
-        # Call the triggered message
+        """ Call the triggered message """
         if (args is None or len(args) == 0 or args[0] == ">"):
             reply = get_reply(replies, action)
             if (reply is not None):
@@ -107,6 +121,10 @@ class ReplierPlugin(Plugin):
             else:
                 pass
                 # self.cdb.log_info_command("Non-existant trigger %s has been called by %s" % (action, author), message)
+
+        elif (args[0] == "<"):
+            if (len(args) > 1):
+                return
 
         # Assign a message to this trigger
         elif (args[0] == "="):
@@ -139,7 +157,7 @@ class ReplierPlugin(Plugin):
         return
 
     async def on_message(self, message, cmd):
-        if not cmd:
+        if not cmd or not cmd.triggered:
             return
 
         # Set file path
@@ -154,17 +172,16 @@ class ReplierPlugin(Plugin):
             return
 
         # Display the commands call count (Module: "replier")
-        if cmd.triggered:
-            if cmd.action in ["count"]:
-                await self.count(message, cmd.action, cmd.args, cmd.author_nickdis, replies)
+        if cmd.action in ["count"]:
+            await self.count(message, cmd, replies)
 
-            # Lock the permission to modify a specific trigger (Module: "replier")
-            elif cmd.action in ["lock", "unlock"]:
-                await self.locker(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)
+        # Lock the permission to modify a specific trigger (Module: "replier")
+        elif cmd.action in ["lock", "unlock"]:
+            await self.locker(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)
 
-            elif cmd.action in ["triggerlist"]:
-                await self.list(message, cmd.action, cmd.args, cmd.author_nickdis, replies)
+        elif cmd.action in ["triggerlist"]:
+            await self.list(message, cmd.action, cmd.args, cmd.author_nickdis, replies)
 
-            # If it's not a built-in command, check if it's related to replies (Module: "replier")
-            else:
-                await self.replier(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)
+        # If it's not a built-in command, check if it's related to replies (Module: "replier")
+        else:
+            await self.replier(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)
