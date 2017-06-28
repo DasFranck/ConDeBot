@@ -17,6 +17,7 @@
 * Whois Plugin
 * Weather Plugin
 * Think about new plugins
+* Docs? API? 
 
 ### END OF THE BACKLOG
 * Check if the bot is really in asyncio mode or I've failed it a bit

@@ -23,8 +23,8 @@ Command = namedtuple("Command",
                       "args"])
 
 
-# Check if user is op
 def isop_user(user):
+    """ Check if user is op """
     nickdis = ""
     if (isinstance(user, str)):
         nickdis = user
@@ -45,8 +45,8 @@ def get_nickdis(user):
     return (user.name + "#" + str(user.discriminator))
 
 
-# Return a tuple which contain metadata of a message
 def get_meta(cdb, message):
+    """ Return a named tuple which contain metadata of a message """
     content = message.content
     args = content.split(" ")
     if (message.author == cdb.user or content is None or len(args[0]) == 0):
@@ -73,13 +73,13 @@ def get_meta(cdb, message):
     return cmd
 
 
-# Display an error in an embed message
 async def display_error(cdb, channel, error_message, title="Error"):
+    """ Display an error in an embed message """
     em = discord.Embed(title=title, description=error_message, colour=0xFF0000)
     await cdb.send_message(channel, embed=em)
 
 
-# Display a warning in an embed message
 async def display_warning(cdb, channel, error_message, title="Warning"):
+    """ Display a warning in an embed message """
     em = discord.Embed(title=title, description=error_message, colour=0xFFCC00)
     await cdb.send_message(channel, embed=em)
