@@ -42,13 +42,13 @@ class ConDeBot(discord.Client):
 
     # Aliases to self.logger functions
     def log_error_command(self, *args, **kwargs):
-        self.logger.log_error_command(args, kwargs)
+        self.logger.log_error_command(*args, **kwargs)
 
     def log_warn_command(self, *args, **kwargs):
-        self.logger.log_warn_command(args, kwargs)
+        self.logger.log_warn_command(*args, **kwargs)
 
     def log_info_command(self, *args, **kwargs):
-        self.logger.log_info_command(args, kwargs)
+        self.logger.log_info_command(*args, **kwargs)
 
     # Triggered when the bot is ready
     async def on_ready(self):
@@ -59,6 +59,8 @@ class ConDeBot(discord.Client):
     # Triggered when the bot receive a message
     async def on_message(self, message):
         cmd = get_meta(self, message)
+        if not cmd:
+            return
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_message(message, cmd))
 

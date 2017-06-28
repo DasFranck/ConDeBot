@@ -47,9 +47,9 @@ def get_nickdis(user):
 
 # Return a tuple which contain metadata of a message
 def get_meta(cdb, message):
-    msg = message.content
-    args = msg.split(" ")
-    if (message.author == cdb.user or msg is None or len(args[0]) == 0):
+    content = message.content
+    args = content.split(" ")
+    if (message.author == cdb.user or content is None or len(args[0]) == 0):
         return None
 
     if (cdb.PREF == ""):
@@ -58,14 +58,14 @@ def get_meta(cdb, message):
         args = args[1:]
     else:
         triggered = args[0] == ("!" + cdb.PREF)
-        action = msg.split(" ")[1] if len(msg.split(" ")) > 1 else ""
+        action = content.split(" ")[1] if len(content.split(" ")) > 1 else ""
         args = args[2:]
 
     cmd = Command(message.content,
                   message.timestamp,
                   message.author.id,
                   get_nickdis(message.author),
-                  msg,
+                  message,
                   triggered,
                   action,
                   args)

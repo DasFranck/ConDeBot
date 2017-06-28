@@ -1,4 +1,5 @@
 ### TOP PRIORITY
+* Fix coffee module (message not displayed, only coffee/tea)
 * Get rid of the Nickdis (Username#Tag) in the whole bot
   * Define ops by User ID and not Username#Tag
 
