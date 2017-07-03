@@ -1,5 +1,4 @@
 ### TOP PRIORITY
-* Fix coffee module (message not displayed, only coffee/tea)
 * Get rid of the Nickdis (Username#Tag) in the whole bot
   * Define ops by User ID and not Username#Tag
 
@@ -7,6 +6,7 @@
 * Support images in replier.py (DL/UL)
 * Help module with generated help messages
 * Lock and forbid every keyword used by other plugins (replier.py)
+* Hangman Plugin
 
 ### MEDIUM PRIORITY
 * SIGTERM/INT support in async ConDeBot class and eventually his launcher
