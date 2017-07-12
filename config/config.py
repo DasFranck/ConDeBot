@@ -16,4 +16,4 @@ token = ""
 # Plugin configuration
 # The variables must begin by the uppercase name of the plugin
 
-STALKER_AUTOSTART = True
+STALKER_AUTOSTART = False
