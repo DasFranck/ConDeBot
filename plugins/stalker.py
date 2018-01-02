@@ -17,7 +17,7 @@ class StalkerPlugin(Plugin):
                                 message.channel,
                                 "You don't have the right to do that."
                                 )
-            self.cdb.log_warn_command("Stalker command use requested by NON-OP {}, FAILED".format(cmd.author_nickdis),
+            self.cdb.log_warn_command("Stalker command use requested by NON-OP {}, FAILED".format(str(cmd.author)),
                                       message)
 
     async def on_member_update(self, before, after):
@@ -45,6 +45,6 @@ class StalkerPlugin(Plugin):
             )
         if (before.nick != after.nick):
             pass
-        if (before.role != after.role):
-            pass
+#        if (before.role != after.role):
+#            pass
         return

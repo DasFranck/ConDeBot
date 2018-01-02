@@ -13,7 +13,7 @@ class VersionPlugin(Plugin):
            or cmd.action not in ["version"]:
             return
 
-        self.cdb.log_info_command("Version requested by " + cmd.author_nickdis,
+        self.cdb.log_info_command("Version requested by " + str(cmd.author),
                                   message)
         await self.cdb.send_message(message.channel,
                                     "{}'s version: {}".format(

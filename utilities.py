@@ -12,9 +12,9 @@ from config.config import OPS_FILE
 Command = namedtuple("Command",
                      # Message content and metadata
                      ["content",
+                      "channel",
                       "timestamp",
-                      "author_id",
-                      "author_nickdis",
+                      "author",
                       "msg",  # Original Message Object reference
 
                       # Command parsing
@@ -23,26 +23,14 @@ Command = namedtuple("Command",
                       "args"])
 
 
-def isop_user(user):
+def isop_user(user_id):
     """ Check if user is op """
-    nickdis = ""
-    if (isinstance(user, str)):
-        nickdis = user
-    elif (isinstance(user, discord.User)):
-        nickdis = get_nickdis(user)
-    else:
-        return (False)
-
     if (os.path.isfile(OPS_FILE)):
         with open(OPS_FILE) as ops_file:
             ops = json.load(ops_file)
-        return (nickdis in ops)
+        return (user_id in ops)
     else:
         return (False)
-
-
-def get_nickdis(user):
-    return (user.name + "#" + str(user.discriminator))
 
 
 def get_meta(cdb, message):
@@ -62,9 +50,9 @@ def get_meta(cdb, message):
         args = args[2:]
 
     cmd = Command(message.content,
+                  message.channel,
                   message.timestamp,
-                  message.author.id,
-                  get_nickdis(message.author),
+                  message.author,
                   message,
                   triggered,
                   action,

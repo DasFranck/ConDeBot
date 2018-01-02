@@ -15,7 +15,7 @@ class CoffeePlugin(Plugin):
 
         # Serve a delicious coffee (Module: "coffee")
         if cmd.action in ["café", "cafe", "coffee"]:
-            self.cdb.log_info_command("Coffee requested by " + cmd.author_nickdis,
+            self.cdb.log_info_command("Coffee requested by " + str(cmd.author),
                                       message)
             await self.cdb.send_message(message.channel, ":coffee:")
             await self.cdb.send_message(message.channel,
@@ -23,7 +23,7 @@ class CoffeePlugin(Plugin):
 
         # Serve a delicious tea (Module: "coffee")
         elif cmd.action in ["thé", "the", "tea"]:
-            self.cdb.log_info_command("Tea requested by " + cmd.author_nickdis,
+            self.cdb.log_info_command("Tea requested by " + str(cmd.author),
                                       message)
             await self.cdb.send_message(message.channel, ":tea:")
             await self.cdb.send_message(message.channel,

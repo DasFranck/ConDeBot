@@ -96,7 +96,7 @@ class ListPlugin(Plugin):
                 if len(cmd.args) == 2:
                     await self.cdb.send_message(message.channel, "Try with a content to put in the list next time.")
                 else:
-                    new_lists = await self.add_to_list(lists, cmd.args[0], " ".join(cmd.args[2:]), message, cmd.author_nickdis)
+                    new_lists = await self.add_to_list(lists, cmd.args[0], " ".join(cmd.args[2:]), message, str(cmd.author))
                     write_to_file(lists_path, new_lists)
             if cmd.args[1] == "get":
                 pass
@@ -110,7 +110,7 @@ class ListPlugin(Plugin):
                 pass
 
         elif len(cmd.args) == 1:
-            new_lists = await self.write_random_from_list(lists, cmd.args[0], message, cmd.author_nickdis)
+            new_lists = await self.write_random_from_list(lists, cmd.args[0], message, str(cmd.author))
             write_to_file(lists_path, new_lists)
 
         else:

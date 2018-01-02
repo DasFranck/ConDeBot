@@ -50,14 +50,14 @@ class ReplierPlugin(Plugin):
             reply = get_reply(replies, arg)
             if (reply is None):
                 self.cdb.log_error_command("Count of non-existant trigger %s requested by %s" % (arg,
-                                                                                                 cmd.author_nickdis),
+                                                                                                 str(cmd.author)),
                                            cmd.msg)
                 await self.cdb.send_message(cmd.msg.channel,
                                             "The trigger %s doesn't even exist." % arg)
             else:
                 self.cdb.log_info_command("Count of trigger %s (%d) requested by %s" % (arg,
                                                                                         reply["count"],
-                                                                                        cmd.author_nickdis),
+                                                                                        str(cmd.author)),
                                           cmd.msg)
                 await self.cdb.send_message(cmd.msg.channel,
                                             "The trigger %s has been called %d times." % (arg,
@@ -78,7 +78,7 @@ class ReplierPlugin(Plugin):
         await self.cdb.send_message(cmd.msg.author, message_to_send)
         await self.cdb.send_message(cmd.msg.channel,
                                     "{}: I've send you the trigger list by PM.".format(cmd.msg.author.mention))
-        self.cdb.log_info_command("The trigger list has been requested by %s" % (cmd.author_nickdis), cmd.msg)
+        self.cdb.log_info_command("The trigger list has been requested by %s" % (str(cmd.author)), cmd.msg)
         return
 
     async def locker(self, cmd, replies, replies_path):
@@ -87,7 +87,7 @@ class ReplierPlugin(Plugin):
             await self.cdb.send_message(cmd.msg.channel,
                                         "You don't have the right to do that.")
             self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED"
-                                      % (cmd.action if len(cmd.args) else "[ ERR ]", cmd.author_nickdis),
+                                      % (cmd.action if len(cmd.args) else "[ ERR ]", str(cmd.author)),
                                       cmd.msg)
             return
 
@@ -101,7 +101,7 @@ class ReplierPlugin(Plugin):
 
         old_dict["locked"] = True if cmd.action == "lock" else False
         await self.cdb.send_message(cmd.msg.channel, "Roger that, %s trigger has been %s." % (cmd.args[0], cmd.action + "ed"))
-        self.cdb.log_info_command("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], cmd.author_nickdis), cmd.msg)
+        self.cdb.log_info_command("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], str(cmd.author)), cmd.msg)
         with open(replies_path, 'w') as replies_file:
             hjson.dump(replies, replies_file, indent=' ' * 2)
 
@@ -180,8 +180,8 @@ class ReplierPlugin(Plugin):
             await self.locker(cmd, replies, replies_path)
 
         elif cmd.action in ["triggerlist"]:
-            await self.list(message, cmd, replies)
+            await self.list(cmd, replies)
 
         # If it's not a built-in command, check if it's related to replies (Module: "replier")
         else:
-            await self.replier(message, cmd.action, cmd.args, cmd.author_nickdis, replies, replies_path)
+            await self.replier(message, cmd.action, cmd.args, str(cmd.author), replies, replies_path)

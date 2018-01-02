@@ -15,9 +15,9 @@ class KaamelottPlugin(Plugin):
             return
 
         if (len(cmd.args) == 0):
-            await self.quote(message, cmd.author_nickdis)
+            await self.quote(message, str(cmd.author))
         elif (len(cmd.args) >= 1 and cmd.args[0] == "-q"):
-            await self.spec(message, cmd.args, cmd.author_nickdis)
+            await self.spec(message, cmd.args, str(cmd.author))
         return
 
     # Display random quotes of Kaamelott
