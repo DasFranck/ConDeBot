@@ -1,0 +1,25 @@
+# Docker related
+.dockerignore
+Dockerfile
+
+# Project related
+.git/
+.gitignore
+Todo.md
+
+# Python related
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*,cover
+*.log
