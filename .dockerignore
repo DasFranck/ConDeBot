@@ -6,6 +6,7 @@ Dockerfile
 .git/
 .gitignore
 Todo.md
+config/
 
 # Python related
 __pycache__
