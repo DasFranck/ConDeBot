@@ -11,8 +11,7 @@ class Logger(logging.Logger):
         # Set logger level to INFO
         self.setLevel(logging.INFO)
 
-        if not (os.path.exists("logs")):
-            os.makedirs("logs")
+        os.makedirs("logs", exist_ok=True)
 
         # Setting handler (Log File)
         handler = logging.FileHandler(filename='logs/discord.log',

@@ -42,8 +42,7 @@ def write_to_file(lists_path, lists):
 class ListPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
-        if not os.path.isdir(LISTS_FILE_DIR):
-            os.makedirs(LISTS_FILE_DIR)
+        os.makedirs(LISTS_FILE_DIR, exist_ok=True)
 
     async def add_to_list(self, lists, list_name, content, message, author):
         old_dict = get_list(lists, list_name)

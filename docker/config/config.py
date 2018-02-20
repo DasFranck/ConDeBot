@@ -6,6 +6,7 @@ SHORT_NAME = "CDB"
 DESCRIPTION = "ConDeBot - Un con de bot Discord"
 CMD_PREFIX = ""
 
+# This path must have a trailing slash
 DATA_PATH = "/data/ConDeBot/"
 
 token = ""
