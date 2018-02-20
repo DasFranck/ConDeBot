@@ -6,7 +6,6 @@ import os
 import hjson
 
 from classes.Plugin import Plugin
-from config.config import REPLIES_FILE_DIR
 from utilities import isop_user
 
 
@@ -23,8 +22,8 @@ def get_reply(replies, trigger):
 class ReplierPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
-        if not os.path.isdir(REPLIES_FILE_DIR):
-            os.makedirs(REPLIES_FILE_DIR)
+        self.REPLIER_DIR_PATH = self.cdb.DATA_PATH + "replier/"
+        os.makedirs(self.REPLIER_DIR_PATH, exist_ok=True)
 
     async def load_replies(self, cmd, replies_path):
         """ Load the replies file into an array of dict """
@@ -162,9 +161,9 @@ class ReplierPlugin(Plugin):
 
         # Set file path
         if message.server is not None:
-            replies_path = REPLIES_FILE_DIR + message.server.id + ".json"
+            replies_path = self.REPLIER_DIR_PATH + message.server.id + ".json"
         else:
-            replies_path = REPLIES_FILE_DIR + "dump.json"
+            replies_path = self.REPLIER_DIR_PATH + "dump.json"
 
         # Load JSON replies file
         replies = await self.load_replies(cmd, replies_path)
