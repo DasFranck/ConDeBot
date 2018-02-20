@@ -31,6 +31,7 @@ class ConDeBot(discord.Client):
         self.SHME = config.SHORT_NAME
         self.DESC = config.DESCRIPTION
         self.PREF = config.CMD_PREFIX
+        self.DATA_PATH = config.DATA_PATH
         self.CDB_PATH = "./"
         self.VERS = "1.0dev"
 

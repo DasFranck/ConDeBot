@@ -7,10 +7,6 @@ DESCRIPTION = "ConDeBot - Un con de bot Discord"
 CMD_PREFIX = ""
 
 DATA_PATH = "/data/ConDeBot/"
-OPS_FILE_PATH = DATA_PATH + "jsonfiles/"
-OPS_FILE = DATA_PATH + OPS_FILE_PATH + "ops.json"
-REPLIES_FILE_DIR = DATA_PATH + "jsonfiles/replies/"
-LISTS_FILE_DIR = DATA_PATH + "jsonfiles/lists/"
 
 token = ""
 
