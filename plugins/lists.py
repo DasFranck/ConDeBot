@@ -6,7 +6,6 @@ import hjson
 import os
 import random
 
-from config.config import LISTS_FILE_DIR
 from classes.Plugin import Plugin
 from utilities import isop_user
 
@@ -39,10 +38,11 @@ def write_to_file(lists_path, lists):
         hjson.dump(lists, lists_file, indent=' ' * 2)
 
 
-class ListPlugin(Plugin):
+class ListsPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
-        os.makedirs(LISTS_FILE_DIR, exist_ok=True)
+        self.LISTS_DIR_PATH = self.cdb.DATA_PATH + "lists/"
+        os.makedirs(self.LISTS_DIR_PATH, exist_ok=True)
 
     async def add_to_list(self, lists, list_name, content, message, author):
         old_dict = get_list(lists, list_name)
@@ -79,9 +79,9 @@ class ListPlugin(Plugin):
 
         # Set file path
         if message.server is not None:
-            lists_path = LISTS_FILE_DIR + message.server.id + ".json"
+            lists_path = self.LISTS_DIR_PATH + message.server.id + ".json"
         else:
-            lists_path = LISTS_FILE_DIR + "dump.json"
+            lists_path = self.LISTS_DIR_PATH + "dump.json"
 
         # Load JSON lists file
         lists = load_lists(lists_path)
