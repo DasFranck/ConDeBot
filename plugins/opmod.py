@@ -6,7 +6,6 @@ import os
 
 import discord
 
-from config.config import OPS_FILE, OPS_FILE_PATH
 from classes.Plugin import Plugin
 from utilities import isop_user, display_error, display_warning
 
@@ -18,8 +17,6 @@ from utilities import isop_user, display_error, display_warning
 class OpModPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
-        if (not os.path.exists(OPS_FILE_PATH)):
-            os.makedirs(OPS_FILE_PATH)
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \
@@ -27,8 +24,8 @@ class OpModPlugin(Plugin):
             return
 
         # If json file exist, load it
-        if (os.path.isfile(OPS_FILE)):
-            with open(OPS_FILE) as ops_file:
+        if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
+            with open(self.cdb.OPS_FILE_PATH) as ops_file:
                 ops = json.load(ops_file)
         else:
             ops = []
@@ -45,7 +42,7 @@ class OpModPlugin(Plugin):
         elif (cmd.action == "op_list"):
             await self.op_list(cmd, ops)
 
-        with open(OPS_FILE, 'w') as ops_file:
+        with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
             json.dump(ops, ops_file)
         return
 
@@ -82,7 +79,7 @@ class OpModPlugin(Plugin):
                 continue
 
             ops.append(arg)
-            with open(OPS_FILE, 'w') as ops_file:
+            with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
                 json.dump(ops, ops_file)
             await self.cdb.send_message(cmd.channel, "%s has been added as operator" % arg)
             self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
@@ -101,7 +98,7 @@ class OpModPlugin(Plugin):
                 self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
-            with open(OPS_FILE, 'w') as ops_file:
+            with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
                 json.dump(ops, ops_file)
             ops.remove(arg)
             await self.cdb.send_message(cmd.channel, "%s has been removed from operator list" % arg)
