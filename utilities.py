@@ -4,10 +4,6 @@
 from collections import namedtuple
 import discord
 import json
-import os
-
-from config.config import OPS_FILE
-
 
 Command = namedtuple("Command",
                      # Message content and metadata
@@ -21,16 +17,6 @@ Command = namedtuple("Command",
                       "triggered",
                       "action",
                       "args"])
-
-
-def isop_user(user_id):
-    """ Check if user is op """
-    if (os.path.isfile(OPS_FILE)):
-        with open(OPS_FILE) as ops_file:
-            ops = json.load(ops_file)
-        return (user_id in ops)
-    else:
-        return (False)
 
 
 def get_meta(cdb, message):

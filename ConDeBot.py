@@ -14,6 +14,7 @@
 #            + "```"
 
 import argparse
+import os
 import sys
 
 sys.path.insert(0, "lib")
@@ -32,6 +33,7 @@ class ConDeBot(discord.Client):
         self.DESC = config.DESCRIPTION
         self.PREF = config.CMD_PREFIX
         self.DATA_PATH = config.DATA_PATH
+        self.OPS_FILE_PATH = config.DATA_PATH + "/ops.json"
         self.CDB_PATH = "./"
         self.VERS = "1.0dev"
 
@@ -130,6 +132,16 @@ class ConDeBot(discord.Client):
 
     async def on_typing(self, channel, user, when):
         pass
+
+    def isop_user(self, user_id):
+        """ Check if user is op """
+        if (os.path.isfile(self.OPS_FILE_PATH)):
+            with open(self.OPS_FILE_PATH) as ops_file:
+                ops = json.load(ops_file)
+            return (user_id in ops)
+        else:
+            return (False)
+
 
 
 # The Main.
