@@ -19,7 +19,7 @@ class OpModPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
 
-    def mention_to_user_id(self, mention)
+    def mention_to_user_id(self, mention):
         return re.sub('[<>@]', '', mention)
 
     async def on_message(self, message, cmd):
