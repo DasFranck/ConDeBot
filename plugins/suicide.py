@@ -4,7 +4,6 @@
 import sys
 
 from classes.Plugin import Plugin
-from utilities import isop_user
 
 
 class SuicidePlugin(Plugin):

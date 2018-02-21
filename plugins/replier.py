@@ -6,7 +6,6 @@ import os
 import hjson
 
 from classes.Plugin import Plugin
-from utilities import isop_user
 
 
 # Get the reply dict assign to the trigger

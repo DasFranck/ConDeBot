@@ -3,7 +3,6 @@
 
 import time
 from classes.Plugin import Plugin
-from utilities import isop_user, display_error
 
 
 class StalkerPlugin(Plugin):

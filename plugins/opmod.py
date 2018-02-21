@@ -7,7 +7,7 @@ import os
 import discord
 
 from classes.Plugin import Plugin
-from utilities import isop_user, display_error, display_warning
+from utilities import display_error, display_warning
 
 
 

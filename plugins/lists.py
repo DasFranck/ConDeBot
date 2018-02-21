@@ -7,7 +7,6 @@ import os
 import random
 
 from classes.Plugin import Plugin
-from utilities import isop_user
 
 
 # Load the lists file into an array of dict
@@ -52,7 +51,7 @@ class ListsPlugin(Plugin):
             self.cdb.log_info_command("The new list %s has been created by %s" % (list_name, author), message)
         else:
             # Check if the reply dict is locked
-            if (not isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
+            if (not self.cdb.isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
                 await self.cdb.send_message(message.channel, "Sorry, the %s list has been locked by an operator." % list_name)
                 self.cdb.log_warn_command("The locked list %s modification has been requested by NON-OP %s, FAILED" % (list_name, author), message)
                 return lists
