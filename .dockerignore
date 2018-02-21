@@ -7,11 +7,13 @@ Dockerfile
 .gitignore
 Todo.md
 config/
+lib/
 data/jsonfiles/lists/*
 data/jsonfiles/replies/*
 
 # Python related
 __pycache__
+*/__pycache__
 *.pyc
 *.pyo
 *.pyd
