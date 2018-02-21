@@ -3,6 +3,7 @@
 
 import json
 import os
+import re
 
 import discord
 
@@ -17,6 +18,9 @@ from utilities import display_error, display_warning
 class OpModPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+
+    def mention_to_user_id(self, mention)
+        return re.sub('[<>@]', '', mention)
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \
@@ -68,6 +72,8 @@ class OpModPlugin(Plugin):
     # Op user
     async def op_him(self, cmd, ops):
         for arg in cmd.args:
+            arg = self.mention_to_user_id(arg)
+
             if not self.cdb.isop_user(cmd.author.id):
                 await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
                 self.cdb.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
@@ -88,6 +94,8 @@ class OpModPlugin(Plugin):
     # Deop user
     async def deop_him(self, cmd, ops):
         for arg in cmd.args:
+            arg = self.mention_to_user_id(arg)
+
             if not self.cdb.isop_user(cmd.author.id):
                 await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
                 self.cdb.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
