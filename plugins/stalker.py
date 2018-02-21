@@ -4,6 +4,7 @@
 import time
 from classes.Plugin import Plugin
 
+from utilities import display_error
 
 class StalkerPlugin(Plugin):
     async def on_message(self, message, cmd):
@@ -11,7 +12,7 @@ class StalkerPlugin(Plugin):
            or cmd.action not in ["stalk"]:
             return
 
-        if not isop_user(message.author):
+        if not self.cdb.isop_user(message.author):
             await display_error(self.cdb,
                                 message.channel,
                                 "You don't have the right to do that."

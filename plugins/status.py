@@ -4,7 +4,6 @@
 import discord
 
 from classes.Plugin import Plugin
-from utilities import isop_user
 
 
 class StatusPlugin(Plugin):
@@ -24,7 +23,7 @@ class StatusPlugin(Plugin):
            or cmd.action not in ["status", "game"]:
             return
 
-        if not isop_user(message.author):
+        if not self.cdb.isop_user(message.author):
             await self.cdb.send_message(message.channel, "You don't have the right to do that.")
             self.cdb.log_warn_command("Changing bot status requested by NON-OP %s, FAILED" % (str(cmd.author)), message)
         else:

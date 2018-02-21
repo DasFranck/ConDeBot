@@ -49,8 +49,8 @@ class OpModPlugin(Plugin):
     # Check if user is op (LOGGED FUNCTION, meant to be used via !isop "nickdis")
     async def isop_l(self, cmd):
         for arg in cmd.args:
-            self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, await isop_user(arg), str(cmd.author)), cmd.msg)
-            if isop_user(arg):
+            self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, await self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
+            if self.cdb.isop_user(arg):
                 await self.cdb.send_message(cmd.channel, "%s is an operator" % arg)
             else:
                 await self.cdb.send_message(cmd.channel, "%s is not an operator" % arg)
@@ -58,8 +58,8 @@ class OpModPlugin(Plugin):
 
     # Check if user who called the command is op (LOGGED FUNCTION, meant to be used via !isop)
     async def isop_s(self, cmd):
-        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (str(cmd.author), await isop_user(cmd.author.id), str(cmd.author)), cmd.msg)
-        if isop_user(cmd.author.id):
+        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (str(cmd.author), await self.cdb.isop_user(cmd.author.id), str(cmd.author)), cmd.msg)
+        if self.cdb.isop_user(cmd.author.id):
             await self.cdb.send_message(cmd.channel, "You are an operator")
         else:
             await self.cdb.send_message(cmd.channel, "You are not an operator")
@@ -68,12 +68,12 @@ class OpModPlugin(Plugin):
     # Op user
     async def op_him(self, cmd, ops):
         for arg in cmd.args:
-            if not isop_user(cmd.author.id):
+            if not self.cdb.isop_user(cmd.author.id):
                 await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
                 self.cdb.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
                 return (ops)
 
-            if isop_user(arg):
+            if self.cdb.isop_user(arg):
                 await display_warning(self.cdb, cmd.channel, "%s is already an operator" % arg)
                 self.cdb.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
@@ -88,12 +88,12 @@ class OpModPlugin(Plugin):
     # Deop user
     async def deop_him(self, cmd, ops):
         for arg in cmd.args:
-            if not isop_user(cmd.author.id):
+            if not self.cdb.isop_user(cmd.author.id):
                 await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
                 self.cdb.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
                 return (ops)
 
-            if not isop_user(arg):
+            if not self.cdb.isop_user(arg):
                 await display_warning(self.cdb, cmd.channel, "%s is already not an operator" % arg)
                 self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue

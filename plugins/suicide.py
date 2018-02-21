@@ -13,7 +13,7 @@ class SuicidePlugin(Plugin):
             return
 
         if cmd.action in ["slain", "kill", "suicide"]:
-            if not isop_user(message.author):
+            if not self.cdb.isop_user(message.author):
                 await self.cdb.send_message(message.channel,
                                             "You don't have the right to do that.")
                 self.cdb.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % str(cmd.author), message)
@@ -36,7 +36,7 @@ class SuicidePlugin(Plugin):
             await self.cdb.logout()
 
         if cmd.action in ["restart", "reboot"]:
-            if not isop_user(message.author):
+            if not self.cdb.isop_user(message.author):
                 await self.cdb.send_message(message.channel, "You don't have the right to do that.")
                 self.cdb.log_warn_command("Bot restart requested by NON-OP %s, FAILED" % str(cmd.author), message)
             else:
