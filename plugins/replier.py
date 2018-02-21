@@ -81,7 +81,7 @@ class ReplierPlugin(Plugin):
 
     async def locker(self, cmd, replies, replies_path):
         """ Unlock/Lock a reply (OP-ONLY) """
-        if not isop_user(cmd.msg.author):
+        if not self.cdb.isop_user(cmd.msg.author):
             await self.cdb.send_message(cmd.msg.channel,
                                         "You don't have the right to do that.")
             self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED"
@@ -136,7 +136,7 @@ class ReplierPlugin(Plugin):
                     self.cdb.log_info_command("The new trigger %s has been set by %s" % (action, author), message)
                 else:
                     # Check if the reply dict is locked
-                    if (not isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
+                    if (not self.cdb.isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
                         await self.cdb.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
                         self.cdb.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
                         return
