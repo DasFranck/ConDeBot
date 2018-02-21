@@ -14,10 +14,11 @@
 #            + "```"
 
 import argparse
+import json
 import os
 import sys
 
-sys.path.insert(0, "lib")
+# sys.path.insert(0, "lib")
 import discord
 
 from classes.PluginManager import PluginManager
