@@ -8,8 +8,11 @@ Dockerfile
 Todo.md
 config/
 lib/
-data/jsonfiles/lists/*
-data/jsonfiles/replies/*
+logs/
+
+data/replier/
+data/lists/
+data/ops.json
 
 # Python related
 __pycache__
@@ -19,6 +22,8 @@ __pycache__
 *.pyd
 .Python
 env
+.venv
+venv
 pip-log.txt
 pip-delete-this-directory.txt
 .tox

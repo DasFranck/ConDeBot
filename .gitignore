@@ -5,9 +5,11 @@
 .cache
 .config
 
-data/logs/
-data/jsonfiles/lists/
-data/jsonfiles/replies/
+data/replier/
+data/lists/
+data/ops.json
+
+logs/
 
 # Virtualenv files
 .Python
@@ -19,4 +21,5 @@ data/jsonfiles/replies/
 [Ss]cripts
 pyvenv.cfg
 .venv
+venv
 pip-selfcheck.json
