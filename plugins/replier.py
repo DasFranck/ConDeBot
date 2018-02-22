@@ -27,9 +27,9 @@ class ReplierPlugin(Plugin):
     async def load_replies(self, cmd, replies_path):
         """ Load the replies file into an array of dict """
         if (os.path.isfile(replies_path)):
-            with open(replies_path) as replies_file:
+            with open(replies_path, encoding="utf8") as replies_file:
                 try:
-                    return hjson.load(replies_file)
+                    return hjson.load(replies_file, encoding="utf8")
                 except:
                     self.cdb.logger.error("JSON replies file loading failed.")
                     await self.cdb.send_message(cmd.msg.channel, "The JSON replies file seems corrupted. Please fix it before using the replier module.")
@@ -100,8 +100,8 @@ class ReplierPlugin(Plugin):
         old_dict["locked"] = True if cmd.action == "lock" else False
         await self.cdb.send_message(cmd.msg.channel, "Roger that, %s trigger has been %s." % (cmd.args[0], cmd.action + "ed"))
         self.cdb.log_info_command("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], str(cmd.author)), cmd.msg)
-        with open(replies_path, 'w') as replies_file:
-            hjson.dump(replies, replies_file, indent=' ' * 2)
+        with open(replies_path, 'w', encoding="utf8") as replies_file:
+            hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
 
     async def replier(self, message, action, args, author, replies, replies_path):
         """ Call the triggered message """
@@ -114,8 +114,8 @@ class ReplierPlugin(Plugin):
                     await self.cdb.send_message(message.channel, reply["message"])
                 reply["count"] += 1
                 self.cdb.log_info_command("The trigger %s has been called by %s" % (action, author), message)
-                with open(replies_path, 'w') as replies_file:
-                    hjson.dump(replies, replies_file, indent=' ' * 2)
+                with open(replies_path, 'w', encoding="utf8") as replies_file:
+                    hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
             else:
                 pass
                 # self.cdb.log_info_command("Non-existant trigger %s has been called by %s" % (action, author), message)
@@ -147,8 +147,8 @@ class ReplierPlugin(Plugin):
                         old_dict["locked"] = False
                         self.cdb.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
                 await self.cdb.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
-                with open(replies_path, 'w') as replies_file:
-                    hjson.dump(replies, replies_file, indent=' ' * 2)
+                with open(replies_path, 'w', encoding="utf8") as replies_file:
+                    hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
             else:
                 await self.cdb.send_message(message.channel, "You should try to put a message to assign to this trigger.")
                 return
