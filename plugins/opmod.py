@@ -53,6 +53,8 @@ class OpModPlugin(Plugin):
     # Check if user is op (LOGGED FUNCTION, meant to be used via !isop "nickdis")
     async def isop_l(self, cmd):
         for arg in cmd.args:
+            arg = self.mention_to_user_id(arg)
+
             self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
             if self.cdb.isop_user(arg):
                 await self.cdb.send_message(cmd.channel, "%s is an operator" % arg)
@@ -80,14 +82,14 @@ class OpModPlugin(Plugin):
                 return (ops)
 
             if self.cdb.isop_user(arg):
-                await display_warning(self.cdb, cmd.channel, "%s is already an operator" % arg)
+                await display_warning(self.cdb, cmd.channel, "%s is already an operator" % discord.utils.get(cmd.msg.server.members, id=arg))
                 self.cdb.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
             ops.append(arg)
             with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
                 json.dump(ops, ops_file)
-            await self.cdb.send_message(cmd.channel, "%s has been added as operator" % arg)
+            await self.cdb.send_message(cmd.channel, "%s has been added as operator" % discord.utils.get(cmd.msg.server.members, id=arg))
             self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
         return (ops)
 
@@ -102,14 +104,14 @@ class OpModPlugin(Plugin):
                 return (ops)
 
             if not self.cdb.isop_user(arg):
-                await display_warning(self.cdb, cmd.channel, "%s is already not an operator" % arg)
+                await display_warning(self.cdb, cmd.channel, "%s is already not an operator" % discord.utils.get(cmd.msg.server.members, id=arg))
                 self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
             with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
                 json.dump(ops, ops_file)
             ops.remove(arg)
-            await self.cdb.send_message(cmd.channel, "%s has been removed from operator list" % arg)
+            await self.cdb.send_message(cmd.channel, "%s has been removed from operator list" % discord.utils.get(cmd.msg.server.members, id=arg))
             self.cdb.log_info_command("Deleting operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
         return (ops)
 
