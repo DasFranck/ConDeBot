@@ -11,16 +11,15 @@ from classes.Plugin import Plugin
 from utilities import display_error, display_warning
 
 
-
-## OP ONLY USABLE VIA ID FOR NOW
-## NEED CODE REVIEW
+## Should add security for the id/mention input
+## Need code review
 
 class OpModPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
 
     def mention_to_user_id(self, mention):
-        return re.sub('[<>@]', '', mention)
+        return re.sub('[<>!@]', '', mention)
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \
