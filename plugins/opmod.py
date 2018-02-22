@@ -8,7 +8,7 @@ import re
 import discord
 
 from classes.Plugin import Plugin
-from utilities import display_error, display_warning
+from utilities import display_error, display_warning, display_success
 
 
 ## Should add security for the id/mention input
@@ -88,7 +88,7 @@ class OpModPlugin(Plugin):
             ops.append(arg)
             with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
                 json.dump(ops, ops_file)
-            await self.cdb.send_message(cmd.channel, "%s has been added as operator" % discord.utils.get(cmd.msg.server.members, id=arg))
+            await display_success(self.cdb, cmd.channel, "%s has been added as operator" % discord.utils.get(cmd.msg.server.members, id=arg))
             self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
         return (ops)
 
@@ -110,7 +110,7 @@ class OpModPlugin(Plugin):
             with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
                 json.dump(ops, ops_file)
             ops.remove(arg)
-            await self.cdb.send_message(cmd.channel, "%s has been removed from operator list" % discord.utils.get(cmd.msg.server.members, id=arg))
+            await display_success(self.cdb, cmd.channel, "%s has been removed from operator list" % discord.utils.get(cmd.msg.server.members, id=arg))
             self.cdb.log_info_command("Deleting operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
         return (ops)
 
