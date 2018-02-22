@@ -34,7 +34,7 @@ class Logger(logging.Logger):
         if (message.channel.is_private is True):
             self.info(string + " in a Private Channel")
         else:
-            self.info("{} in #{} on {} (%{})".format(string,
+            self.info("{} in #{} on {} ({})".format(string,
                                                      message.channel.name,
                                                      message.server.name,
                                                      message.server.id))
@@ -44,7 +44,7 @@ class Logger(logging.Logger):
         if (message.channel.is_private is True):
             self.error(string + " in a Private Channel")
         else:
-            self.error("{} in #{} on {} (%{})".format(string,
+            self.error("{} in #{} on {} ({})".format(string,
                                                       message.channel.name,
                                                       message.server.name,
                                                       message.server.id))
@@ -54,7 +54,7 @@ class Logger(logging.Logger):
         if (message.channel.is_private is True):
             self.warn(string + " in a Private Channel")
         else:
-            self.warn("{} in #{} on {} (%{})".format(string,
+            self.warn("{} in #{} on {} ({})".format(string,
                                                      message.channel.name,
                                                      message.server.name,
                                                      message.server.id))

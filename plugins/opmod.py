@@ -53,7 +53,7 @@ class OpModPlugin(Plugin):
     # Check if user is op (LOGGED FUNCTION, meant to be used via !isop "nickdis")
     async def isop_l(self, cmd):
         for arg in cmd.args:
-            self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, await self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
+            self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
             if self.cdb.isop_user(arg):
                 await self.cdb.send_message(cmd.channel, "%s is an operator" % arg)
             else:
@@ -62,7 +62,7 @@ class OpModPlugin(Plugin):
 
     # Check if user who called the command is op (LOGGED FUNCTION, meant to be used via !isop)
     async def isop_s(self, cmd):
-        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (str(cmd.author), await self.cdb.isop_user(cmd.author.id), str(cmd.author)), cmd.msg)
+        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (str(cmd.author), self.cdb.isop_user(cmd.author.id), str(cmd.author)), cmd.msg)
         if self.cdb.isop_user(cmd.author.id):
             await self.cdb.send_message(cmd.channel, "You are an operator")
         else:
