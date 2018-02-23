@@ -37,11 +37,29 @@ class ConDeBot(discord.Client):
         self.CDB_PATH = "./"
         self.VERS = "1.0dev"
 
+        self._reserved_keyword = {}
+
         super().__init__(*args, **kwargs)
 
         self.logger = Logger()
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
+
+    # Manage reserved keywords
+    def reserve_keyword(self, keyword, plugin_name):
+        if keyword not in self._reserved_keywords:
+            self._reserved_keywords[keyword] = [plugin_name]
+        else:
+            print("Warning: Conflicting with the plugins {} for the keyword {}".format(self._reserved_keywords[keyword], keyword))
+            self._reserved_keywords[keyword].append(plugin_name)
+        pass
+
+    def unreserve_keyword(self, keyword):
+        del self._reserved_keywords[keyword]
+
+    def reserve_keywords(self, keyword_list, plugin_name):
+        for keyword in keyword_list:
+            self.reserve_keyword(keyword, plugin_name)
 
     # Aliases to self.logger functions
     def log_error_command(self, *args, **kwargs):
