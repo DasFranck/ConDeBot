@@ -8,4 +8,6 @@ install:
   - pip install -r requirements.txt
 script:
   - flake8 . --ignore=E402,E501,E722
+  - BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  - if [ "$BRANCH" = "dev" ] || [ "$BRANCH" = "master" ]; then curl -H "Content-Type: application/json" --data '{"source_type": "Branch", "source_name": "$BRANCH"}' -X POST https://registry.hub.docker.com/u/dasfranck/condebot/trigger/${DOCKER_TRIGGER_TOKEN}/; fi;
 cache: pip
