@@ -8,6 +8,7 @@ from classes.Plugin import Plugin
 
 from utilities import display_error
 
+
 class StalkerPlugin(Plugin):
     async def on_message(self, message, cmd):
         if not cmd.triggered \
