@@ -10,9 +10,9 @@ config/
 lib/
 logs/
 
-data/replier/
-data/lists/
-data/ops.json
+data/
+!data/coffee
+!data/kaamelott
 
 # Python related
 __pycache__

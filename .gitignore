@@ -5,9 +5,9 @@
 .cache
 .config
 
-data/replier/
-data/lists/
-data/ops.json
+data/
+!data/coffee
+!data/kaamelott
 
 logs/
 
