@@ -25,7 +25,7 @@ def main():
     if not args.no_pip:
         print("Downloading or updating requirements, please wait...")
         status_code = subprocess.call([sys.executable, "-m", "pip",
-                                                       "install", "--upgrade",
+                                                       "install",
                                                        "--target", "lib",
                                                        "-r", "requirements.txt"
                                        ])
