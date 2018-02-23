@@ -11,8 +11,8 @@ from classes.Plugin import Plugin
 from utilities import display_error, display_warning, display_success
 
 
-## Should add security for the id/mention input
-## Need code review
+# Should add checks for the id/mention input
+# Need code review
 
 class OpModPlugin(Plugin):
     def __init__(self, cdb):

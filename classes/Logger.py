@@ -35,9 +35,9 @@ class Logger(logging.Logger):
             self.info(string + " in a Private Channel")
         else:
             self.info("{} in #{} on {} ({})".format(string,
-                                                     message.channel.name,
-                                                     message.server.name,
-                                                     message.server.id))
+                                                    message.channel.name,
+                                                    message.server.name,
+                                                    message.server.id))
 
     def log_error_command(self, string, message):
         """ Add an entry in the log with error level. """
@@ -45,9 +45,9 @@ class Logger(logging.Logger):
             self.error(string + " in a Private Channel")
         else:
             self.error("{} in #{} on {} ({})".format(string,
-                                                      message.channel.name,
-                                                      message.server.name,
-                                                      message.server.id))
+                                                     message.channel.name,
+                                                     message.server.name,
+                                                     message.server.id))
 
     def log_warn_command(self, string, message):
         """ Add an entry in the log with warn level. """
@@ -55,6 +55,6 @@ class Logger(logging.Logger):
             self.warn(string + " in a Private Channel")
         else:
             self.warn("{} in #{} on {} ({})".format(string,
-                                                     message.channel.name,
-                                                     message.server.name,
-                                                     message.server.id))
+                                                    message.channel.name,
+                                                    message.server.name,
+                                                    message.server.id))

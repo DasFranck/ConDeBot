@@ -16,7 +16,6 @@
 import argparse
 import json
 import os
-import sys
 
 # sys.path.insert(0, "lib")
 import discord
@@ -142,7 +141,6 @@ class ConDeBot(discord.Client):
             return (user_id in ops)
         else:
             return (False)
-
 
 
 # The Main.

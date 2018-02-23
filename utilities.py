@@ -3,7 +3,6 @@
 
 from collections import namedtuple
 import discord
-import json
 
 Command = namedtuple("Command",
                      # Message content and metadata
