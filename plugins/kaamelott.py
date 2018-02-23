@@ -22,7 +22,7 @@ class KaamelottPlugin(Plugin):
 
     # Display random quotes of Kaamelott
     async def quote(self, message, author):
-        fd_kaam = codecs.open(self.cdb.DATA_PATH + "txtfiles/kaamelott.txt", "r", encoding="utf8")
+        fd_kaam = codecs.open(self.cdb.DATA_PATH + "kaamelott/quotes.txt", "r", encoding="utf8")
         buf = fd_kaam.read()
         nb = random.randint(1, int(buf[0:buf.index('\n')]))
         beg_quote = buf.find("#" + str(nb))
@@ -35,7 +35,7 @@ class KaamelottPlugin(Plugin):
 
     # Display specific quotes of Kaamelott
     async def spec(self, message, args, author):
-        fd_kaam = codecs.open(self.cdb.DATA_PATH + "txtfiles/kaamelott.txt", "r", encoding="utf8")
+        fd_kaam = codecs.open(self.cdb.DATA_PATH + "kaamelott/quotes.txt", "r", encoding="utf8")
         buf = fd_kaam.read()
 
         if (len(args) == 1):
