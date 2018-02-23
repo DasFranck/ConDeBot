@@ -12,7 +12,7 @@ from classes.Plugin import Plugin
 # Load the lists file into an array of dict
 def load_lists(lists_path):
     if (os.path.isfile(lists_path)):
-        with open(lists_path) as lists_file:
+        with open(lists_path, encoding="utf8") as lists_file:
             try:
                 return hjson.load(lists_file)
             except:
@@ -33,7 +33,7 @@ def get_list(lists, name):
 
 # Write the lists to the hjson file
 def write_to_file(lists_path, lists):
-    with open(lists_path, 'w') as lists_file:
+    with open(lists_path, 'w', encoding="utf8") as lists_file:
         hjson.dump(lists, lists_file, indent=' ' * 2)
 
 

@@ -28,7 +28,7 @@ class OpModPlugin(Plugin):
 
         # If json file exist, load it
         if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
-            with open(self.cdb.OPS_FILE_PATH) as ops_file:
+            with open(self.cdb.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 ops = json.load(ops_file)
         else:
             ops = []
@@ -45,7 +45,7 @@ class OpModPlugin(Plugin):
         elif (cmd.action == "op_list"):
             await self.op_list(cmd, ops)
 
-        with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
+        with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
             json.dump(ops, ops_file)
         return
 
@@ -86,7 +86,7 @@ class OpModPlugin(Plugin):
                 continue
 
             ops.append(arg)
-            with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
+            with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
                 json.dump(ops, ops_file)
             await display_success(self.cdb, cmd.channel, "%s has been added as operator" % discord.utils.get(cmd.msg.server.members, id=arg))
             self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
@@ -107,7 +107,7 @@ class OpModPlugin(Plugin):
                 self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
-            with open(self.cdb.OPS_FILE_PATH, 'w') as ops_file:
+            with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
                 json.dump(ops, ops_file)
             ops.remove(arg)
             await display_success(self.cdb, cmd.channel, "%s has been removed from operator list" % discord.utils.get(cmd.msg.server.members, id=arg))

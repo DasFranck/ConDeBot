@@ -137,7 +137,7 @@ class ConDeBot(discord.Client):
     def isop_user(self, user_id):
         """ Check if user is op """
         if (os.path.isfile(self.OPS_FILE_PATH)):
-            with open(self.OPS_FILE_PATH) as ops_file:
+            with open(self.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 ops = json.load(ops_file)
             return (user_id in ops)
         else:
