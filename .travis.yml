@@ -11,5 +11,5 @@ script:
   - BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 after_success:
-  - ./travis/trigger_docker_build.sh
+  - bash ./travis/trigger_docker_build.sh
 cache: pip

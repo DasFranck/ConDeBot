@@ -1,16 +1,16 @@
 ### Steps before release:
-- [ ] Support images in replier.py (DL/UL)
 - [ ] Help module with generated help messages
 - [ ] Lock and forbid every keyword used by other plugins (replier.py)
-- [ ] Rethink project arborescence
-- [ ] Better "dockerization"
+- [x] Rethink project arborescence
+- [x] Better "dockerization"
 - [x] Add docker build and push to master branch CI
 
 
 ### HIGH PRIORITY
 
 ### MEDIUM PRIORITY
-* SIGTERM/INT support in async ConDeBot class and eventually his launcher
+* Support images in replier.py (DL/UL)
+* SIGTERM/INT support in async ConDeBot class
 * Do an op level per server
 * Learn about unit test in discord.py
 * Databases instead of plain (h)json files
