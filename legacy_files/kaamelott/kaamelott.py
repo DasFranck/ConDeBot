@@ -6,8 +6,10 @@ import random
 
 from classes.Plugin import Plugin
 
+# Warning
 # This is a really old legacy code.
 # I learned json something like 4 years ago, I should definitly replace this crappy txt parsing.
+
 
 class KaamelottPlugin(Plugin):
     def __init__(self, cdb):
