@@ -33,3 +33,6 @@ pip-delete-this-directory.txt
 coverage.xml
 *,cover
 *.log
+
+# VSC related
+.vscode

@@ -23,3 +23,6 @@ pyvenv.cfg
 .venv
 venv
 pip-selfcheck.json
+
+# VSC related
+.vscode
