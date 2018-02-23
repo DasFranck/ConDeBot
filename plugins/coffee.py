@@ -10,7 +10,7 @@ from classes.Plugin import Plugin
 class CoffeePlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
-        self.COFFEE_FILE_PATH = self.cdb.DATA_PATH + "jsonfiles/coffee.json"
+        self.COFFEE_FILE_PATH = self.cdb.DATA_PATH + "coffee/quotes.json"
 
     async def on_message(self, message, cmd):
         if not cmd or not cmd.triggered:
