@@ -17,6 +17,7 @@ from utilities import display_error, display_warning, display_success
 class OpModPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+        cdb.reserve_keywords(["op", "deop", "isop", "op_list"], "OpMod")
 
     def mention_to_user_id(self, mention):
         return re.sub('[<>!@]', '', mention)

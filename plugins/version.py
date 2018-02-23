@@ -7,6 +7,7 @@ from classes.Plugin import Plugin
 class VersionPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+        cdb.reserve_keywords(["version"], "Version")
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \

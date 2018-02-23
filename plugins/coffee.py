@@ -11,6 +11,7 @@ class CoffeePlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
         self.COFFEE_FILE_PATH = self.cdb.DATA_PATH + "coffee/quotes.json"
+        cdb.reserve_keywords(["café", "cafe", "coffee", "thé", "the", "tea"], "Coffee")
 
     async def on_message(self, message, cmd):
         if not cmd or not cmd.triggered:

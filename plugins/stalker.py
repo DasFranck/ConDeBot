@@ -10,6 +10,10 @@ from utilities import display_error
 
 
 class StalkerPlugin(Plugin):
+    def __init__(self, cdb):
+        super().__init__(cdb)
+        cdb.reserve_keywords(["stalk"], "Stalker")
+
     async def on_message(self, message, cmd):
         if not cmd.triggered \
            or cmd.action not in ["stalk"]:

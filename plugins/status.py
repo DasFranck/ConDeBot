@@ -17,6 +17,7 @@ class StatusPlugin(Plugin):
                             "invisible": discord.Status.invisible}
         self.status = None
         self.game = None
+        cdb.reserve_keywords(["status", "game"], "Status")
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \

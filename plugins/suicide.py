@@ -7,6 +7,10 @@ from classes.Plugin import Plugin
 
 
 class SuicidePlugin(Plugin):
+    def __init__(self, cdb):
+        super().__init__(cdb)
+        cdb.reserve_keywords(["slain", "kill", "suicide", "restart", "reboot"], "Suicide")
+
     async def on_message(self, message, cmd):
         if not cmd \
            or not cmd.triggered:

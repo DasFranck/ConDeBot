@@ -42,6 +42,7 @@ class ListsPlugin(Plugin):
         super().__init__(cdb)
         self.LISTS_DIR_PATH = self.cdb.DATA_PATH + "lists/"
         os.makedirs(self.LISTS_DIR_PATH, exist_ok=True)
+        cdb.reserve_keywords(["list"], "Lists")
 
     async def add_to_list(self, lists, list_name, content, message, author):
         old_dict = get_list(lists, list_name)
