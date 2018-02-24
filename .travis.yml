@@ -8,8 +8,6 @@ install:
   - pip install -r requirements.txt
 script:
   - flake8 . --ignore=E402,E501,E722
-  - BRANCH=$(git rev-parse --abbrev-ref HEAD)
-
 after_success:
   - bash ./travis/trigger_docker_build.sh
 cache: pip
