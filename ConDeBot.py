@@ -37,7 +37,7 @@ class ConDeBot(discord.Client):
         self.CDB_PATH = "./"
         self.VERS = "1.0dev"
 
-        self._reserved_keyword = {}
+        self._reserved_keywords = {}
 
         super().__init__(*args, **kwargs)
 
@@ -60,6 +60,10 @@ class ConDeBot(discord.Client):
     def reserve_keywords(self, keyword_list, plugin_name):
         for keyword in keyword_list:
             self.reserve_keyword(keyword, plugin_name)
+
+    def unreserve_keywords(self, keyword_list):
+        for keyword in keyword_list:
+            self.unreserve_keyword(keyword)
 
     # Aliases to self.logger functions
     def log_error_command(self, *args, **kwargs):
