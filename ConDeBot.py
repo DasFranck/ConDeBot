@@ -160,7 +160,7 @@ class ConDeBot(discord.Client):
         if (os.path.isfile(self.OPS_FILE_PATH)):
             with open(self.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 ops = json.load(ops_file)
-            return (user_id in ops)
+            return (ops["global"] and user_id in ops["global"])
         else:
             return (False)
 
