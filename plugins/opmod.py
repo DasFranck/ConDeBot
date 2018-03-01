@@ -142,12 +142,18 @@ class OpModPlugin(Plugin):
         await self.cdb.send_message(cmd.channel, string)
         self.cdb.log_info_command("Operator list requested by %s" % str(cmd.author), cmd.msg)
 
-    async def reload_ops(self):
+    async def reload_ops(self, cmd):
         """
         Reload ops from the file at the path self.cdb.OPS_FILE_PATH
         """
+        if not self.cdb.isop_user(cmd.author.id):
+            await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
+            self.cdb.log_warn_command("Reload operator file requested by NON-OP %s, FAILED" % str(cmd.author), cmd.msg)
+            return
+
         if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
             with open(self.cdb.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 self.ops = json.load(ops_file)
         else:
             self.ops = {"global": [], "channel": {}}
+        self.cdb.log_info_command("Reload operator file requested by %s" % str(cmd.author), cmd.msg)
