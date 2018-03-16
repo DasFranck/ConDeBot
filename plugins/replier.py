@@ -62,7 +62,7 @@ class ReplierPlugin(Plugin):
                                                                                           reply["count"]))
 
     async def list(self, cmd, replies):
-        """ Send the list of the server's trigger messages """
+        """ Send the list of the server's trigger messages to the requester"""
         if cmd.msg.server is None:
             await self.cdb.send_message(cmd.msg.channel,
                                         "You can't use this command outside of a server for now.")
@@ -105,6 +105,9 @@ class ReplierPlugin(Plugin):
 
     async def replier(self, message, action, args, author, replies, replies_path):
         """ Call the triggered message """
+        if action in self.cdb._reserved_keywords:
+            return
+
         if (args is None or len(args) == 0 or args[0] == ">"):
             reply = get_reply(replies, action)
             if (reply is not None):

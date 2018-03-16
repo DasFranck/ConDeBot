@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import random
-import json
+import hjson
 
 from classes.Plugin import Plugin
 
@@ -39,7 +39,7 @@ class CoffeePlugin(Plugin):
         (And if the sender didn't forget the recipient)
         """
         with open(self.COFFEE_FILE_PATH, 'r', encoding="utf8") as quotes_file:
-            quotes = json.load(quotes_file)
+            quotes = hjson.load(quotes_file)
             if ('>' in args):
                 index = args.index('>') + 1
                 return ("Here {}, that's your {}.\n{}".format(

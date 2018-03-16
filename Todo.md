@@ -1,9 +1,10 @@
 ### Steps before release:
 - [ ] Help module with generated help messages
-- [ ] Lock and forbid every keyword used by other plugins (replier.py)
+- [x] Lock and forbid every keyword used by other plugins (replier.py)
 - [x] Rethink project arborescence
 - [x] Better "dockerization"
 - [x] Add docker build and push to master branch CI
+- [ ] Write a real Readme.md
 
 
 ### HIGH PRIORITY
