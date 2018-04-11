@@ -5,6 +5,8 @@ import discord
 
 from classes.Plugin import Plugin
 
+NAME = "Status"
+
 
 class StatusPlugin(Plugin):
     def __init__(self, cdb):

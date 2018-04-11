@@ -8,6 +8,10 @@ import random
 
 from classes.Plugin import Plugin
 
+NAME = "Lists"
+DESCRIPTION = ""
+USAGE = {}
+
 
 # Load the lists file into an array of dict
 def load_lists(lists_path):

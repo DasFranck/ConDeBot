@@ -8,6 +8,8 @@ from classes.Plugin import Plugin
 
 from utilities import display_error
 
+NAME = "Stalker"
+
 
 class StalkerPlugin(Plugin):
     def __init__(self, cdb):

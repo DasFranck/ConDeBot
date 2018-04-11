@@ -5,6 +5,8 @@ import sys
 
 from classes.Plugin import Plugin
 
+NAME = "Suicide"
+
 
 class SuicidePlugin(Plugin):
     def __init__(self, cdb):

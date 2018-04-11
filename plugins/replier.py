@@ -7,6 +7,8 @@ import hjson
 
 from classes.Plugin import Plugin
 
+NAME = "REPLIER"
+
 
 # Get the reply dict assign to the trigger
 def get_reply(replies, trigger):

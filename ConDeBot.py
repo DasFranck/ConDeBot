@@ -1,18 +1,5 @@
 #!/usr/bin/python3
 
-# Help message
-# TODO: Should be automatically generated
-# HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
-#            + "!coffee                  Serve some coffee\n"                                        \
-#            + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
-#            + "!source                  Display an url to the bot's source code\n"                  \
-#            + "!version                 Show CDB and Discord API Version\n"                         \
-#            + "!op USERNAME             Grant USERNAME to Operator status (OP Rights needed)\n"     \
-#            + "!deop USERNAME           Remove USERNAME from Operator status (OP Rights needed)\n"  \
-#            + "!isop USERNAME           Check if USERNAME is an Operator status\n"                  \
-#            + "!op_list                 Print the Operators list\n"                                 \
-#            + "```"
-
 import argparse
 import json
 import os
@@ -35,9 +22,10 @@ class ConDeBot(discord.Client):
         self.DATA_PATH = config.DATA_PATH
         self.OPS_FILE_PATH = config.DATA_PATH + "/ops.json"
         self.CDB_PATH = "./"
-        self.VERS = "1.0dev"
+        self.VERSION = "1.0dev"
 
         self._reserved_keywords = {}
+        self._plugin_metadata = {}
 
         super().__init__(*args, **kwargs)
 
@@ -45,8 +33,20 @@ class ConDeBot(discord.Client):
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
 
-    # Manage reserved keywords
+    def add_plugin_metadata(self, metaname, metadata, plugin_name):
+        try:
+            self._plugin_metadata[plugin_name][metaname] = metadata
+        except KeyError:
+            self._plugin_metadata[plugin_name] = {metaname: metadata}
+
+    def add_plugin_usage(self, usage, plugin_name):
+        self.add_plugin_metadata("Usage", usage, plugin_name)
+
+    def add_plugin_description(self, description, plugin_name):
+        self.add_plugin_metadata("Description", description, plugin_name)
+
     def reserve_keyword(self, keyword, plugin_name):
+        """ Manage reserved keywords """
         if keyword not in self._reserved_keywords:
             self._reserved_keywords[keyword] = [plugin_name]
         else:

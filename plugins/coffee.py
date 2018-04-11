@@ -6,12 +6,25 @@ import hjson
 
 from classes.Plugin import Plugin
 
+NAME = "Coffee"
+DESCRIPTION = "Serve some coffee"
+USAGE = {
+    "_": """
+         !coffee: Serve a delicious coffee
+         !tea: Serve a delicious tea
+         """
+}
+
 
 class CoffeePlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+
+        cdb.add_plugin_description(DESCRIPTION, NAME)
+        cdb.add_plugin_usage(USAGE, NAME)
+        cdb.reserve_keywords(["café", "cafe", "coffee", "thé", "the", "tea"], NAME)
+
         self.COFFEE_FILE_PATH = self.cdb.DATA_PATH + "coffee/quotes.json"
-        cdb.reserve_keywords(["café", "cafe", "coffee", "thé", "the", "tea"], "Coffee")
 
     async def on_message(self, message, cmd):
         if not cmd or not cmd.triggered:

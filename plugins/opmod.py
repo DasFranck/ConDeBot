@@ -10,6 +10,18 @@ import discord
 from classes.Plugin import Plugin
 from utilities import display_error, display_warning, display_success
 
+NAME = "OpMod"
+DESCRIPTION = "Manage operators"
+USAGE = {
+    "_": """
+         !opmod op: Add an user to the operator list [OP ONLY]
+         !opmod deop: Remove an user from the operator list [OP ONLY]
+         !opmod isop: Check if an user is an operator
+         !opmod list: List every op on this server
+         !opmod reload: Reload the op list from files [OP ONLY]
+         """
+}
+
 
 # Adding local channel moderator
 # Should add checks for the id/mention input
@@ -18,7 +30,11 @@ from utilities import display_error, display_warning, display_success
 class OpModPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+
         cdb.reserve_keywords(["opmod"], "OpMod")
+        cdb.add_plugin_description(DESCRIPTION, NAME)
+        cdb.add_plugin_usage(USAGE, NAME)
+
         if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
             with open(self.cdb.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 self.ops = json.load(ops_file)
@@ -38,7 +54,7 @@ class OpModPlugin(Plugin):
             pass
         elif (cmd.args[0] in ["op", "add"]):
             await self.op_users(cmd)
-        elif (cmd.args[0] in ["deop", "del"]):
+        elif (cmd.args[0] in ["deop", "rm"]):
             await self.deop_users(cmd)
         elif (cmd.args[0] == "isop"):
             if (len(cmd.args) > 1):
