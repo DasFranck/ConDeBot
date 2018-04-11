@@ -12,8 +12,6 @@ Un con de bot Discord.
 ## Plugins
 - **Coffee**  
 Serve a delicous coffee (or tea) with a random phrase
-- **Kaamelott**  
-Display random quotes and specific quotes from the french TV series Kaamelott
 - **List**  
 Kinda like the replier module but with list and random picking
 - **Opmod**  
@@ -29,18 +27,17 @@ Remotly kill the bot
 - **Version**  
 Display the bot version
 
+## Usage
+### User Side
+Just type !help in a channel where the bot is present or read the docs! (soon)
+
+### Server Side
+[Docs coming soon here.](https://condebot.readthedocs.io)
+
 ## Dependencies
 * [discord.py](https://github.com/Rapptz/discord.py)
 * [hjson](https://github.com/hjson/hjson-py)
 
-## Usage
-*To be writed soon.*
 
-
-## Changelog
-### Actual dev version (xx/xx/20xx)
-* Error and warning are now displayed in a nice embed message
-* Bugfixes
-
-### Version 1 (06/02/2017)
-* Initial Release
+## Useful links
+* [Docker Hub](https://hub.docker.com/r/dasfranck/condebot/)
