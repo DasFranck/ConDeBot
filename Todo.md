@@ -3,9 +3,9 @@
 - [x] Rethink project arborescence
 - [x] Better "dockerization"
 - [x] Add docker build and push to master branch CI
-- [ ] Help module with generated help messages
-- [ ] Write a real Readme.md
-- [ ] Write some docs
+- [x] Help module with generated help messages
+- [x] Write a real Readme.md
+- [x] Write some docs
 
 ### Steps before v1.1
 - [ ] Prometheus implementation
