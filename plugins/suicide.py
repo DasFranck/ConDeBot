@@ -6,6 +6,8 @@ import sys
 from classes.Plugin import Plugin
 
 NAME = "Suicide"
+DESCRIPTION = "Remotly kill the bot"
+USAGE = {}
 
 
 class SuicidePlugin(Plugin):

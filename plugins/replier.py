@@ -8,6 +8,8 @@ import hjson
 from classes.Plugin import Plugin
 
 NAME = "REPLIER"
+DESCRIPTION = "Register custom replies for the bot"
+USAGE = {}
 
 
 # Get the reply dict assign to the trigger
@@ -23,8 +25,12 @@ def get_reply(replies, trigger):
 class ReplierPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+
         self.REPLIER_DIR_PATH = self.cdb.DATA_PATH + "replier/"
         os.makedirs(self.REPLIER_DIR_PATH, exist_ok=True)
+
+        cdb.add_plugin_description(DESCRIPTION, NAME)
+        cdb.add_plugin_usage(USAGE, NAME)
 
     async def load_replies(self, cmd, replies_path):
         """ Load the replies file into an array of dict """

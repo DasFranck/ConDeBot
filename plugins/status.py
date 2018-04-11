@@ -6,11 +6,14 @@ import discord
 from classes.Plugin import Plugin
 
 NAME = "Status"
+DESCRIPTION = "Change the bot status and his played game on discord"
+USAGE = {}
 
 
 class StatusPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
+
         self.status_dict = {"online": discord.Status.online,
                             "offline": discord.Status.offline,
                             "idle": discord.Status.idle,
@@ -19,7 +22,10 @@ class StatusPlugin(Plugin):
                             "invisible": discord.Status.invisible}
         self.status = None
         self.game = None
+
         cdb.reserve_keywords(["status", "game"], "Status")
+        cdb.add_plugin_description(DESCRIPTION, NAME)
+        cdb.add_plugin_usage(USAGE, NAME)
 
     async def on_message(self, message, cmd):
         if not cmd.triggered \
