@@ -27,6 +27,7 @@ class ConDeBot(discord.Client):
         self._reserved_keywords = {}
         self._plugin_metadata = {}
 
+
         super().__init__(*args, **kwargs)
 
         self.logger = Logger()
