@@ -1,4 +1,4 @@
-![ConDeBot](https://dasfranck.fr/Stuff/ConDeBot-Banner.png)
+![ConDeBot](https://raw.githubusercontent.com/DasFranck/ConDeBot_Documentation/master/docs/img/ConDeBot-Banner.png)
 
 # ConDeBot (Discord Version)
 Un con de bot Discord.
@@ -12,6 +12,8 @@ Un con de bot Discord.
 ## Plugins
 - **Coffee**  
 Serve a delicous coffee (or tea) with a random phrase
+- **Help**
+Generate help messages from plugins' metadata
 - **List**  
 Kinda like the replier module but with list and random picking
 - **Opmod**  
