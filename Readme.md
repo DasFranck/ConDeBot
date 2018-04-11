@@ -40,6 +40,8 @@ Just type !help in a channel where the bot is present or read the docs! (soon)
 * [discord.py](https://github.com/Rapptz/discord.py)
 * [hjson](https://github.com/hjson/hjson-py)
 
+## Changelog
+[Changelog available here](https://condebot.readthedocs.io/en/latest/changelog/)
 
 ## Useful links
 * [Docker Hub](https://hub.docker.com/r/dasfranck/condebot/)
