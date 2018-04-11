@@ -2,9 +2,14 @@
 *.swp
 *.log
 
+.cache
+.config
+
+data/
+!data/coffee
+!data/kaamelott
+
 logs/
-jsonfiles/lists/
-jsonfiles/replies/
 
 # Virtualenv files
 .Python
@@ -16,4 +21,8 @@ jsonfiles/replies/
 [Ss]cripts
 pyvenv.cfg
 .venv
+venv
 pip-selfcheck.json
+
+# VSC related
+.vscode

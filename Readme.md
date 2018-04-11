@@ -1,4 +1,4 @@
-![ConDeBot](https://dasfranck.fr/Stuff/ConDeBot-Banner.png)
+![ConDeBot](https://raw.githubusercontent.com/DasFranck/ConDeBot_Documentation/master/docs/img/ConDeBot-Banner.png)
 
 # ConDeBot (Discord Version)
 Un con de bot Discord.
@@ -12,8 +12,8 @@ Un con de bot Discord.
 ## Plugins
 - **Coffee**  
 Serve a delicous coffee (or tea) with a random phrase
-- **Kaamelott**  
-Display random quotes and specific quotes from the french TV series Kaamelott
+- **Help**  
+Generate help messages from plugins' metadata
 - **List**  
 Kinda like the replier module but with list and random picking
 - **Opmod**  
@@ -29,16 +29,19 @@ Remotly kill the bot
 - **Version**  
 Display the bot version
 
+## Usage
+### User Side
+Just type !help in a channel where the bot is present or read the docs! (soon)
+
+### Server Side
+[Docs coming soon here.](https://condebot.readthedocs.io)
+
 ## Dependencies
 * [discord.py](https://github.com/Rapptz/discord.py)
 * [hjson](https://github.com/hjson/hjson-py)
 
-## Usage
-*To be writed soon.*
-
 ## Changelog
-### Version 1.0.1 (16/03/2017)
-* Quick hotfix
+[Changelog available here](https://condebot.readthedocs.io/en/latest/changelog/)
 
-### Version 1.0 (06/02/2017)
-* Initial Release
+## Useful links
+* [Docker Hub](https://hub.docker.com/r/dasfranck/condebot/)

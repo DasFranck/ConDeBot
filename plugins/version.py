@@ -2,16 +2,31 @@
 # -*- coding: utf-8 -*-
 
 from classes.Plugin import Plugin
-from utilities import get_meta
+import discord
+
+NAME = "Version"
+DESCRIPTION = "Show CDB and Discord API Version"
+USAGE = {}
 
 
 class VersionPlugin(Plugin):
     def __init__(self, cdb):
         super().__init__(cdb)
 
-    async def on_message(self, message):
-        (msg, args, author, triggered, action) = get_meta(self.cdb, message)
-        if triggered and action in "version":
-            self.cdb.logger.log_info_command("Version requested by " + author, message)
-            await self.cdb.send_message(message.channel, self.cdb.NAME + "'s version: " + self.cdb.VERS)
+        cdb.reserve_keywords(["version"], NAME)
+        cdb.add_plugin_description(DESCRIPTION, NAME)
+        cdb.add_plugin_usage(USAGE, NAME)
+
+    async def on_message(self, message, cmd):
+        if not cmd.triggered \
+           or cmd.action not in ["version"]:
             return
+
+        self.cdb.log_info_command("Version requested by " + str(cmd.author),
+                                  message)
+        await self.cdb.send_message(message.channel,
+                                    "{}'s version: **{}**\nDiscord API version: **{}**".format(
+                                        self.cdb.NAME,
+                                        self.cdb.VERSION,
+                                        discord.__version__
+                                    ))

@@ -2,35 +2,67 @@
 # -*- coding: utf-8 -*-
 
 import random
-import json
+import hjson
 
 from classes.Plugin import Plugin
-import utilities
+
+NAME = "Coffee"
+DESCRIPTION = "Serve some coffee"
+USAGE = {
+    "_": """
+         !coffee: Serve a delicious coffee
+         !tea: Serve a delicious tea
+         """
+}
 
 
 class CoffeePlugin(Plugin):
-    async def on_message(self, message):
-        (msg, args, author, triggered, action) = utilities.get_meta(self.cdb, message)
-        if not triggered:
+    def __init__(self, cdb):
+        super().__init__(cdb)
+
+        cdb.add_plugin_description(DESCRIPTION, NAME)
+        cdb.add_plugin_usage(USAGE, NAME)
+        cdb.reserve_keywords(["café", "cafe", "coffee", "thé", "the", "tea"], NAME)
+
+        self.COFFEE_FILE_PATH = self.cdb.DATA_PATH + "coffee/quotes.json"
+
+    async def on_message(self, message, cmd):
+        if not cmd or not cmd.triggered:
             return
 
         # Serve a delicious coffee (Module: "coffee")
-        if action in ["café", "cafe", "coffee"]:
-            self.cdb.logger.log_info_command("Coffee requested by " + author, message)
+        if cmd.action in ["café", "cafe", "coffee"]:
+            self.cdb.log_info_command("Coffee requested by " + str(cmd.author),
+                                      message)
             await self.cdb.send_message(message.channel, ":coffee:")
-            await self.cdb.send_message(message.channel, self.serve(message, args, "coffee"))
+            await self.cdb.send_message(message.channel,
+                                        self.serve(message, cmd.args, "coffee"))
+
         # Serve a delicious tea (Module: "coffee")
-        elif action in ["thé", "the", "tea"]:
-            self.cdb.logger.log_info_command("Tea requested by " + author, message)
+        elif cmd.action in ["thé", "the", "tea"]:
+            self.cdb.log_info_command("Tea requested by " + str(cmd.author),
+                                      message)
             await self.cdb.send_message(message.channel, ":tea:")
-            await self.cdb.send_message(message.channel, self.serve(message, args, "tea"))
+            await self.cdb.send_message(message.channel,
+                                        self.serve(message, cmd.args, "tea"))
 
     def serve(self, message, args, drink):
-        # Check if the coffee is for someone else (And if the sender didn't forget the recipient)
-        with open("jsonfiles/coffee.json", 'r') as quotes_file:
-            quotes = json.load(quotes_file)
+        """
+        Check if the coffee is for someone else
+        (And if the sender didn't forget the recipient)
+        """
+        with open(self.COFFEE_FILE_PATH, 'r', encoding="utf8") as quotes_file:
+            quotes = hjson.load(quotes_file)
             if ('>' in args):
                 index = args.index('>') + 1
-                return ("Here {}, that's your {}.\n{}".format(" ".join(args[index:]), drink, random.choice(quotes[drink])))
+                return ("Here {}, that's your {}.\n{}".format(
+                    " ".join(args[index:]),
+                    drink,
+                    random.choice(quotes[drink]))
+                )
             else:
-                return ("Here {}, that's your {}.\n{}".format(message.author.mention, drink, random.choice(quotes[drink])))
+                return ("Here {}, that's your {}.\n{}".format(
+                    message.author.mention,
+                    drink,
+                    random.choice(quotes[drink]))
+                )

@@ -1,0 +1,15 @@
+[Unit]
+Description=ConDeBot
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/home/dasfranck/dasgit/ConDeBot_Discord
+User=dasfranck
+Group=users
+ExecStart=/usr/bin/python3 /home/dasfranck/dasgit/ConDeBot_Discord/launcher.py --token "INSERTTOKENHERE" --autorestart
+Type=idle
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

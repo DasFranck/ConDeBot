@@ -1,27 +1,16 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-# Help message
-# TODO: Should be automatically generated
-# HELP = "**" + NAME + " v" + VERS + "**\n```\nUSAGE :\n" \
-#            + "!coffee                  Serve some coffee\n"                                        \
-#            + "!kaamelott [-q ID]       Kaamelott quotes\n"                                         \
-#            + "!source                  Display an url to the bot's source code\n"                  \
-#            + "!version                 Show CDB and Discord API Version\n"                         \
-#            + "!op USERNAME             Grant USERNAME to Operator status (OP Rights needed)\n"     \
-#            + "!deop USERNAME           Remove USERNAME from Operator status (OP Rights needed)\n"  \
-#            + "!isop USERNAME           Check if USERNAME is an Operator status\n"                  \
-#            + "!op_list                 Print the Operators list\n"                                 \
-#            + "```"
+#!/usr/bin/python3
 
 import argparse
+import json
+import os
+
+# sys.path.insert(0, "lib")
 import discord
-import sys
 
 from classes.PluginManager import PluginManager
 from classes.Logger import Logger
-
-import config
+from config import config
+from utilities import get_meta
 
 
 class ConDeBot(discord.Client):
@@ -30,25 +19,76 @@ class ConDeBot(discord.Client):
         self.SHME = config.SHORT_NAME
         self.DESC = config.DESCRIPTION
         self.PREF = config.CMD_PREFIX
-
+        self.DATA_PATH = config.DATA_PATH
+        self.OPS_FILE_PATH = config.DATA_PATH + "/ops.json"
         self.CDB_PATH = "./"
-        self.VERS = "1.0.1-release"
+        self.VERSION = "1.0dev"
+
+        self._reserved_keywords = {}
+        self._plugin_metadata = {}
+
 
         super().__init__(*args, **kwargs)
+
         self.logger = Logger()
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
 
+    def add_plugin_metadata(self, metaname, metadata, plugin_name):
+        try:
+            self._plugin_metadata[plugin_name][metaname] = metadata
+        except KeyError:
+            self._plugin_metadata[plugin_name] = {metaname: metadata}
+
+    def add_plugin_usage(self, usage, plugin_name):
+        self.add_plugin_metadata("Usage", usage, plugin_name)
+
+    def add_plugin_description(self, description, plugin_name):
+        self.add_plugin_metadata("Description", description, plugin_name)
+
+    def reserve_keyword(self, keyword, plugin_name):
+        """ Manage reserved keywords """
+        if keyword not in self._reserved_keywords:
+            self._reserved_keywords[keyword] = [plugin_name]
+        else:
+            print("Warning: Conflicting with the plugins {} for the keyword {}".format(self._reserved_keywords[keyword], keyword))
+            self._reserved_keywords[keyword].append(plugin_name)
+        pass
+
+    def unreserve_keyword(self, keyword):
+        del self._reserved_keywords[keyword]
+
+    def reserve_keywords(self, keyword_list, plugin_name):
+        for keyword in keyword_list:
+            self.reserve_keyword(keyword, plugin_name)
+
+    def unreserve_keywords(self, keyword_list):
+        for keyword in keyword_list:
+            self.unreserve_keyword(keyword)
+
+    # Aliases to self.logger functions
+    def log_error_command(self, *args, **kwargs):
+        self.logger.log_error_command(*args, **kwargs)
+
+    def log_warn_command(self, *args, **kwargs):
+        self.logger.log_warn_command(*args, **kwargs)
+
+    def log_info_command(self, *args, **kwargs):
+        self.logger.log_info_command(*args, **kwargs)
+
     # Triggered when the bot is ready
     async def on_ready(self):
-        self.logger.logger.info("Sucessfully connected as %s (%s)" % (self.user.name, self.user.id))
-        self.logger.logger.info("------------")
-        return
+        self.logger.info("Sucessfully connected as %s (%s)" % (self.user.name,
+                                                               self.user.id))
+        self.logger.info("------------")
 
     # Triggered when the bot receive a message
     async def on_message(self, message):
+        cmd = get_meta(self, message)
+        if not cmd:
+            return
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_message(message))
+            self.loop.create_task(plugin.on_message(message, cmd))
 
     async def on_message_edit(self, before, after):
         for plugin in self.plugins:
@@ -116,6 +156,15 @@ class ConDeBot(discord.Client):
     async def on_typing(self, channel, user, when):
         pass
 
+    def isop_user(self, user_id):
+        """ Check if user is op """
+        if (os.path.isfile(self.OPS_FILE_PATH)):
+            with open(self.OPS_FILE_PATH, encoding="utf8") as ops_file:
+                ops = json.load(ops_file)
+            return (ops["global"] and user_id in ops["global"])
+        else:
+            return (False)
+
 
 # The Main.
 def main():
@@ -125,13 +174,7 @@ def main():
     parser.add_argument("--token")
     args = parser.parse_args()
 
-    if "token" in args:
-        cdb.run(args.token)
-    elif "token" in config:
-        cdb.run(config.token)
-    else:
-        print("You should input a token via the config file or via arguments", file=sys.stderr)
-    return
+    cdb.run(args.token)
 
 
 if (__name__ == '__main__'):

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import inspect
-
 
 class Plugin:
     def __init__(self, cdb):

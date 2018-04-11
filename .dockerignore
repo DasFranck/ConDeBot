@@ -1,0 +1,38 @@
+# Docker related
+.dockerignore
+Dockerfile
+
+# Project related
+.git/
+.gitignore
+Todo.md
+config/
+lib/
+logs/
+
+data/
+!data/coffee
+!data/kaamelott
+
+# Python related
+__pycache__
+*/__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+.venv
+venv
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*,cover
+*.log
+
+# VSC related
+.vscode
