@@ -12,7 +12,7 @@ Un con de bot Discord.
 ## Plugins
 - **Coffee**  
 Serve a delicous coffee (or tea) with a random phrase
-- **Help**
+- **Help**  
 Generate help messages from plugins' metadata
 - **List**  
 Kinda like the replier module but with list and random picking
