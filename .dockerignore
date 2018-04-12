@@ -11,8 +11,8 @@ lib/
 logs/
 
 data/
-!data/coffee
-!data/kaamelott
+!data/coffee/
+!data/kaamelott/
 
 # Python related
 __pycache__
