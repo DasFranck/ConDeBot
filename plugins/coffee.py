@@ -9,10 +9,9 @@ from classes.Plugin import Plugin
 NAME = "Coffee"
 DESCRIPTION = "Serve some coffee"
 USAGE = {
-    "_": """
-         !coffee: Serve a delicious coffee
-         !tea: Serve a delicious tea
-         """
+    "_": ("!coffee: Serve a delicious coffee"
+          "!tea: Serve a delicious tea"
+          )
 }
 
 
