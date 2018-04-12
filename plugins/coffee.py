@@ -23,7 +23,7 @@ class CoffeePlugin(Plugin):
         cdb.add_plugin_usage(USAGE, NAME)
         cdb.reserve_keywords(["café", "cafe", "coffee", "thé", "the", "tea"], NAME)
 
-        self.COFFEE_FILE_PATH = self.cdb.DATA_PATH + "coffee/quotes.json"
+        self.COFFEE_FILE_PATH = self.cdb.CDB_PATH + "plugins/coffee/quotes.json"
 
     async def on_message(self, message, cmd):
         if not cmd or not cmd.triggered:
