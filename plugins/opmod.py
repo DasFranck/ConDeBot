@@ -13,10 +13,10 @@ from utilities import display_error, display_warning, display_success
 NAME = "OpMod"
 DESCRIPTION = "Manage operators"
 USAGE = {
-    "_": ("!opmod op: Add an user to the operator list [OP ONLY]"
-          "!opmod deop: Remove an user from the operator list [OP ONLY]"
-          "!opmod isop: Check if an user is an operator"
-          "!opmod list: List every op on this server"
+    "_": ("!opmod op: Add an user to the operator list [OP ONLY]\n"
+          "!opmod deop: Remove an user from the operator list [OP ONLY]\n"
+          "!opmod isop: Check if an user is an operator\n"
+          "!opmod list: List every op on this server\n"
           "!opmod reload: Reload the op list from files [OP ONLY]"
           )
 }
