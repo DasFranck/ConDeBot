@@ -5,8 +5,10 @@ from classes.Plugin import Plugin
 from utilities import display_error
 
 NAME = "Help"
-DESCRIPTION = ""
-USAGE = {}
+DESCRIPTION = "Generates help messages"
+USAGE = {
+    "_": "!help: Display help"
+}
 
 
 class HelpPlugin(Plugin):
@@ -27,12 +29,12 @@ class HelpPlugin(Plugin):
                                   message)
 
         if len(cmd.args) == 0:
-            help_message = "**{} v{}**\nAvailable plugins:\n".format(self.cdb.NAME, self.cdb.VERSION)
+            help_message = "**{} v{}**\n\nAvailable plugins:\n".format(self.cdb.NAME, self.cdb.VERSION)
             for plugin in self.cdb._plugin_metadata.keys():
                 try:
-                    help_message += "- {}: {}\n".format(plugin, self.cdb._plugin_metadata[plugin]["Description"])
+                    help_message += "- **{}**: {}\n".format(plugin, self.cdb._plugin_metadata[plugin]["Description"])
                 except KeyError:
-                    help_message += "- {}: {}\n".format(plugin, "No description")
+                    help_message += "- **{}**: {}\n".format(plugin, "No description")
             help_message += "\n\nYou can access plugin's help by typing !help [plugin_name]"
         else:
             try:
