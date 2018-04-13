@@ -96,6 +96,18 @@ class ConDeBot(discord.Client):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_message_delete(message))
 
+    async def on_reaction_add(self, reaction, user):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_reaction_add(reaction, user))
+
+    async def on_reaction_remove(self, reaction, user):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_reaction_remove(reaction, user))
+
+    async def on_reaction_clear(self, message, reactions):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_reaction_clear(message, reactions))
+
     async def on_channel_create(self, channel):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_channel_create(channel))

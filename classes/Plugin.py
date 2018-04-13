@@ -24,6 +24,15 @@ class Plugin:
     async def on_message_delete(self, message):
         pass
 
+    async def on_reaction_add(self, reaction, user):
+        pass
+
+    async def on_reaction_remove(self, reaction, user):
+        pass
+
+    async def on_reaction_clear(self, message, reactions):
+        pass
+
     async def on_channel_create(self, channel):
         pass
 
