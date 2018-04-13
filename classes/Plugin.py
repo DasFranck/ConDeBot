@@ -45,6 +45,9 @@ class Plugin:
     async def on_server_join(self, server):
         pass
 
+    async def on_server_remove(self, server):
+        pass
+
     async def on_server_update(self, before, after):
         pass
 

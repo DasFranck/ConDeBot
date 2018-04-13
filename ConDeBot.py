@@ -75,13 +75,12 @@ class ConDeBot(discord.Client):
     def log_info_command(self, *args, **kwargs):
         self.logger.log_info_command(*args, **kwargs)
 
-    # Triggered when the bot is ready
     async def on_ready(self):
+        """Triggered when the bot is ready"""
         self.logger.info("Sucessfully connected as %s (%s)" % (self.user.name,
                                                                self.user.id))
         self.logger.info("------------")
 
-    # Triggered when the bot receive a message
     async def on_message(self, message):
         cmd = get_meta(self, message)
         if not cmd:
@@ -124,6 +123,10 @@ class ConDeBot(discord.Client):
     async def on_server_join(self, server):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_server_join(server))
+
+    async def on_server_remove(self, server):
+        for plugin in self.plugins:
+            self.loop.create_task(plugin.on_server_remove(server))
 
     async def on_server_update(self, before, after):
         for plugin in self.plugins:
