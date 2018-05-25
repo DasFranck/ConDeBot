@@ -39,6 +39,8 @@ class OpModPlugin(Plugin):
                 self.ops = json.load(ops_file)
         else:
             self.ops = {"global": [], "channel": {}}
+            with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
+                json.dump(self.ops, ops_file)
 
     def mention_to_user_id(self, mention):
         return re.sub('[<>!@]', '', mention)
