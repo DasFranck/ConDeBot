@@ -89,7 +89,7 @@ class ReplierPlugin(Plugin):
 
     async def locker(self, cmd, replies, replies_path):
         """ Unlock/Lock a reply (OP-ONLY) """
-        if not self.cdb.isop_user(cmd.msg.author):
+        if not self.cdb.isop_user(cmd.msg.author.id):
             await self.cdb.send_message(cmd.msg.channel,
                                         "You don't have the right to do that.")
             self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED"
