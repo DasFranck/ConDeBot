@@ -23,7 +23,7 @@ class SourcePlugin(Plugin):
         self.cdb.log_info_command("Source files requested by " + str(cmd.author), message)
         await self.cdb.send_message(message.channel,
                                     ("{}'s source files:\n"
-                                     "https://git.dasfranck.fr/ConDeBot/\n"
+                                     "https://git.dasfranck.fr/DasFranck/ConDeBot/\n"
                                      "https://github.com/DasFranck/ConDeBot/")
                                     .format(self.cdb.NAME))
         return
