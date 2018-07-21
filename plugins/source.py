@@ -17,8 +17,8 @@ class SourcePlugin(Plugin):
         cdb.reserve_keywords(["source"], NAME)
 
     async def on_message(self, message, cmd):
-        if not cmd.triggered \
-           or cmd.action not in ["source"]:
+        if (not cmd.triggered 
+            or cmd.action not in ["source"]):
             return
         self.cdb.log_info_command("Source files requested by " + str(cmd.author), message)
         await self.cdb.send_message(message.channel,
