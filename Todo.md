@@ -1,22 +1,12 @@
-### Steps before release
-- [x] Lock and forbid every keyword used by other plugins (replier.py)
-- [x] Rethink project arborescence
-- [x] Better "dockerization"
-- [x] Add docker build and push to master branch CI
-- [x] Help module with generated help messages
-- [x] Write a real Readme.md
-- [x] Write some docs
-
-### Steps before v1.1
+### Steps before v1.2
 - [ ] Prometheus implementation
 
-### Steps before v1.2
+### Steps before v1.3
 - [ ] Support images in replier.py (DL/UL)
-- [ ] Do an op level per server
+- [ ] Implement op level per server
 
 ### Steps before v2
 - [ ] Web interface
-
 
 
 ### HIGH PRIORITY
