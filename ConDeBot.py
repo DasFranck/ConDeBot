@@ -22,7 +22,7 @@ class ConDeBot(discord.Client):
         self.DATA_PATH = config.DATA_PATH
         self.OPS_FILE_PATH = config.DATA_PATH + "/ops.json"
         self.CDB_PATH = "./"
-        self.VERSION = "1.0"
+        self.VERSION = "1.1"
 
         self._reserved_keywords = {}
         self._plugin_metadata = {}
