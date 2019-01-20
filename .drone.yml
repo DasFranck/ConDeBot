@@ -30,7 +30,7 @@ steps:
       password:
         from_secret: docker_password
       repo: dasfranck/condebot
-    tags: latest-linux-arm64
+      tags: latest-linux-arm64
     
 
 depends_on:
@@ -52,7 +52,7 @@ steps:
       password:
         from_secret: docker_password
       repo: dasfranck/condebot
-    tags: latest-linux-amd64
+      tags: latest-linux-amd64
     
 
 depends_on:
