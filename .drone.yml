@@ -75,8 +75,8 @@ steps:
       password:
         from_secret: docker_password
       target: dasfranck/condebot:${DRONE_COMMIT_BRANCH}
-      template: dasfranck/condebot:${DRONE_COMMIT_BRANCH-OS-ARCH
-      plateforms:
+      template: dasfranck/condebot:${DRONE_COMMIT_BRANCH}-OS-ARCH
+      platforms:
         - linux/amd64
         - linux/arm64
   - name: latest_manifest
@@ -88,7 +88,7 @@ steps:
         from_secret: docker_password
       target: dasfranck/condebot:latest
       template: dasfranck/condebot:latest-OS-ARCH
-      plateforms:
+      platforms:
         - linux/amd64
         - linux/arm64
     when:
