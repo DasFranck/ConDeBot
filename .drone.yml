@@ -30,8 +30,7 @@ steps:
       password:
         from_secret: docker_password
       repo: dasfranck/condebot
-      tags: latest-linux-arm64
-    
+      tags: ${DRONE_COMMIT_BRANCH}-linux-arm64
 
 depends_on:
   - tests
@@ -52,8 +51,7 @@ steps:
       password:
         from_secret: docker_password
       repo: dasfranck/condebot
-      tags: latest-linux-amd64
-    
+      tags: ${DRONE_COMMIT_BRANCH}-linux-amd64
 
 depends_on:
   - tests
@@ -68,7 +66,7 @@ platform:
 
 steps:
   - name: branch_manifest
-    image: plugins/manifest
+    image: plugins/manifest:1
     settings:
       username:
         from_secret: docker_username
@@ -80,14 +78,14 @@ steps:
         - linux/amd64
         - linux/arm64
   - name: latest_manifest
-    image: plugins/manifest
+    image: plugins/manifest:1
     settings:
       username:
         from_secret: docker_username
       password:
         from_secret: docker_password
       target: dasfranck/condebot:latest
-      template: dasfranck/condebot:latest-OS-ARCH
+      template: dasfranck/condebot:${DRONE_COMMIT_BRANCH}-OS-ARCH
       platforms:
         - linux/amd64
         - linux/arm64
