@@ -23,7 +23,7 @@ platform:
 
 steps:
   - name: build
-    image: plugins/docker
+    image: plugins/docker:linux-arm64
     settings:
       username:
         from_secret: docker_username
@@ -35,7 +35,6 @@ steps:
 
 depends_on:
   - tests
-
 ---
 kind: pipeline
 name: build_amd64
