@@ -1,0 +1,82 @@
+kind: pipeline
+name: tests
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: test
+    image: python:alpine3.7
+    commands:
+      - pip install flake8
+      - pip install -r requirements.txt
+      - flake8 . --ignore=E402,E501,E722
+
+---
+kind: pipeline
+name: build_arm64
+
+platform:
+  arch: arm64
+  os: linux
+
+steps:
+  - name: docker build
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: dasfranck/condebot
+    tags: latest-linux-arm64
+    
+
+depends_on:
+  - tests
+
+---
+kind: pipeline
+name: build_amd64
+
+platform:
+  arch: arm64
+  os: linux
+
+steps:
+  - name: docker build
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: dasfranck/condebot
+    tags: latest-linux-amd64
+    
+
+depends_on:
+  - tests
+
+---
+kind: pipeline
+name: manifest
+
+steps:
+  - name: manifest
+    image: plugins/manifest
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      target: dasfranck/condebot:latest
+      template: dasfranck/condebot:latest-OS-ARCH
+      plateforms:
+        - linux/amd64
+        - linux/arm64
+
+depends_on:
+    - build_arm64
+    - build_amd64
