@@ -26,7 +26,7 @@ class RollPlugin(Plugin):
 
     async def on_message(self, message, cmd):
         if (not cmd or not cmd.triggered
-            or cmd.action not in ["roll"]):
+                or cmd.action not in ["roll"]):
             return
 
         if len(cmd.args) == 0:
