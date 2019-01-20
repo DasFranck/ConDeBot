@@ -11,7 +11,7 @@ steps:
     commands:
       - pip install flake8
       - pip install -r requirements.txt
-      - flake8 . --ignore=E402,E501,E722
+      - flake8 . --ignore=E402,E501,E722,W503,W504
 
 ---
 kind: pipeline
