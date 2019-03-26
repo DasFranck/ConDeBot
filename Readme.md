@@ -1,6 +1,7 @@
 ![ConDeBot](https://raw.githubusercontent.com/DasFranck/ConDeBot_Documentation/master/docs/img/ConDeBot-Banner.png)
 
 # ConDeBot (Discord Version)
+[![Build Status](https://cloud.drone.io/api/badges/DasFranck/ConDeBot/status.svg)](https://cloud.drone.io/DasFranck/ConDeBot)  
 Un con de bot Discord.
 
 ## Features
