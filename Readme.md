@@ -21,6 +21,8 @@ Kinda like the replier module but with list and random picking
 Manage Operators
 - **Replier**  
 Register custom replies for the bot. You can send them, lock them and display stats about them.
+- **Roll**
+Roll dices
 - **Source**  
 Display links to his own source code
 - **Status**  

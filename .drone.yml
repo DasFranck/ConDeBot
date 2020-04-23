@@ -7,7 +7,7 @@ platform:
 
 steps:
   - name: test
-    image: python:alpine3.7
+    image: python:alpine3.8
     commands:
       - pip install flake8
       - pip install -r requirements.txt
@@ -34,6 +34,7 @@ steps:
 
 depends_on:
   - tests
+
 ---
 kind: pipeline
 name: build_amd64
@@ -58,6 +59,28 @@ depends_on:
 
 ---
 kind: pipeline
+name: build_arm32
+
+platform:
+  arch: arm32
+  os: linux
+
+steps:
+  - name: build
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: dasfranck/condebot
+      tags: ${DRONE_COMMIT_BRANCH}-linux-arm32
+
+depends_on:
+  - tests
+
+---
+kind: pipeline
 name: manifest
 
 platform:
@@ -75,6 +98,7 @@ steps:
       target: dasfranck/condebot:${DRONE_COMMIT_BRANCH}
       template: dasfranck/condebot:${DRONE_COMMIT_BRANCH}-OS-ARCH
       platforms:
+        - linux/arm32
         - linux/amd64
         - linux/arm64
   - name: latest_manifest
@@ -87,11 +111,13 @@ steps:
       target: dasfranck/condebot:latest
       template: dasfranck/condebot:${DRONE_COMMIT_BRANCH}-OS-ARCH
       platforms:
-        - linux/amd64
+        - linux/arm32
         - linux/arm64
+        - linux/amd64
     when:
       branch: [master]
 
 depends_on:
+    - build_arm32
     - build_arm64
     - build_amd64
