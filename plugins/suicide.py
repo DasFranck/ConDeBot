@@ -35,7 +35,7 @@ class SuicidePlugin(Plugin):
                 await self.cdb.send_message(message.channel,
                                             "%s has been killed by %s." % (self.cdb.NAME, str(cmd.author)))
             elif (cmd.action == "suicide"):
-                await self.cdb.send_message(message.channel, "%s is suiciding himself. With %s's help." % (self.cdb.NAME, str(cmd.author)))
+                await message.channel.send("%s is suiciding himself. With %s's help." % (self.cdb.NAME, str(cmd.author)))
 
             self.cdb.log_info_command("Bot has been terminated by " + str(cmd.author), message)
             self.cdb.logger.info("#--------------END--------------#")
@@ -45,10 +45,10 @@ class SuicidePlugin(Plugin):
 
         if cmd.action in ["restart", "reboot"]:
             if not self.cdb.isop_user(message.author):
-                await self.cdb.send_message(message.channel, "You don't have the right to do that.")
+                await message.channel.send("You don't have the right to do that.")
                 self.cdb.log_warn_command("Bot restart requested by NON-OP %s, FAILED" % str(cmd.author), message)
             else:
-                await self.cdb.send_message(message.channel, "Restart has been ordered by %s." % str(cmd.author))
+                await message.channel.send("Restart has been ordered by %s." % str(cmd.author))
                 self.cdb.log_info_command("Bot has been restarted by " + str(cmd.author), message)
                 self.cdb.logger.info("#------------RESTART------------#")
                 await self.cdb.logout()

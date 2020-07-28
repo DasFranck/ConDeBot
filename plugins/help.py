@@ -49,4 +49,4 @@ class HelpPlugin(Plugin):
                 await display_error(self.cdb, cmd.channel, "No help is available for those arguments.")
                 return
 
-        await self.cdb.send_message(message.channel, help_message)
+        await message.channel.send(help_message)

@@ -3,7 +3,7 @@
 
 ### Steps before v1.3
 - [ ] Support images in replier.py (DL/UL)
-- [ ] Implement op level per server
+- [ ] Implement op level per guild
 
 ### Steps before v2
 - [ ] Web interface

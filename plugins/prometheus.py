@@ -19,11 +19,11 @@ class PrometheusPlugin(Plugin):
 
         start_http_server(9100)
         # Maybe too much labals, can overload Prometheus: https://prometheus.io/docs/practices/instrumentation/#do-not-overuse-labels
-        self.reserved_keywords_calls = Counter("reserved_keywords_calls", "Reserved Keywords Calls", ["keyword", "author_id", "server_id", "channel_id"])
+        self.reserved_keywords_calls = Counter("reserved_keywords_calls", "Reserved Keywords Calls", ["keyword", "author_id", "guild_id", "channel_id"])
 
     async def on_message(self, message, cmd):
         if cmd.triggered and cmd.action in self.cdb._reserved_keywords:
-            self.reserved_keywords_calls.labels(cmd.action, cmd.author.id, cmd.channel.server.id, cmd.channel.id).inc()
+            self.reserved_keywords_calls.labels(cmd.action, cmd.author.id, cmd.channel.guild.id, cmd.channel.id).inc()
 
         if not cmd.triggered \
            or cmd.action not in ["prometheus"]:

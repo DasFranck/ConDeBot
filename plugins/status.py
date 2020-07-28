@@ -33,19 +33,19 @@ class StatusPlugin(Plugin):
             return
 
         if not self.cdb.isop_user(message.author):
-            await self.cdb.send_message(message.channel, "You don't have the right to do that.")
+            await message.channel.send("You don't have the right to do that.")
             self.cdb.log_warn_command("Changing bot status requested by NON-OP %s, FAILED" % (str(cmd.author)), message)
         else:
             if cmd.action == "status":
                 if len(cmd.args) == 0:
-                    await self.cdb.send_message(message.channel, "Try with an argument for this command next time.")
-                    await self.cdb.send_message(message.channel, "Valid arguments: online, offline, idle, dnd, invisible.")
+                    await message.channel.send("Try with an argument for this command next time.")
+                    await message.channel.send("Valid arguments: online, offline, idle, dnd, invisible.")
                 elif cmd.args[0].lower() in self.status_dict:
                     self.cdb.log_info_command("Change bot's status to %s requested by %s" % (cmd.args[0].lower(), str(cmd.author)), message)
                     self.status = self.status_dict[cmd.args[0].lower()]
                 else:
-                    await self.cdb.send_message(message.channel, "It's not a valid argument.")
-                    await self.cdb.send_message(message.channel, "Valid arguments: online, offline, idle, dnd, invisible.")
+                    await message.channel.send("It's not a valid argument.")
+                    await message.channel.send("Valid arguments: online, offline, idle, dnd, invisible.")
             elif cmd.action == "game":
                 if len(cmd.args) == 0:
                     self.game = None

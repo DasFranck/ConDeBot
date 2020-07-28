@@ -51,22 +51,22 @@ class Plugin:
     async def on_member_update(self, before, after):
         pass
 
-    async def on_server_join(self, server):
+    async def on_guild_join(self, guild):
         pass
 
-    async def on_server_remove(self, server):
+    async def on_guild_remove(self, guild):
         pass
 
-    async def on_server_update(self, before, after):
+    async def on_guild_update(self, before, after):
         pass
 
-    async def on_server_role_create(self, server, role):
+    async def on_guild_role_create(self, guild, role):
         pass
 
-    async def on_server_role_delete(self, server, role):
+    async def on_guild_role_delete(self, guild, role):
         pass
 
-    async def on_server_role_update(self, server, role):
+    async def on_guild_role_update(self, guild, role):
         pass
 
     async def on_voice_state_update(self, before, after):

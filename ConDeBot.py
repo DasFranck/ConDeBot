@@ -108,18 +108,6 @@ class ConDeBot(discord.Client):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_reaction_clear(message, reactions))
 
-    async def on_channel_create(self, channel):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_channel_create(channel))
-
-    async def on_channel_update(self, before, after):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_channel_update(before, after))
-
-    async def on_channel_delete(self, channel):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_channel_delete(channel))
-
     async def on_member_join(self, member):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_member_join(member))
@@ -132,34 +120,34 @@ class ConDeBot(discord.Client):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_member_update(before, after))
 
-    async def on_server_join(self, server):
+    async def on_guild_join(self, guild):
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_server_join(server))
+            self.loop.create_task(plugin.on_guild_join(guild))
 
-    async def on_server_remove(self, server):
+    async def on_guild_remove(self, guild):
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_server_remove(server))
+            self.loop.create_task(plugin.on_guild_remove(guild))
 
-    async def on_server_update(self, before, after):
+    async def on_guild_update(self, before, after):
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_server_update(before, after))
+            self.loop.create_task(plugin.on_guild_update(before, after))
 
-    async def on_server_role_create(self, server, role):
+    async def on_guild_role_create(self, guild, role):
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_server_role_create(server, role))
+            self.loop.create_task(plugin.on_guild_role_create(guild, role))
 
-    async def on_server_role_delete(self, server, role):
+    async def on_guild_role_delete(self, guild, role):
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_server_role_delete(server, role))
+            self.loop.create_task(plugin.on_guild_role_delete(guild, role))
 
-    async def on_server_role_update(self, server, role):
+    async def on_guild_role_update(self, guild, role):
         for plugin in self.plugins:
-            self.loop.create_task(plugin.on_server_role_update(server, role))
+            self.loop.create_task(plugin.on_guild_role_update(guild, role))
 
-    async def on_voice_state_update(self, before, after):
+    async def on_voice_state_update(self, member, before, after):
         pass
 
-    async def on_member_ban(self, member):
+    async def on_member_ban(self, guild, user):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_member_ban(member))
 

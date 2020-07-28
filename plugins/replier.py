@@ -40,7 +40,7 @@ class ReplierPlugin(Plugin):
                     return hjson.load(replies_file, encoding="utf8")
                 except:
                     self.cdb.logger.error("JSON replies file loading failed.")
-                    await self.cdb.send_message(cmd.msg.channel, "The JSON replies file seems corrupted. Please fix it before using the replier module.")
+                    await cmd.msg.channel.send("The JSON replies file seems corrupted. Please fix it before using the replier module.")
                     return None
         else:
             return []
@@ -70,18 +70,18 @@ class ReplierPlugin(Plugin):
                                                                                           reply["count"]))
 
     async def list(self, cmd, replies):
-        """ Send the list of the server's trigger messages to the requester"""
-        if cmd.msg.server is None:
+        """ Send the list of the guild's trigger messages to the requester"""
+        if cmd.msg.guild is None:
             await self.cdb.send_message(cmd.msg.channel,
-                                        "You can't use this command outside of a server for now.")
+                                        "You can't use this command outside of a guild for now.")
             return
 
-        message_to_send = "Here's the list of triggers for {} ({})\n```".format(cmd.msg.server.name,
-                                                                                cmd.msg.server.id)
+        message_to_send = "Here's the list of triggers for {} ({})\n```".format(cmd.msg.guild.name,
+                                                                                cmd.msg.guild.id)
         for reply in replies:
             message_to_send += reply["trigger"] + "\n"
         message_to_send += "```"
-        await self.cdb.send_message(cmd.msg.author, message_to_send)
+        await cmd.msg.author.send(message_to_send)
         await self.cdb.send_message(cmd.msg.channel,
                                     "{}: I've send you the trigger list by PM.".format(cmd.msg.author.mention))
         self.cdb.log_info_command("The trigger list has been requested by %s" % (str(cmd.author)), cmd.msg)
@@ -98,7 +98,7 @@ class ReplierPlugin(Plugin):
             return
 
         if (cmd.args is None or len(cmd.args) == 0):
-            await self.cdb.send_message(cmd.msg.channel, "Try with an argument for this command next time.")
+            await cmd.msg.channel.send("Try with an argument for this command next time.")
             return
 
         old_dict = get_reply(replies, cmd.args[0])
@@ -106,7 +106,7 @@ class ReplierPlugin(Plugin):
             return
 
         old_dict["locked"] = True if cmd.action == "lock" else False
-        await self.cdb.send_message(cmd.msg.channel, "Roger that, %s trigger has been %s." % (cmd.args[0], cmd.action + "ed"))
+        await cmd.msg.channel.send("Roger that, %s trigger has been %s." % (cmd.args[0], cmd.action + "ed"))
         self.cdb.log_info_command("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], str(cmd.author)), cmd.msg)
         with open(replies_path, 'w', encoding="utf8") as replies_file:
             hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
@@ -120,9 +120,9 @@ class ReplierPlugin(Plugin):
             reply = get_reply(replies, action)
             if (reply is not None):
                 if (args and args[0] == ">" and len(args) >= 2):
-                    await self.cdb.send_message(message.channel, args[1] + ": " + reply["message"])
+                    await message.channel.send(args[1] + ": " + reply["message"])
                 else:
-                    await self.cdb.send_message(message.channel, reply["message"])
+                    await message.channel.send(reply["message"])
                 reply["count"] += 1
                 self.cdb.log_info_command("The trigger %s has been called by %s" % (action, author), message)
                 with open(replies_path, 'w', encoding="utf8") as replies_file:
@@ -148,7 +148,7 @@ class ReplierPlugin(Plugin):
                 else:
                     # Check if the reply dict is locked
                     if (not self.cdb.isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
-                        await self.cdb.send_message(message.channel, "Sorry, the %s trigger has been locked by an operator." % action)
+                        await message.channel.send("Sorry, the %s trigger has been locked by an operator." % action)
                         self.cdb.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
                         return
                     else:
@@ -157,11 +157,11 @@ class ReplierPlugin(Plugin):
                         old_dict["count"] = 0
                         old_dict["locked"] = False
                         self.cdb.log_info_command("The trigger %s has been reset by %s" % (action, author), message)
-                await self.cdb.send_message(message.channel, "Roger that, %s trigger has been registered." % action)
+                await message.channel.send("Roger that, %s trigger has been registered." % action)
                 with open(replies_path, 'w', encoding="utf8") as replies_file:
                     hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
             else:
-                await self.cdb.send_message(message.channel, "You should try to put a message to assign to this trigger.")
+                await message.channel.send("You should try to put a message to assign to this trigger.")
                 return
         return
 
@@ -170,8 +170,8 @@ class ReplierPlugin(Plugin):
             return
 
         # Set file path
-        if message.server is not None:
-            replies_path = self.REPLIER_DIR_PATH + message.server.id + ".json"
+        if message.guild is not None:
+            replies_path = self.REPLIER_DIR_PATH + message.guild.id + ".json"
         else:
             replies_path = self.REPLIER_DIR_PATH + "dump.json"
 

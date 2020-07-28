@@ -37,7 +37,7 @@ class KaamelottPlugin(Plugin):
         end_quote = beg_quote + buf[beg_quote:].find("\n\n") + 1
 
         self.cdb.log_info_command("Random Kaamelott Quote (#" + str(nb) + ") was requested by " + author, message)
-        await self.cdb.send_message(message.channel, buf[beg_quote:end_quote])
+        await message.channel.send(buf[beg_quote:end_quote])
         fd_kaam.close()
         return
 
@@ -48,20 +48,20 @@ class KaamelottPlugin(Plugin):
 
         if (len(args) == 1):
             self.cdb.log_info_command("Number of Kaamelott Quote (" + buf[0:buf.index('\n')] + ") was requested by " + author, message)
-            await self.cdb.send_message(message.channel, "There's " + buf[0:buf.index('\n')] + " Kaamelott Quote")
+            await message.channel.send("There's " + buf[0:buf.index('\n')] + " Kaamelott Quote")
             fd_kaam.close()
             return
 
         nb = int(args[1])
         if (nb > int(buf[0:buf.index('\n')])):
             self.cdb.log_warn_command("Non-existant Kaamelott Quote #" + str(nb) + " was requested by " + author, message)
-            await self.cdb.send_message(message.channel, "FAILED : Kaamelott Quote #" + str(nb) + " doesn't exist")
+            await message.channel.send("FAILED : Kaamelott Quote #" + str(nb) + " doesn't exist")
             fd_kaam.close()
             return
 
         beg_quote = buf.find("#" + str(nb))
         end_quote = beg_quote + buf[beg_quote:].find("\n\n") + 1
         self.cdb.log_info_command("Kaamelott Quote #" + str(nb) + " was requested by " + author, message)
-        await self.cdb.send_message(message.channel, buf[beg_quote:end_quote])
+        await message.channel.send(buf[beg_quote:end_quote])
         fd_kaam.close()
         return

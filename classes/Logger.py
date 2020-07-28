@@ -36,8 +36,8 @@ class Logger(logging.Logger):
         else:
             self.info("{} in #{} on {} ({})".format(string,
                                                     message.channel.name,
-                                                    message.server.name,
-                                                    message.server.id))
+                                                    message.guild.name,
+                                                    message.guild.id))
 
     def log_error_command(self, string, message):
         """ Add an entry in the log with error level. """
@@ -46,8 +46,8 @@ class Logger(logging.Logger):
         else:
             self.error("{} in #{} on {} ({})".format(string,
                                                      message.channel.name,
-                                                     message.server.name,
-                                                     message.server.id))
+                                                     message.guild.name,
+                                                     message.guild.id))
 
     def log_warn_command(self, string, message):
         """ Add an entry in the log with warn level. """
@@ -56,5 +56,5 @@ class Logger(logging.Logger):
         else:
             self.warn("{} in #{} on {} ({})".format(string,
                                                     message.channel.name,
-                                                    message.server.name,
-                                                    message.server.id))
+                                                    message.guild.name,
+                                                    message.guild.id))

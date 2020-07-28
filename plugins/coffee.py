@@ -33,7 +33,7 @@ class CoffeePlugin(Plugin):
         if cmd.action in ["café", "cafe", "coffee"]:
             self.cdb.log_info_command("Coffee requested by " + str(cmd.author),
                                       message)
-            await self.cdb.send_message(message.channel, ":coffee:")
+            await message.channel.send(":coffee:")
             await self.cdb.send_message(message.channel,
                                         self.serve(message, cmd.args, "coffee"))
 
@@ -41,7 +41,7 @@ class CoffeePlugin(Plugin):
         elif cmd.action in ["thé", "the", "tea"]:
             self.cdb.log_info_command("Tea requested by " + str(cmd.author),
                                       message)
-            await self.cdb.send_message(message.channel, ":tea:")
+            await message.channel.send(":tea:")
             await self.cdb.send_message(message.channel,
                                         self.serve(message, cmd.args, "tea"))
 

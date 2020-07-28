@@ -16,7 +16,7 @@ USAGE = {
     "_": ("!opmod op: Add an user to the operator list [OP ONLY]\n"
           "!opmod deop: Remove an user from the operator list [OP ONLY]\n"
           "!opmod isop: Check if an user is an operator\n"
-          "!opmod list: List every op on this server\n"
+          "!opmod list: List every op on this guild\n"
           "!opmod reload: Reload the op list from files [OP ONLY]"
           )
 }
@@ -79,9 +79,9 @@ class OpModPlugin(Plugin):
 
             self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
             if self.cdb.isop_user(arg):
-                await self.cdb.send_message(cmd.channel, "%s is an operator." % discord.utils.get(cmd.msg.server.members, id=arg))
+                await cmd.channel.send("%s is an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
             else:
-                await self.cdb.send_message(cmd.channel, "%s is not an operator." % discord.utils.get(cmd.msg.server.members, id=arg))
+                await cmd.channel.send("%s is not an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
 
     async def isop_self(self, cmd):
         """
@@ -106,14 +106,14 @@ class OpModPlugin(Plugin):
                 return
 
             if self.cdb.isop_user(arg):
-                await display_warning(self.cdb, cmd.channel, "%s is already an operator." % discord.utils.get(cmd.msg.server.members, id=arg))
+                await display_warning(self.cdb, cmd.channel, "%s is already an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
                 self.cdb.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
             self.ops["global"].append(arg)
             with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
                 json.dump(self.ops, ops_file)
-            await display_success(self.cdb, cmd.channel, "%s has been added as operator." % discord.utils.get(cmd.msg.server.members, id=arg))
+            await display_success(self.cdb, cmd.channel, "%s has been added as operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
             self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
 
         with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
@@ -132,7 +132,7 @@ class OpModPlugin(Plugin):
                 return
 
             if not self.cdb.isop_user(arg):
-                await display_warning(self.cdb, cmd.channel, "%s is already not an operator." % discord.utils.get(cmd.msg.server.members, id=arg))
+                await display_warning(self.cdb, cmd.channel, "%s is already not an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
                 self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
@@ -140,7 +140,7 @@ class OpModPlugin(Plugin):
             with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
                 json.dump(self.ops, ops_file)
 
-            await display_success(self.cdb, cmd.channel, "%s has been removed from operator list." % discord.utils.get(cmd.msg.server.members, id=arg))
+            await display_success(self.cdb, cmd.channel, "%s has been removed from operator list." % discord.utils.get(cmd.msg.guild.members, id=arg))
             self.cdb.log_info_command("Deleting operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
 
         with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
@@ -153,10 +153,10 @@ class OpModPlugin(Plugin):
         string = "**Operator list:**\n"
         for op in self.ops["global"]:
             if (op is self.ops["global"][-1]):
-                string += "- %s" % discord.utils.get(cmd.msg.server.members, id=op)
+                string += "- %s" % discord.utils.get(cmd.msg.guild.members, id=op)
             else:
-                string += "- %s\n" % discord.utils.get(cmd.msg.server.members, id=op)
-        await self.cdb.send_message(cmd.channel, string)
+                string += "- %s\n" % discord.utils.get(cmd.msg.guild.members, id=op)
+        await cmd.channel.send(string)
         self.cdb.log_info_command("Operator list requested by %s" % str(cmd.author), cmd.msg)
 
     async def reload_ops(self, cmd):
