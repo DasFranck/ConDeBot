@@ -10,7 +10,6 @@ import os
 class PluginManager:
     def __init__(self, cdb):
         self.cdb = cdb
-        self.cdb.plugins = []
 
     def load(self, module):
         # Wow this one is really ugly

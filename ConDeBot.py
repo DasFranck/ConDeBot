@@ -30,6 +30,7 @@ class ConDeBot(discord.Client):
         super().__init__(*args, **kwargs)
 
         self.logger = Logger()
+        self.plugins = []
         self.plugin_manager = PluginManager(self)
         self.plugin_manager.load_all()
 
