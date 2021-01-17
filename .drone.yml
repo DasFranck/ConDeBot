@@ -7,7 +7,7 @@ platform:
 
 steps:
   - name: test
-    image: python:alpine3.9
+    image: python:3.9-alpine
     commands:
       - apk add gcc
       - pip install --upgrade pip

@@ -147,7 +147,7 @@ class ConDeBot(discord.Client):
     async def on_voice_state_update(self, member, before, after):
         pass
 
-    async def on_member_ban(self, guild, user):
+    async def on_member_ban(self, guild, member):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_member_ban(member))
 

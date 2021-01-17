@@ -1,4 +1,4 @@
-FROM python:alpine3.8
+FROM python:3.9-alpine
 
 RUN mkdir -p /app/ConDeBot /data/ConDeBot
 WORKDIR /app/ConDeBot
