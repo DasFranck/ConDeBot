@@ -62,7 +62,7 @@ kind: pipeline
 name: build_arm32
 
 platform:
-  arch: arm32
+  arch: arm
   os: linux
 
 steps:
