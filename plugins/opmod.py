@@ -77,7 +77,7 @@ class OpModPlugin(Plugin):
         for arg in cmd.args[1:]:
             arg = self.mention_to_user_id(arg)
 
-            self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (arg, self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
+            self.cdb.log_info("Operator status of %s (%s) requested by %s" % (arg, self.cdb.isop_user(arg), str(cmd.author)), cmd.msg)
             if self.cdb.isop_user(arg):
                 await cmd.channel.send("%s is an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
             else:
@@ -87,7 +87,7 @@ class OpModPlugin(Plugin):
         """
         Check if the user who called the command is op (LOGGED FUNCTION, meant to be used via !opmod isop)
         """
-        self.cdb.log_info_command("Operator status of %s (%s) requested by %s" % (str(cmd.author), self.cdb.isop_user(cmd.author.id), str(cmd.author)), cmd.msg)
+        self.cdb.log_info("Operator status of %s (%s) requested by %s" % (str(cmd.author), self.cdb.isop_user(cmd.author.id), str(cmd.author)), cmd.msg)
         if self.cdb.isop_user(cmd.author.id):
             await display_success(self.cdb, cmd.channel, "You are an operator.")
         else:
@@ -102,19 +102,19 @@ class OpModPlugin(Plugin):
 
             if not self.cdb.isop_user(cmd.author.id):
                 await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
-                self.cdb.log_warn_command("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
+                self.cdb.log_warn("Adding operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
                 return
 
             if self.cdb.isop_user(arg):
                 await display_warning(self.cdb, cmd.channel, "%s is already an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
-                self.cdb.log_info_command("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, str(cmd.author)), cmd.msg)
+                self.cdb.log_info("Adding operator (%s) requested by %s, failed cause he's already an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
             self.ops["global"].append(arg)
             with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
                 json.dump(self.ops, ops_file)
             await display_success(self.cdb, cmd.channel, "%s has been added as operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
-            self.cdb.log_info_command("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
+            self.cdb.log_info("Adding operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
 
         with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
             json.dump(self.ops, ops_file)
@@ -128,12 +128,12 @@ class OpModPlugin(Plugin):
 
             if not self.cdb.isop_user(cmd.author.id):
                 await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
-                self.cdb.log_warn_command("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
+                self.cdb.log_warn("Deleting operator (%s) requested by NON-OP %s, FAILED" % (arg, str(cmd.author)), cmd.msg)
                 return
 
             if not self.cdb.isop_user(arg):
                 await display_warning(self.cdb, cmd.channel, "%s is already not an operator." % discord.utils.get(cmd.msg.guild.members, id=arg))
-                self.cdb.log_info_command("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
+                self.cdb.log_info("Deleting operator (%s) requested by %s, failed cause he's not an operator" % (arg, str(cmd.author)), cmd.msg)
                 continue
 
             self.ops["global"].remove(arg)
@@ -141,7 +141,7 @@ class OpModPlugin(Plugin):
                 json.dump(self.ops, ops_file)
 
             await display_success(self.cdb, cmd.channel, "%s has been removed from operator list." % discord.utils.get(cmd.msg.guild.members, id=arg))
-            self.cdb.log_info_command("Deleting operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
+            self.cdb.log_info("Deleting operator (%s) requested by %s, OK" % (arg, str(cmd.author)), cmd.msg)
 
         with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
             json.dump(self.ops, ops_file)
@@ -157,7 +157,7 @@ class OpModPlugin(Plugin):
             else:
                 string += "- %s\n" % discord.utils.get(cmd.msg.guild.members, id=op)
         await cmd.channel.send(string)
-        self.cdb.log_info_command("Operator list requested by %s" % str(cmd.author), cmd.msg)
+        self.cdb.log_info("Operator list requested by %s" % str(cmd.author), cmd.msg)
 
     async def reload_ops(self, cmd):
         """
@@ -165,7 +165,7 @@ class OpModPlugin(Plugin):
         """
         if not self.cdb.isop_user(cmd.author.id):
             await display_error(self.cdb, cmd.channel, "You don't have the right to do that.")
-            self.cdb.log_warn_command("Reload operator file requested by NON-OP %s, FAILED" % str(cmd.author), cmd.msg)
+            self.cdb.log_warn("Reload operator file requested by NON-OP %s, FAILED" % str(cmd.author), cmd.msg)
             return
 
         if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
@@ -173,4 +173,4 @@ class OpModPlugin(Plugin):
                 self.ops = json.load(ops_file)
         else:
             self.ops = {"global": [], "channel": {}}
-        self.cdb.log_info_command("Reload operator file requested by %s" % str(cmd.author), cmd.msg)
+        self.cdb.log_info("Reload operator file requested by %s" % str(cmd.author), cmd.msg)

@@ -30,7 +30,7 @@ class Logger(logging.Logger):
         self.info("#-------------START-------------#")
         return
 
-    def log_info_command(self, string, message):
+    def log_info(self, string, message):
         """ Add an entry in the log with info level. """
         if isinstance(message.channel, discord.abc.PrivateChannel):
             self.info(string + " in a Private Channel")
@@ -40,7 +40,7 @@ class Logger(logging.Logger):
                                                     message.guild.name,
                                                     message.guild.id))
 
-    def log_error_command(self, string, message):
+    def log_error(self, string, message):
         """ Add an entry in the log with error level. """
         if isinstance(message.channel, discord.abc.PrivateChannel):
             self.error(string + " in a Private Channel")
@@ -50,7 +50,7 @@ class Logger(logging.Logger):
                                                      message.guild.name,
                                                      message.guild.id))
 
-    def log_warn_command(self, string, message):
+    def log_warn(self, string, message):
         """ Add an entry in the log with warn level. """
         if isinstance(message.channel, discord.abc.PrivateChannel):
             self.warn(string + " in a Private Channel")

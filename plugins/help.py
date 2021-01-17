@@ -25,8 +25,7 @@ class HelpPlugin(Plugin):
            or cmd.action not in ["help"]:
             return
 
-        self.cdb.log_info_command("Help requested by " + str(cmd.author),
-                                  message)
+        self.cdb.log_info("Help requested by %s" % str(cmd.author), message)
 
         if len(cmd.args) == 0:
             help_message = "**{} v{}**\n\nAvailable plugins:\n".format(self.cdb.NAME, self.cdb.VERSION)

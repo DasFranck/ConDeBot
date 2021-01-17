@@ -22,7 +22,7 @@ class SuicidePlugin(Plugin):
         if cmd.action in ["slain", "kill", "suicide"]:
             if not self.cdb.isop_user(message.author):
                 await message.channel.send("You don't have the right to do that.")
-                self.cdb.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % str(cmd.author), message)
+                self.cdb.log_warn("Bot Suicide requested by NON-OP %s, FAILED" % str(cmd.author), message)
                 return
 
             if (cmd.action == "slain"):
@@ -32,7 +32,7 @@ class SuicidePlugin(Plugin):
             elif (cmd.action == "suicide"):
                 await message.channel.send("%s is suiciding himself. With %s's help." % (self.cdb.NAME, str(cmd.author)))
 
-            self.cdb.log_info_command("Bot has been terminated by " + str(cmd.author), message)
+            self.cdb.log_info("Bot has been terminated by " + str(cmd.author), message)
             self.cdb.logger.info("#--------------END--------------#")
 
             # Trying to exit properly (client.py:494 from discord.py)
@@ -41,10 +41,10 @@ class SuicidePlugin(Plugin):
         if cmd.action in ["restart", "reboot"]:
             if not self.cdb.isop_user(message.author):
                 await message.channel.send("You don't have the right to do that.")
-                self.cdb.log_warn_command("Bot restart requested by NON-OP %s, FAILED" % str(cmd.author), message)
+                self.cdb.log_warn("Bot restart requested by NON-OP %s, FAILED" % str(cmd.author), message)
             else:
                 await message.channel.send("Restart has been ordered by %s." % str(cmd.author))
-                self.cdb.log_info_command("Bot has been restarted by " + str(cmd.author), message)
+                self.cdb.log_info("Bot has been restarted by " + str(cmd.author), message)
                 self.cdb.logger.info("#------------RESTART------------#")
                 await self.cdb.logout()
                 sys.exit(30)

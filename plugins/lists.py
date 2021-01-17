@@ -53,16 +53,16 @@ class ListsPlugin(Plugin):
         if (old_dict is None):
             new_dict = OrderedDict(name=list_name, list=[content], count=0, locked=False)
             lists.append(new_dict)
-            self.cdb.log_info_command("The new list %s has been created by %s" % (list_name, author), message)
+            self.cdb.log_info("The new list %s has been created by %s" % (list_name, author), message)
         else:
             # Check if the reply dict is locked
             if (not self.cdb.isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
                 await message.channel.send("Sorry, the %s list has been locked by an operator." % list_name)
-                self.cdb.log_warn_command("The locked list %s modification has been requested by NON-OP %s, FAILED" % (list_name, author), message)
+                self.cdb.log_warn("The locked list %s modification has been requested by NON-OP %s, FAILED" % (list_name, author), message)
                 return lists
             else:
                 old_dict["list"].append(content)
-                self.cdb.log_info_command("A new element has been added in the list %s by %s" % (list_name, author), message)
+                self.cdb.log_info("A new element has been added in the list %s by %s" % (list_name, author), message)
         await message.channel.send("Roger that, a new element has been added in %s (index: %d)." % (list_name, len(get_list(lists, list_name)["list"]) - 1))
         return lists
 
@@ -71,7 +71,7 @@ class ListsPlugin(Plugin):
         index = random.randrange(len(list["list"]))
         await message.channel.send(list["list"][index])
         await message.channel.send(str(index))
-        self.cdb.log_info_command("A random content from the list %s has been requested by %s" % (list_name, author), message)
+        self.cdb.log_info("A random content from the list %s has been requested by %s" % (list_name, author), message)
         list["count"] += 1
         return lists
 

@@ -67,14 +67,14 @@ class ConDeBot(discord.Client):
             self.unreserve_keyword(keyword)
 
     # Aliases to self.logger functions
-    def log_error_command(self, *args, **kwargs):
-        self.logger.log_error_command(*args, **kwargs)
+    def log_error(self, *args, **kwargs):
+        self.logger.log_error(*args, **kwargs)
 
-    def log_warn_command(self, *args, **kwargs):
-        self.logger.log_warn_command(*args, **kwargs)
+    def log_warn(self, *args, **kwargs):
+        self.logger.log_warn(*args, **kwargs)
 
-    def log_info_command(self, *args, **kwargs):
-        self.logger.log_info_command(*args, **kwargs)
+    def log_info(self, *args, **kwargs):
+        self.logger.log_info(*args, **kwargs)
 
     async def on_ready(self):
         """Triggered when the bot is ready"""
