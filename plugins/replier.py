@@ -48,8 +48,7 @@ class ReplierPlugin(Plugin):
     async def count(self, cmd, replies):
         """ Print the number of times a message has been triggered"""
         if (cmd.args is None or len(cmd.args) == 0):
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "Try with an argument for this command next time.")
+            await cmd.msg.channel.send("Try with an argument for this command next time.")
             return
 
         for arg in cmd.args:
@@ -58,21 +57,18 @@ class ReplierPlugin(Plugin):
                 self.cdb.log_error_command("Count of non-existant trigger %s requested by %s" % (arg,
                                                                                                  str(cmd.author)),
                                            cmd.msg)
-                await self.cdb.send_message(cmd.msg.channel,
-                                            f"The trigger {arg} doesn't even exist.")
+                await cmd.msg.channel.send(f"The trigger {arg} doesn't even exist.")
             else:
                 self.cdb.log_info_command("Count of trigger %s (%d) requested by %s" % (arg,
                                                                                         reply["count"],
                                                                                         str(cmd.author)),
                                           cmd.msg)
-                await self.cdb.send_message(cmd.msg.channel,
-                                            f"The trigger {arg} has been called {reply['count']} times.")
+                await cmd.msg.channel.send(f"The trigger {arg} has been called {reply['count']} times.")
 
     async def list(self, cmd, replies):
         """ Send the list of the guild's trigger messages to the requester"""
         if cmd.msg.guild is None:
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "You can't use this command outside of a guild for now.")
+            await cmd.msg.channel.send("You can't use this command outside of a guild for now.")
             return
 
         message_to_send = f"Here's the list of triggers for {cmd.msg.guild.name} ({cmd.msg.guild.id})\n```"
@@ -80,16 +76,14 @@ class ReplierPlugin(Plugin):
             message_to_send += reply["trigger"] + "\n"
         message_to_send += "```"
         await cmd.msg.author.send(message_to_send)
-        await self.cdb.send_message(cmd.msg.channel,
-                                    f"{cmd.msg.author.mention}: I've send you the trigger list by PM.")
+        await cmd.msg.channel.send(f"{cmd.msg.author.mention}: I've send you the trigger list by PM.")
         self.cdb.log_info_command("The trigger list has been requested by %s" % (str(cmd.author)), cmd.msg)
         return
 
     async def locker(self, cmd, replies, replies_path):
         """ Unlock/Lock a reply (OP-ONLY) """
         if not self.cdb.isop_user(cmd.msg.author.id):
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "You don't have the right to do that.")
+            await cmd.msg.channel.send("You don't have the right to do that.")
             self.cdb.log_warn_command("The trigger %s lock/unlock has been requested by NON-OP %s, FAILED"
                                       % (cmd.action if len(cmd.args) else "[ ERR ]", str(cmd.author)),
                                       cmd.msg)

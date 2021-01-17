@@ -21,9 +21,6 @@ class SourcePlugin(Plugin):
                 or cmd.action not in ["source"]):
             return
         self.cdb.log_info_command("Source files requested by " + str(cmd.author), message)
-        await self.cdb.send_message(message.channel,
-                                    ("{}'s source files:\n"
-                                     "https://git.dasfranck.fr/DasFranck/ConDeBot/\n"
-                                     "https://github.com/DasFranck/ConDeBot/")
-                                    .format(self.cdb.NAME))
-        return
+        await message.channel.send(f"""{self.cdb.NAME}'s source files:
+                                       https://git.dasfranck.fr/DasFranck/ConDeBot/
+                                       https://github.com/DasFranck/ConDeBot/""")

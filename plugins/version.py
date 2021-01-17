@@ -22,11 +22,5 @@ class VersionPlugin(Plugin):
            or cmd.action not in ["version"]:
             return
 
-        self.cdb.log_info_command("Version requested by " + str(cmd.author),
-                                  message)
-        await self.cdb.send_message(message.channel,
-                                    "{}'s version: **{}**\nDiscord API version: **{}**".format(
-                                        self.cdb.NAME,
-                                        self.cdb.VERSION,
-                                        discord.__version__
-                                    ))
+        self.cdb.log_info_command("Version requested by %s" % str(cmd.author), message)
+        await message.channel.send(f"{self.cdb.NAME}'s version: **{self.cdb.VERSION}**\nDiscord API version: **{discord.__version__}**")

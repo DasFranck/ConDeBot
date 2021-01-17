@@ -49,16 +49,16 @@ def get_meta(cdb, message):
 async def display_success(cdb, channel, success_message, title="Success"):
     """ Display a success in an embed message """
     em = discord.Embed(title=title, description=success_message, colour=0x00FF00)
-    await cdb.send_message(channel, embed=em)
+    await channel.send(embed=em)
 
 
 async def display_error(cdb, channel, error_message, title="Error"):
     """ Display an error in an embed message """
     em = discord.Embed(title=title, description=error_message, colour=0xFF0000)
-    await cdb.send_message(channel, embed=em)
+    await channel.send(embed=em)
 
 
 async def display_warning(cdb, channel, error_message, title="Warning"):
     """ Display a warning in an embed message """
     em = discord.Embed(title=title, description=error_message, colour=0xFFCC00)
-    await cdb.send_message(channel, embed=em)
+    await channel.send(embed=em)

@@ -30,24 +30,21 @@ class RollPlugin(Plugin):
             return
 
         if len(cmd.args) == 0:
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "Try with an argument for this command next time.")
+            await cmd.msg.channel.send("Try with an argument for this command next time.")
             return
 
         try:
             result = roll(" ".join(cmd.args))
         except DiceBaseException as e:
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "Error: \n```" + e.pretty_print() + "```")
+            await cmd.msg.channel.send("Error: \n```" + e.pretty_print() + "```")
             return
 
         if type(result) is Integer:
-            await self.cdb.send_message(cmd.msg.channel, f"The result is: {result}")
+            await cmd.msg.channel.send("The result is: {result}")
         elif type(result) in [Roll, list]:
-            await self.cdb.send_message(cmd.msg.channel, f"The dices are: {', '.join(str(dice) for dice in result[:])}")
+            await cmd.msg.channel.send("The dices are: {', '.join(str(dice) for dice in result[:])}")
         else:
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "That seems to be an unexpected result, please contact DasFranck.")
+            await cmd.msg.channel.send("That seems to be an unexpected result, please contact DasFranck.")
             print(result)
             print(type(result))
         return

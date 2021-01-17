@@ -16,24 +16,19 @@ class SuicidePlugin(Plugin):
         cdb.reserve_keywords(["slain", "kill", "suicide", "restart", "reboot"], "Suicide")
 
     async def on_message(self, message, cmd):
-        if not cmd \
-           or not cmd.triggered:
+        if not cmd or not cmd.triggered:
             return
 
         if cmd.action in ["slain", "kill", "suicide"]:
             if not self.cdb.isop_user(message.author):
-                await self.cdb.send_message(message.channel,
-                                            "You don't have the right to do that.")
+                await message.channel.send("You don't have the right to do that.")
                 self.cdb.log_warn_command("Bot Suicide requested by NON-OP %s, FAILED" % str(cmd.author), message)
                 return
 
             if (cmd.action == "slain"):
-                await self.cdb.send_message(message.channel,
-                                            "%s has been slained by %s." % (self.cdb.NAME,
-                                                                            str(cmd.author)))
+                await message.channel.send(f"{self.cdb.NAME} has been slained by {cmd.author}.")
             elif (cmd.action == "kill"):
-                await self.cdb.send_message(message.channel,
-                                            "%s has been killed by %s." % (self.cdb.NAME, str(cmd.author)))
+                await message.channel.send(f"{self.cdb.NAME} has been killed by {cmd.author}.")
             elif (cmd.action == "suicide"):
                 await message.channel.send("%s is suiciding himself. With %s's help." % (self.cdb.NAME, str(cmd.author)))
 

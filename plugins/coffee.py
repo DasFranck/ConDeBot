@@ -34,16 +34,14 @@ class CoffeePlugin(Plugin):
             self.cdb.log_info_command("Coffee requested by %s" % str(cmd.author),
                                       message)
             await message.channel.send(":coffee:")
-            await self.cdb.send_message(message.channel,
-                                        self.serve(message, cmd.args, "coffee"))
+            await message.channel.send(self.serve(message, cmd.args, "coffee"))
 
         # Serve a delicious tea (Module: "coffee")
         elif cmd.action in ["thé", "the", "tea"]:
             self.cdb.log_info_command("Tea requested by %s" % str(cmd.author),
                                       message)
             await message.channel.send(":tea:")
-            await self.cdb.send_message(message.channel,
-                                        self.serve(message, cmd.args, "tea"))
+            await message.channel.send(self.serve(message, cmd.args, "tea"))
 
     def serve(self, message, args, drink):
         """
