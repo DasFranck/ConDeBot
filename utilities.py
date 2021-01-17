@@ -8,7 +8,7 @@ Command = namedtuple("Command",
                      # Message content and metadata
                      ["content",
                       "channel",
-                      "timestamp",
+                      "created_at",
                       "author",
                       "msg",  # Original Message Object reference
 
@@ -36,7 +36,7 @@ def get_meta(cdb, message):
 
     cmd = Command(message.content,
                   message.channel,
-                  message.timestamp,
+                  message.created_at,
                   message.author,
                   message,
                   triggered,
