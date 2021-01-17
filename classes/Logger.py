@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import discord
 import logging
 import os
 
@@ -31,7 +32,7 @@ class Logger(logging.Logger):
 
     def log_info_command(self, string, message):
         """ Add an entry in the log with info level. """
-        if (message.channel.is_private is True):
+        if isinstance(message.channel, discord.abc.PrivateChannel):
             self.info(string + " in a Private Channel")
         else:
             self.info("{} in #{} on {} ({})".format(string,
@@ -41,7 +42,7 @@ class Logger(logging.Logger):
 
     def log_error_command(self, string, message):
         """ Add an entry in the log with error level. """
-        if (message.channel.is_private is True):
+        if isinstance(message.channel, discord.abc.PrivateChannel):
             self.error(string + " in a Private Channel")
         else:
             self.error("{} in #{} on {} ({})".format(string,
@@ -51,7 +52,7 @@ class Logger(logging.Logger):
 
     def log_warn_command(self, string, message):
         """ Add an entry in the log with warn level. """
-        if (message.channel.is_private is True):
+        if isinstance(message.channel, discord.abc.PrivateChannel):
             self.warn(string + " in a Private Channel")
         else:
             self.warn("{} in #{} on {} ({})".format(string,
