@@ -42,11 +42,9 @@ class RollPlugin(Plugin):
             return
 
         if type(result) is Integer:
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "The result is: " + str(result))
+            await self.cdb.send_message(cmd.msg.channel, f"The result is: {result}")
         elif type(result) in [Roll, list]:
-            await self.cdb.send_message(cmd.msg.channel,
-                                        "The dices are: " + ", ".join(str(dice) for dice in result[:]))
+            await self.cdb.send_message(cmd.msg.channel, f"The dices are: {', '.join(str(dice) for dice in result[:])}")
         else:
             await self.cdb.send_message(cmd.msg.channel,
                                         "That seems to be an unexpected result, please contact DasFranck.")

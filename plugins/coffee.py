@@ -31,7 +31,7 @@ class CoffeePlugin(Plugin):
 
         # Serve a delicious coffee (Module: "coffee")
         if cmd.action in ["café", "cafe", "coffee"]:
-            self.cdb.log_info_command("Coffee requested by " + str(cmd.author),
+            self.cdb.log_info_command("Coffee requested by %s" % str(cmd.author),
                                       message)
             await message.channel.send(":coffee:")
             await self.cdb.send_message(message.channel,
@@ -39,7 +39,7 @@ class CoffeePlugin(Plugin):
 
         # Serve a delicious tea (Module: "coffee")
         elif cmd.action in ["thé", "the", "tea"]:
-            self.cdb.log_info_command("Tea requested by " + str(cmd.author),
+            self.cdb.log_info_command("Tea requested by %s" % str(cmd.author),
                                       message)
             await message.channel.send(":tea:")
             await self.cdb.send_message(message.channel,
@@ -54,14 +54,6 @@ class CoffeePlugin(Plugin):
             quotes = hjson.load(quotes_file)
             if ('>' in args):
                 index = args.index('>') + 1
-                return ("Here {}, that's your {}.\n{}".format(
-                    " ".join(args[index:]),
-                    drink,
-                    random.choice(quotes[drink]))
-                )
+                return f"Here {' '.join(args[index:])}, that's your {drink}.\n{random.choice(quotes[drink])}"
             else:
-                return ("Here {}, that's your {}.\n{}".format(
-                    message.author.mention,
-                    drink,
-                    random.choice(quotes[drink]))
-                )
+                return f"Here {message.author.mention}, that's your {drink}.\n{random.choice(quotes[drink])}"

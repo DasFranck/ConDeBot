@@ -59,15 +59,14 @@ class ReplierPlugin(Plugin):
                                                                                                  str(cmd.author)),
                                            cmd.msg)
                 await self.cdb.send_message(cmd.msg.channel,
-                                            "The trigger %s doesn't even exist." % arg)
+                                            f"The trigger {arg} doesn't even exist.")
             else:
                 self.cdb.log_info_command("Count of trigger %s (%d) requested by %s" % (arg,
                                                                                         reply["count"],
                                                                                         str(cmd.author)),
                                           cmd.msg)
                 await self.cdb.send_message(cmd.msg.channel,
-                                            "The trigger %s has been called %d times." % (arg,
-                                                                                          reply["count"]))
+                                            f"The trigger {arg} has been called {reply['count']} times.")
 
     async def list(self, cmd, replies):
         """ Send the list of the guild's trigger messages to the requester"""
@@ -76,14 +75,13 @@ class ReplierPlugin(Plugin):
                                         "You can't use this command outside of a guild for now.")
             return
 
-        message_to_send = "Here's the list of triggers for {} ({})\n```".format(cmd.msg.guild.name,
-                                                                                cmd.msg.guild.id)
+        message_to_send = f"Here's the list of triggers for {cmd.msg.guild.name} ({cmd.msg.guild.id})\n```"
         for reply in replies:
             message_to_send += reply["trigger"] + "\n"
         message_to_send += "```"
         await cmd.msg.author.send(message_to_send)
         await self.cdb.send_message(cmd.msg.channel,
-                                    "{}: I've send you the trigger list by PM.".format(cmd.msg.author.mention))
+                                    f"{cmd.msg.author.mention}: I've send you the trigger list by PM.")
         self.cdb.log_info_command("The trigger list has been requested by %s" % (str(cmd.author)), cmd.msg)
         return
 
@@ -106,7 +104,7 @@ class ReplierPlugin(Plugin):
             return
 
         old_dict["locked"] = True if cmd.action == "lock" else False
-        await cmd.msg.channel.send("Roger that, %s trigger has been %s." % (cmd.args[0], cmd.action + "ed"))
+        await cmd.msg.channel.send(f"Roger that, {cmd.args[0]} trigger has been {cmd.action}ed.")
         self.cdb.log_info_command("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], str(cmd.author)), cmd.msg)
         with open(replies_path, 'w', encoding="utf8") as replies_file:
             hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
@@ -120,7 +118,7 @@ class ReplierPlugin(Plugin):
             reply = get_reply(replies, action)
             if (reply is not None):
                 if (args and args[0] == ">" and len(args) >= 2):
-                    await message.channel.send(args[1] + ": " + reply["message"])
+                    await message.channel.send(f"{args[1]}: {reply['message']}")
                 else:
                     await message.channel.send(reply["message"])
                 reply["count"] += 1
@@ -148,7 +146,7 @@ class ReplierPlugin(Plugin):
                 else:
                     # Check if the reply dict is locked
                     if (not self.cdb.isop_user(message.author) and "locked" in old_dict and old_dict["locked"] is True):
-                        await message.channel.send("Sorry, the %s trigger has been locked by an operator." % action)
+                        await message.channel.send(f"Sorry, the {action} trigger has been locked by an operator.")
                         self.cdb.log_warn_command("The locked trigger %s reset has been requested by NON-OP %s, FAILED" % (action, author), message)
                         return
                     else:
@@ -170,14 +168,11 @@ class ReplierPlugin(Plugin):
             return
 
         # Set file path
-        if message.guild is not None:
-            replies_path = self.REPLIER_DIR_PATH + message.guild.id + ".json"
-        else:
-            replies_path = self.REPLIER_DIR_PATH + "dump.json"
+        replies_path = f"{self.REPLIER_DIR_PATH}{message.guild.id if message.guild else ''}.json"
 
         # Load JSON replies file
         replies = await self.load_replies(cmd, replies_path)
-        if (replies is None):
+        if not replies:
             return
 
         # Display the commands call count (Module: "replier")
