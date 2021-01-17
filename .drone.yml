@@ -61,7 +61,7 @@ depends_on:
 
 ---
 kind: pipeline
-name: build_arm32
+name: build_arm
 
 platform:
   arch: arm
@@ -76,7 +76,7 @@ steps:
       password:
         from_secret: docker_password
       repo: dasfranck/condebot
-      tags: ${DRONE_COMMIT_BRANCH}-linux-arm32
+      tags: ${DRONE_COMMIT_BRANCH}-linux-arm
 
 depends_on:
   - tests
@@ -120,6 +120,6 @@ steps:
       branch: [master]
 
 depends_on:
-    - build_arm32
+    - build_arm
     - build_arm64
     - build_amd64
