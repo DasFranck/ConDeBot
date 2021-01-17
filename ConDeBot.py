@@ -88,75 +88,75 @@ class ConDeBot(discord.Client):
         for plugin in self.plugins:
             self.loop.create_task(plugin.on_message(message, cmd))
 
-    async def on_message_edit(self, before, after):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_message_edit(before, after))
+    # async def on_message_edit(self, before, after):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_message_edit(before, after))
 
-    async def on_message_delete(self, message):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_message_delete(message))
+    # async def on_message_delete(self, message):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_message_delete(message))
 
-    async def on_reaction_add(self, reaction, user):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_reaction_add(reaction, user))
+    # async def on_reaction_add(self, reaction, user):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_reaction_add(reaction, user))
 
-    async def on_reaction_remove(self, reaction, user):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_reaction_remove(reaction, user))
+    # async def on_reaction_remove(self, reaction, user):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_reaction_remove(reaction, user))
 
-    async def on_reaction_clear(self, message, reactions):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_reaction_clear(message, reactions))
+    # async def on_reaction_clear(self, message, reactions):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_reaction_clear(message, reactions))
 
-    async def on_member_join(self, member):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_member_join(member))
+    # async def on_member_join(self, member):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_member_join(member))
 
-    async def on_member_remove(self, member):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_member_remove(member))
+    # async def on_member_remove(self, member):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_member_remove(member))
 
-    async def on_member_update(self, before, after):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_member_update(before, after))
+    # async def on_member_update(self, before, after):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_member_update(before, after))
 
-    async def on_guild_join(self, guild):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_guild_join(guild))
+    # async def on_guild_join(self, guild):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_guild_join(guild))
 
-    async def on_guild_remove(self, guild):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_guild_remove(guild))
+    # async def on_guild_remove(self, guild):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_guild_remove(guild))
 
-    async def on_guild_update(self, before, after):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_guild_update(before, after))
+    # async def on_guild_update(self, before, after):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_guild_update(before, after))
 
-    async def on_guild_role_create(self, guild, role):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_guild_role_create(guild, role))
+    # async def on_guild_role_create(self, guild, role):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_guild_role_create(guild, role))
 
-    async def on_guild_role_delete(self, guild, role):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_guild_role_delete(guild, role))
+    # async def on_guild_role_delete(self, guild, role):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_guild_role_delete(guild, role))
 
-    async def on_guild_role_update(self, guild, role):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_guild_role_update(guild, role))
+    # async def on_guild_role_update(self, guild, role):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_guild_role_update(guild, role))
 
-    async def on_voice_state_update(self, member, before, after):
-        pass
+    # async def on_voice_state_update(self, member, before, after):
+    #     pass
 
-    async def on_member_ban(self, guild, member):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_member_ban(member))
+    # async def on_member_ban(self, guild, member):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_member_ban(member))
 
-    async def on_member_unban(self, member):
-        for plugin in self.plugins:
-            self.loop.create_task(plugin.on_member_unban(member))
+    # async def on_member_unban(self, member):
+    #     for plugin in self.plugins:
+    #         self.loop.create_task(plugin.on_member_unban(member))
 
-    async def on_typing(self, channel, user, when):
-        pass
+    # async def on_typing(self, channel, user, when):
+    #     pass
 
     def isop_user(self, user_id):
         """ Check if user is op """
