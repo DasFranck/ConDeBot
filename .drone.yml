@@ -9,6 +9,7 @@ steps:
   - name: test
     image: python:alpine3.9
     commands:
+      - apk add gcc
       - pip install --upgrade pip
       - pip install flake8
       - pip install -r requirements.txt
