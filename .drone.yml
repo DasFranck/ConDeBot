@@ -7,8 +7,9 @@ platform:
 
 steps:
   - name: test
-    image: python:alpine3.8
+    image: python:alpine3.9
     commands:
+      - pip install --upgrade pip
       - pip install flake8
       - pip install -r requirements.txt
       - flake8 . --ignore=E402,E501,E722,W503,W504
