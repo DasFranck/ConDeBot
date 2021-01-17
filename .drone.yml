@@ -100,7 +100,7 @@ steps:
       target: dasfranck/condebot:${DRONE_COMMIT_BRANCH}
       template: dasfranck/condebot:${DRONE_COMMIT_BRANCH}-OS-ARCH
       platforms:
-        - linux/arm32
+        - linux/arm
         - linux/amd64
         - linux/arm64
   - name: latest_manifest
@@ -113,7 +113,7 @@ steps:
       target: dasfranck/condebot:latest
       template: dasfranck/condebot:${DRONE_COMMIT_BRANCH}-OS-ARCH
       platforms:
-        - linux/arm32
+        - linux/arm
         - linux/arm64
         - linux/amd64
     when:
