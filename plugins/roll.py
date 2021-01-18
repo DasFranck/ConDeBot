@@ -35,14 +35,14 @@ class RollPlugin(Plugin):
 
         try:
             result = roll(" ".join(cmd.args))
-        except DiceBaseException as e:
-            await cmd.msg.channel.send("Error: \n```" + e.pretty_print() + "```")
+        except DiceBaseException as execption:
+            await cmd.msg.channel.send("Error: \n```" + execption.pretty_print() + "```")
             return
 
-        if type(result) is Integer:
+        if isinstance(result, Integer):
             await cmd.msg.channel.send(f"The result is: {result}")
-        elif type(result) in [Roll, list]:
-            await cmd.msg.channel.send(f"The dices are: {', '.join(str(dice) for dice in result[:])}")
+        elif isinstance(result, (Roll, list)):
+            await cmd.msg.channel.send(f"The dices are: {', '.join(result)}")
         else:
             await cmd.msg.channel.send("That seems to be an unexpected result, please contact DasFranck.")
             print(result)

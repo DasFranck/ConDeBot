@@ -28,12 +28,11 @@ class Logger(logging.Logger):
         self.addHandler(stream_handler)
 
         self.info("#-------------START-------------#")
-        return
 
     def log_info(self, string, message):
         """ Add an entry in the log with info level. """
         if isinstance(message.channel, discord.abc.PrivateChannel):
-            self.info(string + " in a Private Channel")
+            self.info("%s in a Private Channel", string)
         else:
             self.info("{} in #{} on {} ({})".format(string,
                                                     message.channel.name,
@@ -43,7 +42,7 @@ class Logger(logging.Logger):
     def log_error(self, string, message):
         """ Add an entry in the log with error level. """
         if isinstance(message.channel, discord.abc.PrivateChannel):
-            self.error(string + " in a Private Channel")
+            self.error("%s in a Private Channel", string)
         else:
             self.error("{} in #{} on {} ({})".format(string,
                                                      message.channel.name,
@@ -53,9 +52,9 @@ class Logger(logging.Logger):
     def log_warn(self, string, message):
         """ Add an entry in the log with warn level. """
         if isinstance(message.channel, discord.abc.PrivateChannel):
-            self.warn(string + " in a Private Channel")
+            self.warning("%s in a Private Channel", string)
         else:
-            self.warn("{} in #{} on {} ({})".format(string,
-                                                    message.channel.name,
-                                                    message.guild.name,
-                                                    message.guild.id))
+            self.warning("{} in #{} on {} ({})".format(string,
+                                                       message.channel.name,
+                                                       message.guild.name,
+                                                       message.guild.id))

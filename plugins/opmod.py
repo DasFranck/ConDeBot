@@ -34,7 +34,7 @@ class OpModPlugin(Plugin):
         cdb.add_plugin_description(DESCRIPTION, NAME)
         cdb.add_plugin_usage(USAGE, NAME)
 
-        if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
+        if os.path.isfile(self.cdb.OPS_FILE_PATH):
             with open(self.cdb.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 self.ops = json.load(ops_file)
         else:
@@ -42,33 +42,9 @@ class OpModPlugin(Plugin):
             with open(self.cdb.OPS_FILE_PATH, 'w', encoding="utf8") as ops_file:
                 json.dump(self.ops, ops_file)
 
-    def mention_to_user_id(self, mention):
+    @staticmethod
+    def mention_to_user_id(mention):
         return re.sub('[<>!@]', '', mention)
-
-    async def on_message(self, message, cmd):
-        if not cmd.triggered \
-           or cmd.action not in ["opmod"]:
-            return
-
-        # Display help here
-        if (len(cmd.args) == 0):
-            pass
-        elif (cmd.args[0] in ["op", "add"]):
-            await self.op_users(cmd)
-        elif (cmd.args[0] in ["deop", "rm"]):
-            await self.deop_users(cmd)
-        elif (cmd.args[0] == "isop"):
-            if (len(cmd.args) > 1):
-                await self.isop(cmd)
-            else:
-                await self.isop_self(cmd)
-        elif (cmd.args[0] == "list"):
-            await self.op_list(cmd)
-        elif (cmd.args[0] == "reload"):
-            await self.reload_ops(cmd)
-        else:
-            # Display help
-            pass
 
     async def isop(self, cmd):
         """
@@ -151,11 +127,8 @@ class OpModPlugin(Plugin):
         Display a list of global moderators.
         """
         string = "**Operator list:**\n"
-        for op in self.ops["global"]:
-            if (op is self.ops["global"][-1]):
-                string += "- %s" % discord.utils.get(cmd.msg.guild.members, id=op)
-            else:
-                string += "- %s\n" % discord.utils.get(cmd.msg.guild.members, id=op)
+        for operator in self.ops["global"]:
+            string += f"- {discord.utils.get(cmd.msg.guild.members, id=operator)}\n"
         await cmd.channel.send(string)
         self.cdb.log_info("Operator list requested by %s" % str(cmd.author), cmd.msg)
 
@@ -168,9 +141,34 @@ class OpModPlugin(Plugin):
             self.cdb.log_warn("Reload operator file requested by NON-OP %s, FAILED" % str(cmd.author), cmd.msg)
             return
 
-        if (os.path.isfile(self.cdb.OPS_FILE_PATH)):
+        if os.path.isfile(self.cdb.OPS_FILE_PATH):
             with open(self.cdb.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 self.ops = json.load(ops_file)
         else:
             self.ops = {"global": [], "channel": {}}
         self.cdb.log_info("Reload operator file requested by %s" % str(cmd.author), cmd.msg)
+
+    async def on_message(self, message, cmd):
+        if not cmd.triggered \
+           or cmd.action not in ["opmod"]:
+            return
+
+        # Display help here
+        if len(cmd.args) == 0:
+            pass
+        elif cmd.args[0] in ["op", "add"]:
+            await self.op_users(cmd)
+        elif cmd.args[0] in ["deop", "rm"]:
+            await self.deop_users(cmd)
+        elif cmd.args[0] == "isop":
+            if len(cmd.args) > 1:
+                await self.isop(cmd)
+            else:
+                await self.isop_self(cmd)
+        elif cmd.args[0] == "list":
+            await self.op_list(cmd)
+        elif cmd.args[0] == "reload":
+            await self.reload_ops(cmd)
+        else:
+            # Display help
+            pass

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from collections import OrderedDict
-import hjson
 import os
 import random
+
+from collections import OrderedDict
+
+import hjson
 
 from classes.Plugin import Plugin
 
@@ -29,9 +31,9 @@ def load_lists(lists_path):
 def get_list(lists, name):
     if (lists is None):
         return None
-    for list in lists:
-        if (list["name"] == name):
-            return list
+    for lst in lists:
+        if (lst["name"] == name):
+            return lst
     return None
 
 
@@ -67,12 +69,12 @@ class ListsPlugin(Plugin):
         return lists
 
     async def write_random_from_list(self, lists, list_name, message, author):
-        list = get_list(lists, list_name)
-        index = random.randrange(len(list["list"]))
-        await message.channel.send(list["list"][index])
+        lst = get_list(lists, list_name)
+        index = random.randrange(len(lst["list"]))
+        await message.channel.send(lst["list"][index])
         await message.channel.send(str(index))
         self.cdb.log_info("A random content from the list %s has been requested by %s" % (list_name, author), message)
-        list["count"] += 1
+        lst["count"] += 1
         return lists
 
     async def on_message(self, message, cmd):
@@ -89,7 +91,7 @@ class ListsPlugin(Plugin):
 
         # Load JSON lists file
         lists = load_lists(lists_path)
-        if (lists is None):
+        if not lists:
             self.cdb.logger.error("JSON lists file loading failed.")
             await message.channel.send("The JSON lists file seems corrupted. Please fix it before using the replier module.")
             return

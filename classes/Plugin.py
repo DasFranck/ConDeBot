@@ -9,7 +9,7 @@ class Plugin:
     async def on_ready(self):
         pass
 
-    async def on_message(self, message):
+    async def on_message(self, message, cmd):
         pass
 
     # async def on_message_edit(self, before, after):

@@ -53,7 +53,6 @@ class ConDeBot(discord.Client):
         else:
             print("Warning: Conflicting with the plugins {} for the keyword {}".format(self._reserved_keywords[keyword], keyword))
             self._reserved_keywords[keyword].append(plugin_name)
-        pass
 
     def unreserve_keyword(self, keyword):
         del self._reserved_keywords[keyword]
@@ -161,12 +160,11 @@ class ConDeBot(discord.Client):
 
     def isop_user(self, user_id):
         """ Check if user is op """
-        if (os.path.isfile(self.OPS_FILE_PATH)):
+        if os.path.isfile(self.OPS_FILE_PATH):
             with open(self.OPS_FILE_PATH, encoding="utf8") as ops_file:
                 ops = json.load(ops_file)
-            return (ops["global"] and user_id in ops["global"])
-        else:
-            return (False)
+            return ops["global"] and user_id in ops["global"]
+        return False
 
 
 # The Main.

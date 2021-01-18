@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from classes.Plugin import Plugin
 import importlib
 import inspect
 import os
+
+from classes.Plugin import Plugin
 
 
 class PluginManager:
@@ -27,7 +28,6 @@ class PluginManager:
                     module = importlib.import_module("plugins." + plugin_name[:-3])
                     self.load(module)
                 # except ModuleNotFoundError:
-                except ImportError as e:
-                    print(e)
-                    pass
+                except ImportError as exception:
+                    print(exception)
         self.cdb.logger.info("============")

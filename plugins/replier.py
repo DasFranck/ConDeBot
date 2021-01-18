@@ -12,13 +12,14 @@ DESCRIPTION = "Register custom replies for the bot"
 USAGE = {}
 
 
-# Get the reply dict assign to the trigger
 def get_reply(replies, trigger):
-    if (replies is None):
-        return None
-    for reply in replies:
-        if (reply["trigger"] == trigger):
-            return reply
+    """
+    Get the reply dict assign to the trigger
+    """
+    if replies:
+        for reply in replies:
+            if reply["trigger"] == trigger:
+                return reply
     return None
 
 
@@ -34,7 +35,7 @@ class ReplierPlugin(Plugin):
 
     async def load_replies(self, cmd, replies_path):
         """ Load the replies file into an array of dict """
-        if (os.path.isfile(replies_path)):
+        if os.path.isfile(replies_path):
             with open(replies_path, encoding="utf8") as replies_file:
                 try:
                     return hjson.load(replies_file, encoding="utf8")
@@ -52,13 +53,12 @@ class ReplierPlugin(Plugin):
             return
 
         for arg in cmd.args:
-            reply = get_reply(replies, arg)
-            if (reply is None):
-                self.cdb.log_error("Count of non-existant trigger %s requested by %s" % (arg, str(cmd.author)), cmd.msg)
-                await cmd.msg.channel.send(f"The trigger {arg} doesn't even exist.")
-            else:
+            if reply := get_reply(replies, arg):
                 self.cdb.log_info("Count of trigger %s (%d) requested by %s" % (arg, reply["count"], str(cmd.author)), cmd.msg)
                 await cmd.msg.channel.send(f"The trigger {arg} has been called {reply['count']} times.")
+            else:
+                self.cdb.log_error("Count of non-existant trigger %s requested by %s" % (arg, str(cmd.author)), cmd.msg)
+                await cmd.msg.channel.send(f"The trigger {arg} doesn't even exist.")
 
     async def list(self, cmd, replies):
         """ Send the list of the guild's trigger messages to the requester"""
@@ -88,10 +88,10 @@ class ReplierPlugin(Plugin):
             return
 
         old_dict = get_reply(replies, cmd.args[0])
-        if (old_dict is None):
+        if not old_dict:
             return
 
-        old_dict["locked"] = True if cmd.action == "lock" else False
+        old_dict["locked"] = cmd.action == "lock"
         await cmd.msg.channel.send(f"Roger that, {cmd.args[0]} trigger has been {cmd.action}ed.")
         self.cdb.log_info("%s of trigger %s requested by %s" % (cmd.action.capitalize(), cmd.args[0], str(cmd.author)), cmd.msg)
         with open(replies_path, 'w', encoding="utf8") as replies_file:
@@ -117,17 +117,17 @@ class ReplierPlugin(Plugin):
                 pass
                 # self.cdb.log_info("Non-existant trigger %s has been called by %s" % (action, author), message)
 
-        elif (args[0] == "<"):
-            if (len(args) > 1):
+        elif args[0] == "<":
+            if len(args) > 1:
                 return
 
         # Assign a message to this trigger
-        elif (args[0] == "="):
-            if (len(args) > 1):
+        elif args[0] == "=":
+            if len(args) > 1:
                 # Check if the reply dict already exist
                 old_dict = get_reply(replies, action)
                 # If the reply dict don't exist set it, else replace it
-                if (old_dict is None):
+                if not old_dict:
                     new_dict = OrderedDict(trigger=action, message=" ".join(args[1:]), count=0, locked=False)
                     replies.append(new_dict)
                     self.cdb.log_info("The new trigger %s has been set by %s" % (action, author), message)
@@ -148,8 +148,6 @@ class ReplierPlugin(Plugin):
                     hjson.dump(replies, replies_file, indent=' ' * 2, encoding="utf8")
             else:
                 await message.channel.send("You should try to put a message to assign to this trigger.")
-                return
-        return
 
     async def on_message(self, message, cmd):
         if not cmd or not cmd.triggered:
